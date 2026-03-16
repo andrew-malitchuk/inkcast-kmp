@@ -30,7 +30,7 @@ dependencyResolutionManagement {
 }
 
 include(":compose-application")
-include(":androidApp")
+include(":aos-application")
 
 // common
 include(":common-core")

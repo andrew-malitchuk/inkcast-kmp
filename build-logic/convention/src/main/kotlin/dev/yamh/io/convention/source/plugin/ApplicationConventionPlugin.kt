@@ -15,7 +15,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
  *
  * With AGP 9.0, the shared KMP module uses `com.android.kotlin.multiplatform.library`
  * instead of `com.android.application`. The Android app entry point lives in a
- * separate `:androidApp` module.
+ * separate `:aos-application` module.
  */
 class ApplicationConventionPlugin : BaseConventionPlugin() {
 
