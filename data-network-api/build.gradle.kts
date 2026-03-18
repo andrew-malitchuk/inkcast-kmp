@@ -6,7 +6,7 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(project(":data-core"))
+            implementation(projects.dataCore)
             implementation(libs.ktor.client.core)
             // NOTE: api scope because JsonElement is exposed in SettingItemNetwork's public API.
             api(libs.kotlinx.serialization.json)

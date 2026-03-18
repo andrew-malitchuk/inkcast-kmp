@@ -5,8 +5,8 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            api(project(":data-preference-api"))
-            implementation(project(":data-core"))
+            api(projects.dataPreferenceApi)
+            implementation(projects.dataCore)
             implementation(libs.multiplatform.settings)
             implementation(libs.multiplatform.settings.coroutines)
             implementation(libs.koin.core)

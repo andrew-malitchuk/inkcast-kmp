@@ -15,9 +15,9 @@ kotlin {
     }
     sourceSets {
         commonMain.dependencies {
-            api(project(":data-network-api"))
-            implementation(project(":data-core"))
-            implementation(project(":data-preference-api"))
+            api(projects.dataNetworkApi)
+            implementation(projects.dataCore)
+            implementation(projects.dataPreferenceApi)
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.websockets)
             implementation(libs.ktor.client.content.negotiation)

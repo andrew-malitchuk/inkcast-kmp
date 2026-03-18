@@ -5,7 +5,7 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(project(":domain-core"))
+            implementation(projects.domainCore)
         }
     }
 }

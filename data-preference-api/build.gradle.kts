@@ -5,7 +5,7 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(project(":data-core"))
+            implementation(projects.dataCore)
         }
     }
 }

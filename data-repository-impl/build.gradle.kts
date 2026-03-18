@@ -5,12 +5,12 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(project(":common-core"))
-            implementation(project(":data-core"))
-            implementation(project(":data-network-api"))
-            implementation(project(":data-preference-api"))
-            implementation(project(":domain-core"))
-            implementation(project(":domain-repository-api"))
+            implementation(projects.commonCore)
+            implementation(projects.dataCore)
+            implementation(projects.dataNetworkApi)
+            implementation(projects.dataPreferenceApi)
+            implementation(projects.domainCore)
+            implementation(projects.domainRepositoryApi)
             implementation(libs.koin.core)
         }
     }

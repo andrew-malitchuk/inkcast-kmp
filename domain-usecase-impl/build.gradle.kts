@@ -5,9 +5,9 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            api(project(":domain-usecase-api"))
-            implementation(project(":domain-core"))
-            implementation(project(":domain-repository-api"))
+            api(projects.domainUsecaseApi)
+            implementation(projects.domainCore)
+            implementation(projects.domainRepositoryApi)
             implementation(libs.koin.core)
         }
     }

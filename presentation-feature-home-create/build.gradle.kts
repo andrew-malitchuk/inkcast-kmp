@@ -14,12 +14,12 @@ kotlin {
             implementation(libs.navigation3.ui)
             implementation(libs.kotlinx.serialization.core)
 
-            implementation(project(":domain-core"))
-            implementation(project(":domain-usecase-api"))
-            implementation(project(":presentation-core-localisation"))
-            implementation(project(":presentation-core-navigation-api"))
-            implementation(project(":presentation-core-styling"))
-            implementation(project(":presentation-core-ui"))
+            implementation(projects.domainCore)
+            implementation(projects.domainUsecaseApi)
+            implementation(projects.presentationCoreLocalisation)
+            implementation(projects.presentationCoreNavigationApi)
+            implementation(projects.presentationCoreStyling)
+            implementation(projects.presentationCoreUi)
         }
     }
 }

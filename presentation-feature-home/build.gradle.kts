@@ -10,17 +10,17 @@ kotlin {
             implementation(libs.orbit.viewmodel)
             implementation(libs.orbit.compose)
 
-            implementation(project(":domain-core"))
-            implementation(project(":domain-usecase-api"))
-            implementation(project(":presentation-core-localisation"))
-            implementation(project(":presentation-core-navigation-api"))
-            implementation(project(":presentation-core-styling"))
-            implementation(project(":presentation-core-ui"))
+            implementation(projects.domainCore)
+            implementation(projects.domainUsecaseApi)
+            implementation(projects.presentationCoreLocalisation)
+            implementation(projects.presentationCoreNavigationApi)
+            implementation(projects.presentationCoreStyling)
+            implementation(projects.presentationCoreUi)
 
-            implementation(project(":presentation-feature-home-create"))
-            implementation(project(":presentation-feature-home-device"))
-            implementation(project(":presentation-feature-home-files"))
-            implementation(project(":presentation-feature-home-sleep"))
+            implementation(projects.presentationFeatureHomeCreate)
+            implementation(projects.presentationFeatureHomeDevice)
+            implementation(projects.presentationFeatureHomeFiles)
+            implementation(projects.presentationFeatureHomeSleep)
         }
     }
 }
