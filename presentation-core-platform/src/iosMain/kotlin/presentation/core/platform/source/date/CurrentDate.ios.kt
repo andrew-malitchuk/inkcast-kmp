@@ -1,0 +1,24 @@
+package presentation.core.platform.source.date
+
+import platform.Foundation.NSCalendar
+import platform.Foundation.NSCalendarUnitDay
+import platform.Foundation.NSCalendarUnitMonth
+import platform.Foundation.NSCalendarUnitYear
+import platform.Foundation.NSDate
+import platform.Foundation.timeIntervalSince1970
+
+public actual fun getCurrentDate(): CurrentDate {
+    val cal = NSCalendar.currentCalendar
+    val components = cal.components(
+        NSCalendarUnitYear or NSCalendarUnitMonth or NSCalendarUnitDay,
+        NSDate(),
+    )
+    return CurrentDate(
+        year = components.year.toInt(),
+        month = components.month.toInt(),
+        day = components.day.toInt(),
+    )
+}
+
+public actual fun currentTimeMillis(): Long =
+    (NSDate().timeIntervalSince1970 * 1000).toLong()
