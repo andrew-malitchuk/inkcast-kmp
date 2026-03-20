@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Onboarding -->
+    <string name="onboarding_title">Willkommen in deiner Bibliothek</string>
+    <string name="onboarding_description">Synchronisiere deine Bücher, passe deine E-Ink-Bildschirmschoner an und konvertiere Webartikel ins E-Book-Format.</string>
+    <string name="onboarding_get_started">Loslegen</string>
+
+    <!-- Tabs -->
+    <string name="tab_files">Dateien</string>
+    <string name="tab_create">Erstellen</string>
+    <string name="tab_sleep">Ruhemodus</string>
+    <string name="tab_device">Gerät</string>
+
+    <!-- Splash -->
+    <string name="splash_title">Laden</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Einstellungen</string>
+    <string name="settings_language">Sprache</string>
+    <string name="settings_language_en">English</string>
+    <string name="settings_language_uk">Українська</string>
+    <string name="settings_language_es">Español</string>
+    <string name="settings_language_de">Deutsch</string>
+    <string name="settings_theme">Design</string>
+    <string name="settings_theme_light">Hell</string>
+    <string name="settings_theme_dark">Dunkel</string>
+
+    <!-- Connection -->
+    <string name="connection_title">Verbindung</string>
+    <string name="connection_auto_discovery">Automatische Erkennung</string>
+    <string name="connection_auto_discovery_description">Durchsuche dein lokales Netzwerk nach Geräten in der Nähe. Stelle sicher, dass dein E-Reader mit demselben WLAN verbunden ist.</string>
+    <string name="connection_scanning">Wird gescannt…</string>
+    <string name="connection_scan_for_devices">Geräte suchen</string>
+    <string name="connection_manual_connection">Manuelle Verbindung</string>
+    <string name="connection_manual_description">Gib die IP-Adresse deines Geräts manuell ein, falls es beim automatischen Scan nicht angezeigt wird.</string>
+    <string name="connection_ip_address">IP-Adresse</string>
+    <string name="connection_ip_placeholder">192.168.1.XX</string>
+    <string name="connection_connecting">Verbindung wird hergestellt…</string>
+    <string name="connection_connect">Verbinden</string>
+
+    <!-- File Manager -->
+    <string name="files_title">Dateimanager</string>
+    <string name="files_no_files">Keine Dateien</string>
+    <string name="files_uploading_progress">Hochladen %1$s%%</string>
+    <string name="files_folder">Ordner</string>
+    <string name="files_new_folder">Neuer Ordner</string>
+    <string name="files_folder_name">Ordnername</string>
+    <string name="files_create">Erstellen</string>
+    <string name="files_delete">Löschen</string>
+    <string name="files_delete_message">%1$s löschen?</string>
+    <string name="files_delete_folder_hint">Dadurch werden der Ordner und sein gesamter Inhalt gelöscht.</string>
+    <string name="files_rename">Umbenennen</string>
+    <string name="files_new_name">Neuer Name</string>
+    <string name="files_cancel">Abbrechen</string>
+    <string name="files_actions">Aktionen</string>
+    <string name="files_add">Hinzufügen</string>
+    <string name="files_upload_file">Datei hochladen</string>
+
+    <!-- Device -->
+    <string name="device_title">Gerät</string>
+    <string name="device_info">Geräteinformationen</string>
+    <string name="device_uptime">Betriebszeit</string>
+    <string name="device_free_ram">Freier RAM</string>
+    <string name="device_firmware">Firmware</string>
+    <string name="device_ip">IP</string>
+    <string name="device_wifi_mode">WLAN-Modus</string>
+    <string name="device_orientation">Ausrichtung</string>
+    <string name="device_interface_theme">Oberflächendesign</string>
+    <string name="device_change_device">Gerät wechseln</string>
+
+    <!-- Sleep Screen -->
+    <string name="sleep_title">Ruhebildschirm</string>
+    <string name="sleep_crop_position">Zuschneiden &amp; Positionieren</string>
+    <string name="sleep_drag_hint">Ziehen zum Verschieben, Zusammendrücken zum Zoomen</string>
+    <string name="sleep_eink_preview">E-Ink-Vorschau</string>
+    <string name="sleep_preview_description">Vorschau des Ruhebildschirms</string>
+    <string name="sleep_widget">Widget</string>
+    <string name="sleep_widget_none">Keines</string>
+    <string name="sleep_widget_calendar">Kalender</string>
+    <string name="sleep_widget_quote">Zitat</string>
+    <string name="sleep_quote_placeholder">Zitattext</string>
+    <string name="sleep_upload">Ruhebildschirm hochladen</string>
+    <string name="sleep_on_device">Auf dem Gerät</string>
+    <string name="sleep_no_screens">Keine Ruhebildschirme auf dem Gerät</string>
+    <string name="sleep_delete">Löschen</string>
+    <string name="sleep_delete_message">%1$s löschen?</string>
+    <string name="sleep_cancel">Abbrechen</string>
+    <string name="sleep_pick_hint">Tippe auf das Bildsymbol, um ein Foto auszuwählen</string>
+
+    <!-- Error -->
+    <string name="error_title">Hoppla, etwas ist schiefgelaufen</string>
+    <string name="error_description">Wir arbeiten bereits an einer Lösung. Bitte versuche es später erneut.</string>
+
+    <!-- Create EPUB -->
+    <string name="create_title">EPUB erstellen</string>
+    <string name="create_description">Konvertiere einen Webartikel oder deinen eigenen Text in eine EPUB-Datei und sende sie direkt an deinen E-Reader.</string>
+    <string name="create_url">URL</string>
+    <string name="create_url_placeholder">https://example.com/article</string>
+    <string name="create_downloading">Wird heruntergeladen…</string>
+    <string name="create_download_article">Artikel herunterladen</string>
+    <string name="create_input_title">Titel</string>
+    <string name="create_title_placeholder">Mein Artikel</string>
+    <string name="create_content">Inhalt</string>
+    <string name="create_content_placeholder">Füge deinen Text hier ein…</string>
+    <string name="create_generating">Wird generiert…</string>
+    <string name="create_generate_epub">EPUB generieren</string>
+    <string name="create_ready_to_upload">Bereit zum Hochladen</string>
+    <string name="create_file_size_kb">%1$s KB</string>
+    <string name="create_upload_to_device">Auf Gerät hochladen</string>
+    <string name="create_upload_success">Datei erfolgreich hochgeladen</string>
+    <string name="create_device_not_reachable_title">Gerät nicht erreichbar</string>
+    <string name="create_device_not_reachable">Verbinde dich mit dem WLAN deines E-Readers zum Hochladen. Falls du noch kein Gerät eingerichtet hast, tippe auf „Gerät einrichten".</string>
+    <string name="create_device_not_reachable_setup">Gerät einrichten</string>
+    <string name="create_device_not_reachable_retry">Erneut hochladen</string>
+</resources>

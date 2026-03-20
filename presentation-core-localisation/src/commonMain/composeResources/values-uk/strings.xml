@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Onboarding -->
+    <string name="onboarding_title">Ласкаво просимо до вашої бібліотеки</string>
+    <string name="onboarding_description">Синхронізуйте книги, налаштовуйте заставки e-ink та конвертуйте вебстатті у формат електронних книг.</string>
+    <string name="onboarding_get_started">Розпочати</string>
+
+    <!-- Tabs -->
+    <string name="tab_files">Файли</string>
+    <string name="tab_create">Створити</string>
+    <string name="tab_sleep">Заставка</string>
+    <string name="tab_device">Пристрій</string>
+
+    <!-- Splash -->
+    <string name="splash_title">Завантаження</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Налаштування</string>
+    <string name="settings_language">Мова</string>
+    <string name="settings_language_en">English</string>
+    <string name="settings_language_uk">Українська</string>
+    <string name="settings_language_es">Español</string>
+    <string name="settings_language_de">Deutsch</string>
+    <string name="settings_theme">Тема</string>
+    <string name="settings_theme_light">Світла</string>
+    <string name="settings_theme_dark">Темна</string>
+
+    <!-- Connection -->
+    <string name="connection_title">З'єднання</string>
+    <string name="connection_auto_discovery">Автовиявлення</string>
+    <string name="connection_auto_discovery_description">Скануйте локальну мережу для пошуку пристроїв. Переконайтеся, що ваш рідер підключений до тієї ж Wi-Fi мережі.</string>
+    <string name="connection_scanning">Сканування…</string>
+    <string name="connection_scan_for_devices">Знайти пристрої</string>
+    <string name="connection_manual_connection">Ручне з'єднання</string>
+    <string name="connection_manual_description">Введіть IP-адресу пристрою вручну, якщо він не з'являється при автоматичному скануванні.</string>
+    <string name="connection_ip_address">IP-адреса</string>
+    <string name="connection_ip_placeholder">192.168.1.XX</string>
+    <string name="connection_connecting">З'єднання…</string>
+    <string name="connection_connect">З'єднатися</string>
+
+    <!-- File Manager -->
+    <string name="files_title">Файловий менеджер</string>
+    <string name="files_no_files">Немає файлів</string>
+    <string name="files_uploading_progress">Завантаження %1$s%%</string>
+    <string name="files_folder">Тека</string>
+    <string name="files_new_folder">Нова тека</string>
+    <string name="files_folder_name">Назва теки</string>
+    <string name="files_create">Створити</string>
+    <string name="files_delete">Видалити</string>
+    <string name="files_delete_message">Видалити %1$s?</string>
+    <string name="files_delete_folder_hint">Це видалить теку та весь її вміст.</string>
+    <string name="files_rename">Перейменувати</string>
+    <string name="files_new_name">Нова назва</string>
+    <string name="files_cancel">Скасувати</string>
+    <string name="files_actions">Дії</string>
+    <string name="files_add">Додати</string>
+    <string name="files_upload_file">Завантажити файл</string>
+
+    <!-- Device -->
+    <string name="device_title">Пристрій</string>
+    <string name="device_info">Інформація про пристрій</string>
+    <string name="device_uptime">Час роботи</string>
+    <string name="device_free_ram">Вільна RAM</string>
+    <string name="device_firmware">Прошивка</string>
+    <string name="device_ip">IP</string>
+    <string name="device_wifi_mode">Режим Wi-Fi</string>
+    <string name="device_orientation">Орієнтація</string>
+    <string name="device_interface_theme">Тема інтерфейсу</string>
+    <string name="device_change_device">Змінити пристрій</string>
+
+    <!-- Sleep Screen -->
+    <string name="sleep_title">Заставка сну</string>
+    <string name="sleep_crop_position">Обрізка та позиція</string>
+    <string name="sleep_drag_hint">Перетягніть для переміщення, зведіть для масштабування</string>
+    <string name="sleep_eink_preview">Попередній перегляд E-ink</string>
+    <string name="sleep_preview_description">Попередній перегляд заставки сну</string>
+    <string name="sleep_widget">Віджет</string>
+    <string name="sleep_widget_none">Немає</string>
+    <string name="sleep_widget_calendar">Календар</string>
+    <string name="sleep_widget_quote">Цитата</string>
+    <string name="sleep_quote_placeholder">Текст цитати</string>
+    <string name="sleep_upload">Завантажити заставку</string>
+    <string name="sleep_on_device">На пристрої</string>
+    <string name="sleep_no_screens">Немає заставок на пристрої</string>
+    <string name="sleep_delete">Видалити</string>
+    <string name="sleep_delete_message">Видалити %1$s?</string>
+    <string name="sleep_cancel">Скасувати</string>
+    <string name="sleep_pick_hint">Натисніть іконку зображення, щоб обрати фото</string>
+
+    <!-- Error -->
+    <string name="error_title">Ой, щось пішло не так</string>
+    <string name="error_description">Ми вже працюємо над виправленням. Спробуйте пізніше.</string>
+
+    <!-- Create EPUB -->
+    <string name="create_title">Створити EPUB</string>
+    <string name="create_description">Конвертуйте вебстаттю або власний текст у файл EPUB та надішліть його безпосередньо на ваш рідер.</string>
+    <string name="create_url">URL</string>
+    <string name="create_url_placeholder">https://example.com/article</string>
+    <string name="create_downloading">Завантаження…</string>
+    <string name="create_download_article">Завантажити статтю</string>
+    <string name="create_input_title">Назва</string>
+    <string name="create_title_placeholder">Моя стаття</string>
+    <string name="create_content">Зміст</string>
+    <string name="create_content_placeholder">Вставте текст тут…</string>
+    <string name="create_generating">Генерація…</string>
+    <string name="create_generate_epub">Згенерувати EPUB</string>
+    <string name="create_ready_to_upload">Готово до завантаження</string>
+    <string name="create_file_size_kb">%1$s КБ</string>
+    <string name="create_upload_to_device">Завантажити на пристрій</string>
+    <string name="create_upload_success">Файл успішно завантажено</string>
+    <string name="create_device_not_reachable_title">Пристрій недоступний</string>
+    <string name="create_device_not_reachable">Підключіться до Wi-Fi мережі рідера для завантаження. Якщо ви ще не налаштували пристрій, натисніть «Налаштувати пристрій».</string>
+    <string name="create_device_not_reachable_setup">Налаштувати пристрій</string>
+    <string name="create_device_not_reachable_retry">Повторити завантаження</string>
+</resources>
