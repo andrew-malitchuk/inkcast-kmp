@@ -27,7 +27,7 @@ public data class PreparedEpubNetwork(
     }
 
     override fun hashCode(): Int {
-        var result = title.hashCode()
+        var result = title?.hashCode() ?: 0
         result = 31 * result + (bytes?.contentHashCode() ?: 0)
         return result
     }
