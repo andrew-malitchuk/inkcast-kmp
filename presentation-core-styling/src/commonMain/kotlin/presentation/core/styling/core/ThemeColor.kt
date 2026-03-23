@@ -2,6 +2,31 @@ package presentation.core.styling.core
 
 import androidx.compose.ui.graphics.Color
 
+/**
+ * Design-token holder for the application color palette.
+ *
+ * Colors are grouped into semantic roles (brand, surface, ink, outline, status, interaction)
+ * so that UI components reference roles rather than raw hex values. Light and dark palettes
+ * each supply their own [ThemeColor] instance.
+ *
+ * @param brand Primary brand accent color used for key interactive elements.
+ * @param brandVariant Secondary brand accent, typically a lighter or darker shade of [brand].
+ * @param canvas Background color for the root app surface (screen-level background).
+ * @param surface Background color for cards, sheets, and elevated containers.
+ * @param surfaceVariant Alternative surface tone for visual separation of nested containers.
+ * @param surfaceInverse Inverted surface color, used for high-contrast overlays or tooltips.
+ * @param inkMain Primary text / icon color rendered on [canvas] or [surface].
+ * @param inkSubtle Secondary text / icon color for less prominent content.
+ * @param inkOnBrand Text / icon color rendered on top of [brand] backgrounds.
+ * @param outlineLow Low-emphasis border or divider color.
+ * @param outlineHigh High-emphasis border or divider color.
+ * @param success Semantic color indicating a successful or positive state.
+ * @param error Semantic color indicating an error or destructive state.
+ * @param warning Semantic color indicating a cautionary or warning state.
+ * @param disabled Color applied to disabled / inactive UI elements.
+ * @param scrim Semi-transparent overlay color used behind modals and bottom sheets.
+ * @see Theme.color
+ */
 public data class ThemeColor(
     // region 1. Brand
     val brand: Color,

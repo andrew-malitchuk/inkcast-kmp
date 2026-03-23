@@ -3,6 +3,14 @@ package presentation.core.styling.source.attribute
 import androidx.compose.ui.unit.dp
 import presentation.core.styling.core.ThemeSpacing
 
+/**
+ * Concrete spacing-scale values used for paddings, margins, and gaps.
+ *
+ * The scale grows non-linearly (2, 4, 8, 12, 16, 24, 32, 48, 64, 80 dp) to provide fine
+ * granularity at small sizes while still offering generous whitespace steps at larger sizes.
+ *
+ * @see ThemeSpacing
+ */
 internal val attributeSpacing: ThemeSpacing =
     ThemeSpacing(
         spacingXXS = 2.dp,

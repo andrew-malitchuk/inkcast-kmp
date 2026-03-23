@@ -13,6 +13,14 @@ import inkcast_kmp.presentation_core_styling.generated.resources.merriweather_se
 import org.jetbrains.compose.resources.Font
 import presentation.core.styling.core.ThemeTypography
 
+/**
+ * Builds the Merriweather [FontFamily] from bundled Compose Resources font files.
+ *
+ * Merriweather is a serif typeface used for display and title text to convey an editorial,
+ * book-like feel that aligns with the Inkcast reading experience.
+ *
+ * @return [FontFamily] containing Normal, SemiBold, and Bold weights.
+ */
 @Composable
 internal fun MerriweatherFontFamily(): FontFamily =
     FontFamily(
@@ -21,6 +29,14 @@ internal fun MerriweatherFontFamily(): FontFamily =
         Font(Res.font.merriweather_bold, FontWeight.Bold),
     )
 
+/**
+ * Builds the Lato [FontFamily] from bundled Compose Resources font files.
+ *
+ * Lato is a sans-serif typeface used for body copy, labels, captions, and action elements
+ * to provide clean readability at smaller sizes.
+ *
+ * @return [FontFamily] containing Normal and Bold weights.
+ */
 @Composable
 internal fun LatoFontFamily(): FontFamily =
     FontFamily(
@@ -28,12 +44,26 @@ internal fun LatoFontFamily(): FontFamily =
         Font(Res.font.lato_bold, FontWeight.Bold),
     )
 
+/**
+ * Assembles the complete [ThemeTypography] by combining [attributeFontSize],
+ * [attributeLineHeight], font families, and weights into ready-to-use [TextStyle] tokens.
+ *
+ * Display and title roles use [MerriweatherFontFamily] (serif) for an editorial feel,
+ * while body, label, caption, and action roles use [LatoFontFamily] (sans-serif) for
+ * UI clarity.
+ *
+ * @return [ThemeTypography] containing a [TextStyle] for every typographic scale level.
+ * @see ThemeTypography
+ * @see attributeFontSize
+ * @see attributeLineHeight
+ */
 @Composable
 internal fun AttributeTypography(): ThemeTypography {
     val merriweather = MerriweatherFontFamily()
     val lato = LatoFontFamily()
 
     return ThemeTypography(
+        // Serif styles for hero / heading text
         display = TextStyle(
             fontSize = attributeFontSize.display,
             lineHeight = attributeLineHeight.display,
@@ -46,6 +76,7 @@ internal fun AttributeTypography(): ThemeTypography {
             fontWeight = FontWeight.SemiBold,
             fontFamily = merriweather,
         ),
+        // Sans-serif styles for UI / body text
         label = TextStyle(
             fontSize = attributeFontSize.label,
             lineHeight = attributeLineHeight.label,
