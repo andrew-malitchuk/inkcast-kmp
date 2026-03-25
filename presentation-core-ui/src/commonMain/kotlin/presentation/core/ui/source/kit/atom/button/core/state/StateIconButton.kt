@@ -17,6 +17,10 @@ import presentation.core.ui.source.kit.atom.button.core.model.ButtonColor
 import presentation.core.ui.source.kit.atom.button.core.model.ButtonInteractionState
 import presentation.core.ui.source.kit.atom.button.core.model.ButtonSizeValues
 
+/**
+ * Icon-button counterpart of [StateButton] -- collects interaction states including
+ * selection, resolves colors, and delegates to [AnimateIconButton].
+ */
 @Composable
 internal fun StateIconButton(
     onClick: () -> Unit,
@@ -34,6 +38,7 @@ internal fun StateIconButton(
     val isPressed by interactionSource.collectIsPressedAsState()
     val isFocused by interactionSource.collectIsFocusedAsState()
 
+    // Build the bitmask; includes SELECTED for icon buttons
     var interactionState = 0
     if (isHovered) interactionState = interactionState.or(ButtonInteractionState.HOVER)
     if (isPressed) interactionState = interactionState.or(ButtonInteractionState.PRESSED)

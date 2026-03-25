@@ -11,14 +11,24 @@ import presentation.core.ui.core.ext.has
 import presentation.core.ui.source.kit.atom.button.core.model.ButtonColor
 import presentation.core.ui.source.kit.atom.button.core.model.ButtonInteractionState
 
+/**
+ * Sealed hierarchy of button visual styles, each providing its own color scheme and corner radius.
+ *
+ * - [Primary] -- outlined with an ink-colored border.
+ * - [Secondary] -- filled surface-variant background.
+ * - [Text] -- transparent background, brand-colored label.
+ */
 public sealed class ButtonStyle {
 
+    /** Resolves the color scheme for this style. */
     @Composable
     internal abstract fun colors(): ButtonColor
 
+    /** Resolves the corner radius based on the button's minimum height. */
     @Composable
     internal abstract fun corner(minHeight: Dp): Dp
 
+    /** Outlined primary style with a pill-shaped corner. */
     public data object Primary : ButtonStyle() {
         @Composable
         override fun colors(): ButtonColor = PrimaryButtonColors
@@ -27,6 +37,7 @@ public sealed class ButtonStyle {
         override fun corner(minHeight: Dp): Dp = minHeight / 2
     }
 
+    /** Filled secondary style with a pill-shaped corner. */
     public data object Secondary : ButtonStyle() {
         @Composable
         override fun colors(): ButtonColor = SecondaryButtonColors
@@ -35,6 +46,7 @@ public sealed class ButtonStyle {
         override fun corner(minHeight: Dp): Dp = minHeight / 2
     }
 
+    /** Text-only style with no corner rounding. */
     public data object Text : ButtonStyle() {
         @Composable
         override fun colors(): ButtonColor = TextButtonColors
@@ -44,6 +56,7 @@ public sealed class ButtonStyle {
     }
 }
 
+/** Color scheme for [ButtonStyle.Primary]: transparent background, ink foreground, ink border. */
 private object PrimaryButtonColors : ButtonColor {
     @Composable
     override fun borderColor(
@@ -82,6 +95,7 @@ private object PrimaryButtonColors : ButtonColor {
         rememberUpdatedState(Color.Transparent)
 }
 
+/** Color scheme for [ButtonStyle.Secondary]: surface-variant background, brand foreground. */
 private object SecondaryButtonColors : ButtonColor {
     @Composable
     override fun borderColor(
@@ -120,6 +134,7 @@ private object SecondaryButtonColors : ButtonColor {
         )
 }
 
+/** Color scheme for [ButtonStyle.Text]: transparent background, brand foreground. */
 private object TextButtonColors : ButtonColor {
     @Composable
     override fun borderColor(

@@ -36,6 +36,25 @@ import presentation.core.ui.source.kit.atom.button.ButtonSizeType
 import presentation.core.ui.source.kit.atom.button.IconButton
 import presentation.core.ui.source.kit.atom.shape.SquircleShape
 
+/**
+ * Single-line text input with animated border, optional regex validation, and a clear button.
+ *
+ * The component manages its own text state internally (state hoisting via [initialText])
+ * and reports changes through [onTextChanged]. The border color animates between idle,
+ * focused, error, and disabled states.
+ *
+ * @param modifier Modifier applied to the outer [Row].
+ * @param initialText Starting text value; changes to this key reset the internal state.
+ * @param onTextChanged Callback fired on every text change with the new value.
+ * @param placeholder Placeholder text shown when the field is empty.
+ * @param textStyle Typography style applied to the input text.
+ * @param clearIcon Optional icon; when provided and text is non-empty, a clear button appears.
+ * @param validationRegex Optional regex; non-matching non-empty text triggers the error border.
+ * @param keyboardOptions Keyboard configuration (IME action, type, autocorrect, etc.).
+ * @param enabled Whether the input accepts user interaction.
+ *
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @Composable
 public fun Input(
     modifier: Modifier = Modifier,
@@ -66,6 +85,7 @@ public fun Input(
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
 
+    // Animated border color transitions between disabled, error, focused, and idle states
     val borderColor by animateColorAsState(
         targetValue = when {
             !enabled -> Color.Transparent
@@ -138,6 +158,7 @@ public fun Input(
             }
         }
 
+        // Show the clear button only when there is text and the field is enabled
         if (clearIcon != null && text.isNotEmpty() && enabled) {
             IconButton(
                 icon = clearIcon,

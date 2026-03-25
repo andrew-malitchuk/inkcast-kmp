@@ -32,6 +32,19 @@ import presentation.core.ui.source.kit.atom.icon.Image
 import presentation.core.ui.source.kit.atom.icon.MoreVertical
 import presentation.core.ui.source.kit.atom.shape.SquircleShape
 
+/**
+ * A card representing a file-system item (book, file, image, or folder) with an icon,
+ * title, description, and a "more" action button.
+ *
+ * @param modifier Modifier to be applied to the root [Row].
+ * @param title Primary label displayed next to the icon.
+ * @param description Secondary label shown below the title.
+ * @param type Determines the leading icon variant.
+ * @param onCallback Called when the user taps the card body ([ItemCardCallback.OnClick]) or
+ *   the overflow button ([ItemCardCallback.OnMoreClick]).
+ *
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @Composable
 public fun ItemCard(
     modifier: Modifier = Modifier,
@@ -103,6 +116,9 @@ public fun ItemCard(
     }
 }
 
+/**
+ * Visual type of an [ItemCard], controlling which icon is displayed.
+ */
 public enum class ItemCardType {
     Book,
     File,
@@ -110,8 +126,14 @@ public enum class ItemCardType {
     Folder,
 }
 
+/**
+ * Sealed set of user interactions emitted by [ItemCard].
+ */
 public sealed interface ItemCardCallback {
+    /** The user tapped the card body. */
     public data object OnClick : ItemCardCallback
+
+    /** The user tapped the overflow ("more") button. */
     public data object OnMoreClick : ItemCardCallback
 }
 

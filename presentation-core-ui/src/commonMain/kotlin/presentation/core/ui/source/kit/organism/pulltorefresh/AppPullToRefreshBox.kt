@@ -46,6 +46,8 @@ private const val DRAG_MULTIPLIER = 0.5f
  * @param onRefresh Called when the user completes a valid pull gesture.
  * @param modifier Modifier for the root container.
  * @param content The scrollable content.
+ *
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
  */
 @Composable
 public fun AppPullToRefreshBox(

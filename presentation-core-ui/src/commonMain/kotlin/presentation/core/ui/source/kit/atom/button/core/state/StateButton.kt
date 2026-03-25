@@ -18,6 +18,13 @@ import presentation.core.ui.source.kit.atom.button.core.model.ButtonColor
 import presentation.core.ui.source.kit.atom.button.core.model.ButtonInteractionState
 import presentation.core.ui.source.kit.atom.button.core.model.ButtonSizeValues
 
+/**
+ * Collects hover, press, and focus interaction states, builds a bitmask, resolves
+ * colors from [colors], and forwards everything to [AnimateButton].
+ *
+ * This is an internal orchestration layer between the public [Button] API and the
+ * animation / draw layers.
+ */
 @Composable
 internal fun StateButton(
     text: String,
@@ -37,6 +44,7 @@ internal fun StateButton(
     val isPressed by interactionSource.collectIsPressedAsState()
     val isFocused by interactionSource.collectIsFocusedAsState()
 
+    // Build the bitmask from individual interaction flags
     var interactionState = 0
     if (isHovered) interactionState = interactionState.or(ButtonInteractionState.HOVER)
     if (isPressed) interactionState = interactionState.or(ButtonInteractionState.PRESSED)

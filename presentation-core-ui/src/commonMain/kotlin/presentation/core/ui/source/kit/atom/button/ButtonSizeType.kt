@@ -6,6 +6,9 @@ import androidx.compose.ui.unit.dp
 import presentation.core.styling.core.Theme
 import presentation.core.ui.source.kit.atom.button.core.model.ButtonSizeValues
 
+/**
+ * Available size presets for buttons, controlling padding, icon size, and minimum height.
+ */
 public enum class ButtonSizeType {
     Small,
     Medium,
@@ -14,6 +17,11 @@ public enum class ButtonSizeType {
     XXLarge,
 }
 
+/**
+ * Resolves this [ButtonSizeType] into concrete [ButtonSizeValues] for a standard text button.
+ *
+ * @param hasBorder Whether the button style includes a visible border (e.g. [ButtonStyle.Primary]).
+ */
 @Composable
 internal fun ButtonSizeType.resolve(hasBorder: Boolean): ButtonSizeValues {
     val borderSize = if (hasBorder) Theme.spacing.spacingXXS else 0.dp
@@ -80,6 +88,9 @@ internal fun ButtonSizeType.resolve(hasBorder: Boolean): ButtonSizeValues {
     }
 }
 
+/**
+ * Resolves this [ButtonSizeType] into concrete [ButtonSizeValues] for an icon-only button.
+ */
 @Composable
 internal fun ButtonSizeType.resolveIcon(): ButtonSizeValues {
     return when (this) {

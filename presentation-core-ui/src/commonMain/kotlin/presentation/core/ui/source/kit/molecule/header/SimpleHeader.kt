@@ -7,6 +7,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import presentation.core.styling.core.Theme
 
+/**
+ * A minimal header that displays a single title label with standard horizontal and vertical padding.
+ *
+ * @param title The header text displayed across the full width.
+ * @param modifier Modifier to be applied to the root [Text].
+ *
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @Composable
 public fun SimpleHeader(
     title: String,

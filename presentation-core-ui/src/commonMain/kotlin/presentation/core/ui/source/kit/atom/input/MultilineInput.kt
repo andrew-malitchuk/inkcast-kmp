@@ -44,6 +44,26 @@ import presentation.core.ui.source.kit.atom.shape.SquircleShape
 private val DEFAULT_MIN_HEIGHT: Dp = 120.dp
 private val DEFAULT_MAX_HEIGHT: Dp = 240.dp
 
+/**
+ * Multi-line text input with animated border, optional regex validation, and a clear button.
+ *
+ * Behaves like [Input] but supports multiple lines with a scrollable text area
+ * constrained between [minHeight] and [maxHeight].
+ *
+ * @param modifier Modifier applied to the outer [Row].
+ * @param initialText Starting text value; changes to this key reset the internal state.
+ * @param onTextChanged Callback fired on every text change with the new value.
+ * @param placeholder Placeholder text shown when the field is empty.
+ * @param textStyle Typography style applied to the input text.
+ * @param clearIcon Optional icon; when provided and text is non-empty, a clear button appears.
+ * @param validationRegex Optional regex; non-matching non-empty text triggers the error border.
+ * @param minHeight Minimum height of the text area.
+ * @param maxHeight Maximum height of the text area before scrolling kicks in.
+ * @param keyboardOptions Keyboard configuration (IME action, type, autocorrect, etc.).
+ * @param enabled Whether the input accepts user interaction.
+ *
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @Composable
 public fun MultilineInput(
     modifier: Modifier = Modifier,
@@ -76,6 +96,7 @@ public fun MultilineInput(
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
 
+    // Animated border color transitions between disabled, error, focused, and idle states
     val borderColor by animateColorAsState(
         targetValue = when {
             !enabled -> Color.Transparent
@@ -155,6 +176,7 @@ public fun MultilineInput(
             }
         }
 
+        // Show the clear button only when there is text and the field is enabled
         if (clearIcon != null && text.isNotEmpty() && enabled) {
             IconButton(
                 icon = clearIcon,

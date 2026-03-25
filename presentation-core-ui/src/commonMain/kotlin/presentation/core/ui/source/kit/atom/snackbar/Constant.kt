@@ -12,6 +12,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import presentation.core.ui.source.kit.atom.snackbar.Constant.TWEEN_ANIMATION_DURATION
 
+/**
+ * Animation presets for [StackedSnackbarHost] enter / exit transitions.
+ *
+ * - [Bounce] uses spring physics with high bouncy damping.
+ * - [Slide] uses a tween with fast-out-slow-in easing.
+ */
 @Stable
 public enum class StackedSnackbarAnimation(
     public val paddingAnimationSpec: AnimationSpec<Dp>,
@@ -71,6 +77,9 @@ public enum class StackedSnackbarAnimation(
     ),
 }
 
+/**
+ * Display-duration presets for stacked snackbars.
+ */
 @Stable
 public enum class StackedSnackbarDuration {
     Short,
@@ -78,6 +87,7 @@ public enum class StackedSnackbarDuration {
     Indefinite,
 }
 
+/** Layout and animation magic numbers shared across the snackbar subsystem. */
 internal object Constant {
     const val SCALE_DECREMENT = 0.05f
     const val PADDING_INCREMENT = 16

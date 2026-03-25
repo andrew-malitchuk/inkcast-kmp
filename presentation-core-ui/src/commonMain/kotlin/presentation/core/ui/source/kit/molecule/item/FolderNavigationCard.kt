@@ -23,6 +23,16 @@ import presentation.core.ui.source.kit.atom.icon.ChevronLeft
 import presentation.core.ui.source.kit.atom.icon.Folder
 import presentation.core.ui.source.kit.atom.shape.SquircleShape
 
+/**
+ * A tappable card that represents a parent-folder navigation entry, displaying a folder
+ * icon, a title, and a left-chevron indicator.
+ *
+ * @param title Folder name displayed next to the icon.
+ * @param onClick Called when the user taps the card to navigate into the folder.
+ * @param modifier Modifier to be applied to the root [Row].
+ *
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @Composable
 public fun FolderNavigationCard(
     title: String,

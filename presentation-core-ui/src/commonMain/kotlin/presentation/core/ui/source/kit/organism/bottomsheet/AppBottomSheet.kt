@@ -17,6 +17,17 @@ import androidx.compose.ui.Modifier
 import presentation.core.styling.core.Theme
 import presentation.core.ui.source.kit.atom.shape.SquircleShape
 
+/**
+ * App-styled modal bottom sheet with a squircle top shape, optional title, and
+ * navigation-bar-safe content area.
+ *
+ * @param onDismiss Called when the user dismisses the sheet (swipe-down or scrim tap).
+ * @param modifier Modifier to be applied to the root [ModalBottomSheet].
+ * @param title Optional headline rendered at the top of the sheet content.
+ * @param content Slot for the sheet body; receives a [ColumnScope].
+ *
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 public fun AppBottomSheet(

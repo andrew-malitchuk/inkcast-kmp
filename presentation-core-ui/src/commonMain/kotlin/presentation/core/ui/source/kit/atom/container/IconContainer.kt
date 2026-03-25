@@ -16,6 +16,16 @@ import presentation.core.styling.core.Theme
 import presentation.core.styling.source.theme.AppTheme
 import presentation.core.ui.source.kit.atom.shape.SquircleShape
 
+/**
+ * A squircle-shaped container that displays a tinted icon on a colored background.
+ *
+ * @param modifier Modifier applied to the outer [Box].
+ * @param icon The vector icon to render.
+ * @param backgroundColor Fill color of the squircle container.
+ * @param foregroundColor Tint applied to the icon.
+ *
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @Composable
 public fun IconContainer(
     modifier: Modifier = Modifier,

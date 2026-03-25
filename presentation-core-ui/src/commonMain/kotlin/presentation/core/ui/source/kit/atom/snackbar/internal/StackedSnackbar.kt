@@ -44,6 +44,10 @@ import presentation.core.ui.source.kit.atom.snackbar.StackedSnackbarAnimation
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
+/**
+ * Internal composable that lays out a stack of snackbar items with animated
+ * scale, padding, slide-in/out, and swipe-to-dismiss behaviour.
+ */
 @Composable
 internal fun StackedSnackbar(
     snackbarData: List<StackedSnackbarData>,
@@ -56,6 +60,7 @@ internal fun StackedSnackbar(
     val snackbarDataSize = snackbarData.size
     Box(contentAlignment = Alignment.TopCenter, modifier = modifier) {
         snackbarData.forEachIndexed { index, data ->
+            // Calculate visual depth: items further back appear smaller and lower
             val multiplier = abs(index.toFloat() - snackbarDataSize.dec().toFloat())
             val scale = 1f.minus((multiplier).times(Constant.SCALE_DECREMENT))
 
@@ -93,6 +98,7 @@ internal fun StackedSnackbar(
                             animationSpec = animation.exitAnimationSpec,
                         )
                     } else {
+                        // Horizontal swipe exit direction depends on drag direction
                         slideOutHorizontally(
                             targetOffsetX = {
                                 if (offsetX > 0) {
@@ -108,6 +114,7 @@ internal fun StackedSnackbar(
                         )
                     },
             ) {
+                // Only the topmost snackbar supports horizontal drag-to-dismiss
                 val draggableModifier =
                     if (snackbarData.lastIndex == index) {
                         Modifier
@@ -132,6 +139,7 @@ internal fun StackedSnackbar(
                     } else {
                         Modifier
                     }
+                // Hide items that exceed the visible stack limit
                 val snackbarScale =
                     if (snackbarDataSize - index > maxStack) {
                         0f
@@ -167,6 +175,7 @@ internal fun StackedSnackbar(
     }
 }
 
+/** Renders a custom-content snackbar inside a [CardSnackbarContainer]. */
 @Composable
 private fun CustomStackedSnackbarItem(
     data: StackedSnackbarData.Custom,
@@ -195,6 +204,7 @@ private fun CustomStackedSnackbarItem(
     )
 }
 
+/** Renders a standard text snackbar with optional description and action inside a [CardSnackbarContainer]. */
 @Composable
 private fun NormalStackedSnackbarItem(
     data: StackedSnackbarData.Normal,
@@ -260,6 +270,7 @@ private fun NormalStackedSnackbarItem(
     )
 }
 
+/** Shared elevated card wrapper applying scale and bottom-padding animations. */
 @Composable
 private fun CardSnackbarContainer(
     scaleAnimation: Float,

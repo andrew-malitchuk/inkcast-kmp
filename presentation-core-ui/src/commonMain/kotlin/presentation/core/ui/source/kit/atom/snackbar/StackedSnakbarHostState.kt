@@ -16,6 +16,17 @@ import kotlinx.coroutines.launch
 import presentation.core.ui.source.kit.atom.snackbar.internal.StackedSnackbar
 import presentation.core.ui.source.kit.atom.snackbar.internal.StackedSnackbarData
 
+/**
+ * Composable host that observes [StackedSnakbarHostState] and renders stacked snackbars.
+ *
+ * Auto-dismisses the top snackbar after its configured duration and supports
+ * manual swipe-to-dismiss via the internal [StackedSnackbar] component.
+ *
+ * @param hostState State holder driving the snackbar queue.
+ * @param modifier Modifier applied to the host container.
+ *
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @Composable
 public fun StackedSnackbarHost(hostState: StackedSnakbarHostState, modifier: Modifier = Modifier) {
     val firstItemVisible by hostState.newSnackbarHosted.collectAsState()
@@ -57,6 +68,13 @@ public fun StackedSnackbarHost(hostState: StackedSnakbarHostState, modifier: Mod
     }
 }
 
+/**
+ * State holder for a stacked snackbar host, managing the queue of visible snackbars.
+ *
+ * @param coroutinesScope Scope used for internal delay-based scheduling.
+ * @param animation Animation preset applied to all hosted snackbars.
+ * @param maxStack Maximum number of snackbars rendered simultaneously.
+ */
 @Stable
 public class StackedSnakbarHostState(
     private val coroutinesScope: CoroutineScope,
@@ -66,6 +84,15 @@ public class StackedSnakbarHostState(
     internal var currentSnackbarData by mutableStateOf<List<StackedSnackbarData>>(emptyList())
     internal val newSnackbarHosted = MutableStateFlow(false)
 
+    /**
+     * Enqueues a normal snackbar with a title, optional description, and optional action button.
+     *
+     * @param title Primary text displayed in the snackbar.
+     * @param description Optional secondary text.
+     * @param actionTitle Optional label for the action button.
+     * @param action Callback invoked when the action button is tapped.
+     * @param duration How long the snackbar remains visible.
+     */
     public fun showSnackbar(
         title: String,
         description: String? = null,
@@ -85,6 +112,12 @@ public class StackedSnakbarHostState(
         )
     }
 
+    /**
+     * Enqueues a custom snackbar whose content is provided by the caller.
+     *
+     * @param content Composable content receiving a dismiss callback.
+     * @param duration How long the snackbar remains visible.
+     */
     public fun showCustomSnackbar(
         content: @Composable (() -> Unit) -> Unit,
         duration: StackedSnackbarDuration = StackedSnackbarDuration.Indefinite,

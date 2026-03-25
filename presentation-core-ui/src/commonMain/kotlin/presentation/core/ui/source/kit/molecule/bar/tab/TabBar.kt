@@ -52,6 +52,8 @@ public data class TabBarItem(
  * @param backgroundColor Fill color of the pill container.
  * @param activeColor Icon tint for the selected tab.
  * @param inactiveColor Icon tint for unselected tabs.
+ *
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
  */
 @Composable
 public fun TabBar(

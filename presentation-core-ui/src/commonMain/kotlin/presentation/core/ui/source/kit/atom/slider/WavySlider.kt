@@ -73,6 +73,7 @@ import presentation.core.ui.core.draw.buildWavyPath
  *   completes, useful for committing the final value.
  *
  * @see buildWavyPath
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
  */
 @Composable
 public fun WavySlider(

@@ -21,6 +21,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 
+/**
+ * Renders the visual content of a text button inside a [DrawBaseButton] container,
+ * laying out optional start/end icons alongside a single-line label.
+ */
 @Composable
 internal fun DrawButton(
     modifier: Modifier = Modifier,

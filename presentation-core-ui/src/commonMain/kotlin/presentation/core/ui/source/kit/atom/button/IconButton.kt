@@ -12,6 +12,19 @@ import presentation.core.ui.source.kit.atom.button.core.model.ButtonColor
 import presentation.core.ui.source.kit.atom.button.core.model.ButtonInteractionState
 import presentation.core.ui.source.kit.atom.button.core.state.StateIconButton
 
+/**
+ * Icon-only button variant with selection and loading states.
+ *
+ * @param icon The vector icon displayed inside the button.
+ * @param onClick Callback invoked when the button is tapped.
+ * @param size Predefined size category controlling padding and icon dimensions.
+ * @param modifier Modifier applied to the root composable.
+ * @param enabled Whether the button accepts input.
+ * @param isSelected Whether the button is in its selected visual state.
+ * @param isLoading When `true`, replaces the icon with a loading indicator.
+ *
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @Composable
 public fun IconButton(
     icon: ImageVector,
@@ -39,6 +52,10 @@ public fun IconButton(
     )
 }
 
+/**
+ * Provides the color scheme for [IconButton], resolving foreground, background,
+ * and border colors based on interaction, enabled, and selection states.
+ */
 @Composable
 private fun iconButtonColors(): ButtonColor {
     val containerColor = Theme.color.surfaceVariant

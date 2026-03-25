@@ -27,23 +27,26 @@ import androidx.compose.ui.unit.TextUnit
  */
 
 /**
- * Resizeable Text element that contains all the default behavior and description
- * that you can find in [Text].
- * Minimization applied only by height. If you want to reach result,
- * you need to set [maxLines] or your container should have fixed size, otherwise [fontSize] will
- * be used.
+ * Resizeable text element that automatically shrinks the font to fit the available space.
  *
- * Extra parameters:
- * @param minFontSize - Allows you to specify minimum allowed font size for text. If [minFontSize]
- * reached but text still overflows, you can use default [overflow] param.
- * @param keepLineHeight - Allows you to control line height decreasing. If you want to make your
- * line height unchanged provide `true`. By default `false` means that line height will be
- * decreased by default aspect ratio from provided values.
- * Example:
- *  [fontSize] = 12.sp; [lineHeight] = 24.sp.
- *  In that case, if [keepLineHeight] = false, [lineHeight] will be always 2 times bigger
- *  than [fontSize].
- *  If [keepLineHeight] = true, [lineHeight] will have always 24.sp.
+ * Minimisation is applied by height only. To trigger auto-sizing, either set [maxLines] or
+ * place this composable inside a fixed-size container; otherwise the original [fontSize]
+ * is used as-is.
+ *
+ * The shrink algorithm works in four stages (see [SizeDecreasingStage]):
+ * 1. **Offense** -- halve the font size until it fits.
+ * 2. **Defence** -- grow it back by 20 % while it still fits.
+ * 3. **Diplomacy** -- fine-tune by shrinking 5 % until it fits.
+ * 4. **Peace** -- final size found, draw content.
+ *
+ * @param text The text to display.
+ * @param modifier Modifier applied to the underlying [Text].
+ * @param minFontSize Minimum allowed font size; if reached and text still overflows,
+ *   the standard [overflow] behaviour applies.
+ * @param keepLineHeight When `true` the line height stays at its original value;
+ *   when `false` it scales proportionally with the font size.
+ *
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
  */
 @Composable
 public fun AutoSizeText(
@@ -98,6 +101,7 @@ public fun AutoSizeText(
     Text(
         modifier =
         modifier.drawWithContent {
+            // Only draw once the correct font size has been determined
             if (textReadyToDraw) {
                 drawContent()
             }
@@ -161,6 +165,11 @@ public fun AutoSizeText(
 
 internal const val SIZE_DECREASER = 0.9f
 
+/**
+ * Stages of the binary-search-like font-size reduction algorithm used by [AutoSizeText].
+ *
+ * @property value Multiplier applied to the current font size at this stage.
+ */
 internal enum class SizeDecreasingStage(val value: Float) {
     Offense(0.5f),
     Defence(1.2f),
@@ -168,6 +177,7 @@ internal enum class SizeDecreasingStage(val value: Float) {
     Peace(Float.NaN),
 }
 
+/** Advances to the next stage based on whether the text still overflows. */
 internal fun SizeDecreasingStage?.next(didOverflowHeight: Boolean): SizeDecreasingStage {
     return when {
         this == null -> SizeDecreasingStage.Offense
@@ -180,10 +190,12 @@ internal fun SizeDecreasingStage?.next(didOverflowHeight: Boolean): SizeDecreasi
     }
 }
 
+/** Intermediate metrics tracked during the auto-size algorithm. */
 internal data class InnerMetrics(
     val fontSize: TextUnit,
     val lineHeight: TextUnit,
 )
 
+/** Returns [expected] when it is specified, otherwise falls back to [default]. */
 internal fun coerceTextUnit(expected: TextUnit, default: TextUnit) =
     if (expected != TextUnit.Unspecified) expected else default

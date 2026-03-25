@@ -303,7 +303,18 @@ private class SequentialAnimationHost : SequentialAnimationScope {
     }
 }
 
-/** Composable function that creates and manages a sequential animation host */
+/**
+ * Creates and manages a sequential animation host that orchestrates staggered
+ * enter/exit animations for its [AnimatedItem] children.
+ *
+ * @param modifier Modifier to be applied to the root [Box].
+ * @param startByDefault When `true`, the enter sequence starts automatically on first composition.
+ * @param content Content slot receiving a [SequentialAnimationScope] that can trigger
+ *   enter/exit animations programmatically.
+ *
+ * @see AnimatedItem
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @Composable
 public fun AnimationSequenceHost(
     modifier: Modifier = Modifier,
@@ -344,7 +355,23 @@ public fun AnimationSequenceHost(
     }
 }
 
-/** Composable for individual animated items that participate in a sequence */
+/**
+ * An individually animated item that participates in a parent [AnimationSequenceHost] sequence.
+ *
+ * Must be placed inside an [AnimationSequenceHost]; throws if no host is found in the
+ * composition hierarchy.
+ *
+ * @param modifier Modifier to be applied to the root [AnimatedVisibility].
+ * @param index Unique position in the animation sequence; items animate in ascending order.
+ * @param delayAfterAnimation Pause in milliseconds after this item's animation before the
+ *   next item begins.
+ * @param enter Enter transition applied when the item becomes visible.
+ * @param exit Exit transition applied when the item is hidden.
+ * @param content The composable content to animate.
+ *
+ * @see AnimationSequenceHost
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @Composable
 public fun AnimatedItem(
     modifier: Modifier = Modifier,

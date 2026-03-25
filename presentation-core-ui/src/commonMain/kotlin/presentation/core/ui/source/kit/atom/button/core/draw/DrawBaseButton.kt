@@ -19,6 +19,21 @@ import androidx.compose.ui.unit.Dp
 import presentation.core.ui.core.configuration.AnimationConfiguration
 import presentation.core.ui.source.kit.atom.shape.SquircleShape
 
+/**
+ * Shared base container for all button variants, providing squircle background,
+ * border, and an animated content-size transition between normal and loading states.
+ *
+ * @param modifier Modifier applied to the outer [Box].
+ * @param backgroundColor Fill color of the button container.
+ * @param borderColor Stroke color of the button border.
+ * @param corner Corner radius applied via [SquircleShape].
+ * @param borderSize Stroke width of the border.
+ * @param paddings Inner content padding.
+ * @param isLoading When `true`, swaps [content] for a loading placeholder.
+ * @param loadingSize Diameter of the loading indicator.
+ * @param horizontalArrangement Content alignment inside the container.
+ * @param content Slot for the normal (non-loading) button content.
+ */
 @Composable
 internal fun DrawBaseButton(
     modifier: Modifier = Modifier,

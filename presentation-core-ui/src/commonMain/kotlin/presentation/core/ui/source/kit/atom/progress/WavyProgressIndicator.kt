@@ -60,6 +60,7 @@ import presentation.core.ui.core.draw.buildWavyPath
  *   on first composition, producing a smooth reveal effect.
  *
  * @see buildWavyPath
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
  */
 @Composable
 public fun WavyProgressIndicator(

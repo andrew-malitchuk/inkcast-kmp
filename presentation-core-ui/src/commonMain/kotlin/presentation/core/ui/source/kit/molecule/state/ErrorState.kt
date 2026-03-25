@@ -16,6 +16,15 @@ import androidx.compose.ui.unit.dp
 import presentation.core.styling.core.Theme
 import presentation.core.ui.source.kit.atom.icon.AlertTriangle
 
+/**
+ * A full-screen error placeholder showing a warning icon, a title, and a descriptive message.
+ *
+ * @param title Primary error headline displayed below the icon.
+ * @param description Secondary explanatory text displayed below the title.
+ * @param modifier Modifier to be applied to the root [Column].
+ *
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @Composable
 public fun ErrorState(
     title: String,

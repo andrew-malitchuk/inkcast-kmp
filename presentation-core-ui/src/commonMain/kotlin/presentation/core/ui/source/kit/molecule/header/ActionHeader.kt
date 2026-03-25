@@ -30,6 +30,7 @@ import presentation.core.ui.source.kit.atom.icon.Plus
  *
  * @see SimpleHeader
  * @see IconButton
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
  */
 @Composable
 public fun ActionHeader(

@@ -13,6 +13,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 
+/**
+ * Renders the visual content of an icon-only button inside a [DrawBaseButton] container.
+ */
 @Composable
 internal fun DrawIconButton(
     modifier: Modifier = Modifier,

@@ -14,6 +14,12 @@ import androidx.compose.ui.unit.Dp
 import presentation.core.ui.core.configuration.AnimationConfiguration
 import presentation.core.ui.source.kit.atom.button.core.draw.DrawIconButton
 
+/**
+ * Wraps [DrawIconButton] with smooth color and content-size animations.
+ *
+ * All color parameters are animated with a linear-easing tween before
+ * being forwarded to the draw layer.
+ */
 @Composable
 internal fun AnimateIconButton(
     icon: ImageVector,

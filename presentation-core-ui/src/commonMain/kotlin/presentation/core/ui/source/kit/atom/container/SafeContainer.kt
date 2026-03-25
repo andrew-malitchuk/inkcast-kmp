@@ -17,6 +17,18 @@ import presentation.core.ui.source.kit.atom.snackbar.StackedSnackbarHost
 import presentation.core.ui.source.kit.atom.snackbar.StackedSnakbarHostState
 import presentation.core.ui.source.kit.atom.snackbar.rememberStackedSnackbarHostState
 
+/**
+ * Screen-level scaffold that accounts for system bars and IME insets, and
+ * provides a default [StackedSnackbarHost] for showing stacked snackbars.
+ *
+ * @param modifier Modifier applied to the [Scaffold].
+ * @param snackbarHostState State holder for managing snackbar display.
+ * @param snackbarHost Composable slot for the snackbar host; defaults to a
+ *   top-center [StackedSnackbarHost].
+ * @param content Main screen content receiving the resolved [PaddingValues].
+ *
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @Composable
 public fun SafeContainer(
     modifier: Modifier = Modifier,
@@ -33,6 +45,7 @@ public fun SafeContainer(
     },
     content: @Composable (PaddingValues) -> Unit,
 ) {
+    // Merge system-bar and IME insets so content is never obscured
     val windowInsets = WindowInsets.systemBars.union(WindowInsets.ime)
 
     Scaffold(
