@@ -1,0 +1,21 @@
+plugins {
+    id("dev.yamh.io.convention.feature")
+    id("dev.yamh.io.convention.di")
+}
+
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            implementation(libs.orbit.core)
+            implementation(libs.orbit.viewmodel)
+            implementation(libs.orbit.compose)
+
+            implementation(project(":domain-core"))
+            implementation(project(":domain-usecase-api"))
+            implementation(project(":presentation-core-localisation"))
+            implementation(project(":presentation-core-navigation-api"))
+            implementation(project(":presentation-core-styling"))
+            implementation(project(":presentation-core-ui"))
+        }
+    }
+}
