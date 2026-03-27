@@ -8,9 +8,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import presentation.core.navigation.api.source.destination.AppNavigator
 
+/**
+ * Provides the [AppNavigator] instance to the composition tree for screen-level navigation.
+ *
+ * @see AppNavigator
+ */
 public val LocalAppNavigator: ProvidableCompositionLocal<AppNavigator?> =
     compositionLocalOf { error("No App Navigator Provided") }
 
+/**
+ * Provides a back-navigation callback, typically bound to [AppNavigator.popBackStack].
+ */
 public val LocalBackAction: ProvidableCompositionLocal<() -> Unit> =
     compositionLocalOf { error("No Back Action Provided") }
 
@@ -31,5 +39,8 @@ public class SharedUrlState(initialUrl: String? = null) {
     }
 }
 
+/**
+ * Provides a [SharedUrlState] for screens to consume one-shot shared URLs from external intents.
+ */
 public val LocalSharedUrl: ProvidableCompositionLocal<SharedUrlState> =
     compositionLocalOf { SharedUrlState() }

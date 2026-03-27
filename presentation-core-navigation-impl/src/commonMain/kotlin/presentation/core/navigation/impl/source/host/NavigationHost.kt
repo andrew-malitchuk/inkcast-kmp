@@ -21,6 +21,18 @@ import presentation.feature.onboarding.source.onboarding.OnboardingScreen
 import presentation.feature.settings.source.settings.SettingsScreen
 import presentation.feature.splash.source.splash.SplashScreen
 
+/**
+ * Root navigation host that maps [Destination] entries to feature screen composables.
+ *
+ * Sets up the Navigation 3 back stack, provides [AppNavigator] and back-action callback
+ * via composition locals, and disables default transition animations.
+ *
+ * @param startDestination Initial destination, defaults to [Destination.Splash].
+ *
+ * @see Destination
+ * @see AppNavigatorImpl
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @Composable
 public fun NavigationHost(startDestination: Destination? = null) {
     val backStack = rememberNavBackStack(

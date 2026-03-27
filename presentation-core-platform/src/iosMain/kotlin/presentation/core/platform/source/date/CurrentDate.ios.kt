@@ -7,6 +7,11 @@ import platform.Foundation.NSCalendarUnitYear
 import platform.Foundation.NSDate
 import platform.Foundation.timeIntervalSince1970
 
+/**
+ * iOS implementation using `NSCalendar` and `NSDate`.
+ *
+ * @return Current date with year, month (1-based), and day fields.
+ */
 public actual fun getCurrentDate(): CurrentDate {
     val cal = NSCalendar.currentCalendar
     val components = cal.components(
@@ -20,5 +25,6 @@ public actual fun getCurrentDate(): CurrentDate {
     )
 }
 
+/** iOS implementation using `NSDate.timeIntervalSince1970` converted to milliseconds. */
 public actual fun currentTimeMillis(): Long =
     (NSDate().timeIntervalSince1970 * 1000).toLong()

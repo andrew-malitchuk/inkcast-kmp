@@ -2,6 +2,11 @@ package presentation.core.platform.source.date
 
 import java.util.Calendar
 
+/**
+ * Android implementation using `java.util.Calendar`.
+ *
+ * @return Current date with year, month (1-based), and day fields.
+ */
 public actual fun getCurrentDate(): CurrentDate {
     val cal = Calendar.getInstance()
     return CurrentDate(
@@ -11,4 +16,5 @@ public actual fun getCurrentDate(): CurrentDate {
     )
 }
 
+/** Android implementation delegating to [System.currentTimeMillis]. */
 public actual fun currentTimeMillis(): Long = System.currentTimeMillis()

@@ -8,10 +8,24 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.exifinterface.media.ExifInterface
 import java.io.ByteArrayInputStream
 
+/**
+ * Android implementation of [ImageDecoder] using [BitmapFactory] and EXIF rotation correction.
+ */
 public actual object ImageDecoder {
 
+    /** Maximum width or height before sub-sampling kicks in. */
     private const val MAX_DIMENSION = 1600
 
+    /**
+     * Decodes raw image bytes into a [DecodedImage] with ARGB pixel data.
+     *
+     * Uses a two-pass decode: first pass reads dimensions only, second pass
+     * applies sub-sampling to stay within [MAX_DIMENSION]. EXIF orientation
+     * is applied after decoding.
+     *
+     * @param bytes Raw image file bytes (JPEG, PNG, etc.).
+     * @return Decoded image with pixel array, or `null` if decoding fails.
+     */
     public actual fun decode(bytes: ByteArray): DecodedImage? {
         val opts = BitmapFactory.Options().apply { inJustDecodeBounds = true }
         BitmapFactory.decodeByteArray(bytes, 0, bytes.size, opts)
@@ -38,10 +52,25 @@ public actual object ImageDecoder {
         return result
     }
 
+    /**
+     * Converts ARGB pixel array to a Compose [ImageBitmap] via Android [Bitmap].
+     *
+     * @param pixels ARGB pixel data.
+     * @param width Image width in pixels.
+     * @param height Image height in pixels.
+     * @return Compose-compatible image bitmap.
+     */
     public actual fun toImageBitmap(pixels: IntArray, width: Int, height: Int): ImageBitmap {
         return Bitmap.createBitmap(pixels, width, height, Bitmap.Config.ARGB_8888).asImageBitmap()
     }
 
+    /**
+     * Applies EXIF orientation correction to the decoded bitmap.
+     *
+     * @param bitmap The raw decoded bitmap (may have incorrect orientation).
+     * @param bytes Original file bytes used to read EXIF metadata.
+     * @return Correctly rotated/flipped bitmap, or the original if no correction needed.
+     */
     private fun applyExifRotation(bitmap: Bitmap, bytes: ByteArray): Bitmap {
         val exif = try {
             ExifInterface(ByteArrayInputStream(bytes))

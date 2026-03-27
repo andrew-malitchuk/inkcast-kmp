@@ -22,9 +22,26 @@ import platform.UIKit.UIGraphicsEndImageContext
 import platform.UIKit.UIGraphicsGetImageFromCurrentImageContext
 import platform.UIKit.UIImage
 
+/**
+ * iOS implementation of [ImageDecoder] using UIKit and CoreGraphics.
+ *
+ * Normalizes EXIF orientation by re-drawing through a UIGraphics context,
+ * then extracts raw BGRA pixels via CoreGraphics bitmap context for
+ * conversion to ARGB format.
+ */
 @OptIn(ExperimentalForeignApi::class)
 public actual object ImageDecoder {
 
+    /**
+     * Decodes raw image bytes into a [DecodedImage] with ARGB pixel data.
+     *
+     * Re-draws the image through UIGraphics to normalize EXIF orientation,
+     * then reads pixels via a CoreGraphics bitmap context in BGRA byte order
+     * and converts to ARGB.
+     *
+     * @param bytes Raw image file bytes.
+     * @return Decoded image with pixel array, or `null` if decoding fails.
+     */
     public actual fun decode(bytes: ByteArray): DecodedImage? {
         val nsData = bytes.usePinned { pinned ->
             NSData.create(bytes = pinned.addressOf(0), length = bytes.size.toULong())
@@ -76,6 +93,16 @@ public actual object ImageDecoder {
         return DecodedImage(pixels, width, height)
     }
 
+    /**
+     * Converts ARGB pixel array to a Compose [ImageBitmap] via Skia BGRA bitmap.
+     *
+     * Reorders ARGB channels to BGRA byte layout expected by Skia's [ColorType.BGRA_8888].
+     *
+     * @param pixels ARGB pixel data.
+     * @param width Image width in pixels.
+     * @param height Image height in pixels.
+     * @return Compose-compatible image bitmap.
+     */
     public actual fun toImageBitmap(pixels: IntArray, width: Int, height: Int): ImageBitmap {
         val bitmap = Bitmap()
         bitmap.allocPixels(ImageInfo(width, height, ColorType.BGRA_8888, ColorAlphaType.PREMUL))

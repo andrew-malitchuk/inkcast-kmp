@@ -8,6 +8,14 @@ import presentation.core.navigation.api.source.destination.AppNavigator.NavOptio
 import presentation.core.navigation.api.source.destination.AppNavigator.NavOptions.SingleTop
 import presentation.core.navigation.api.source.destination.Destination
 
+/**
+ * Navigation 3 implementation of [AppNavigator] backed by a [NavBackStack].
+ *
+ * @param backStack The mutable back stack managed by Navigation 3 runtime.
+ *
+ * @see AppNavigator
+ * @see NavigationHost
+ */
 public class AppNavigatorImpl(
     private val backStack: NavBackStack<NavKey>,
 ) : AppNavigator {
