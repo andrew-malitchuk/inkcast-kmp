@@ -6,14 +6,37 @@ import java.util.zip.CRC32
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
+/**
+ * Desktop (JVM) implementation of [EpubBuilder] using `java.util.zip.ZipOutputStream`.
+ *
+ * Identical to the Android implementation — both share the JVM ZIP library.
+ */
 internal actual object EpubBuilder {
 
     private const val MIMETYPE = "application/epub+zip"
 
+    /**
+     * Builds a valid EPUB 3 archive from the given article content and images.
+     *
+     * The archive contains:
+     * 1. `mimetype` — STORED (uncompressed) as required by the EPUB spec.
+     * 2. `META-INF/container.xml` — points to the OPF package document.
+     * 3. `OEBPS/content.opf` — package metadata, manifest, and spine.
+     * 4. `OEBPS/nav.xhtml` — EPUB 3 navigation document.
+     * 5. `OEBPS/article.xhtml` — the article body.
+     * 6. `OEBPS/images/*` — downloaded image assets.
+     *
+     * @param title The article title (will be XML-escaped).
+     * @param cleanHtml The sanitised article HTML body.
+     * @param images The list of [EpubImage] assets to embed.
+     * @return The complete EPUB file as a byte array.
+     */
     actual fun build(title: String, cleanHtml: String, images: List<EpubImage>): ByteArray {
         val safeTitle = title.escapeXml()
         val outputStream = ByteArrayOutputStream()
         ZipOutputStream(outputStream).use { zip ->
+            // NOTE: The mimetype entry MUST be the first entry and MUST use STORED (no compression)
+            // per the EPUB Open Container Format specification.
             val mimeBytes = MIMETYPE.toByteArray(Charsets.UTF_8)
             val crc32 = CRC32().apply { update(mimeBytes) }.value
             val mimeEntry = ZipEntry("mimetype").apply {
@@ -90,6 +113,11 @@ $imageManifest
         return outputStream.toByteArray()
     }
 
+    /**
+     * Escapes XML special characters in this [String] to produce valid XML content.
+     *
+     * @return The escaped string safe for embedding in XML/XHTML documents.
+     */
     private fun String.escapeXml(): String = this
         .replace("&", "&amp;")
         .replace("<", "&lt;")

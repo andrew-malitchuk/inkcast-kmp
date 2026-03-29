@@ -14,5 +14,7 @@ import data.network.impl.source.discovery.DeviceDiscovery
  */
 internal class DeviceDiscoverySourceImpl : DeviceDiscoverySource {
 
-    override suspend fun discover(): List<String> = DeviceDiscovery().discover()
+    private val discovery = DeviceDiscovery()
+
+    override suspend fun discover(): List<String> = discovery.discover()
 }

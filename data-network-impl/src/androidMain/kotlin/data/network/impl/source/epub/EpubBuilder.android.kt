@@ -6,6 +6,12 @@ import java.util.zip.CRC32
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
+/**
+ * Android implementation of [EpubBuilder] using `java.util.zip.ZipOutputStream`.
+ *
+ * Produces a valid EPUB 3 ZIP archive with the `mimetype` entry stored
+ * uncompressed as required by the EPUB specification.
+ */
 internal actual object EpubBuilder {
 
     private const val MIMETYPE = "application/epub+zip"

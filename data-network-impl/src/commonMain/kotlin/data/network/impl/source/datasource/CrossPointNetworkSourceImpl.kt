@@ -20,6 +20,7 @@ import io.ktor.http.contentType
 import io.ktor.http.isSuccess
 import io.ktor.http.parameters
 import io.ktor.serialization.kotlinx.json.json
+import kotlin.coroutines.cancellation.CancellationException
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
@@ -84,6 +85,8 @@ internal class CrossPointNetworkSourceImpl(
                 }
             }
             if (response.status.isSuccess()) response.body<ByteArray>() else null
+        } catch (e: CancellationException) {
+            throw e
         } catch (_: Exception) {
             null
         } finally {
@@ -98,6 +101,8 @@ internal class CrossPointNetworkSourceImpl(
             client.get("$base/api/files") {
                 parameter("path", path)
             }.body()
+        } catch (e: CancellationException) {
+            throw e
         } catch (_: Exception) {
             emptyList()
         } finally {
@@ -119,6 +124,8 @@ internal class CrossPointNetworkSourceImpl(
                 },
             )
             response.status.isSuccess()
+        } catch (e: CancellationException) {
+            throw e
         } catch (_: Exception) {
             false
         } finally {
@@ -138,6 +145,8 @@ internal class CrossPointNetworkSourceImpl(
                 },
             )
             response.status.isSuccess()
+        } catch (e: CancellationException) {
+            throw e
         } catch (_: Exception) {
             false
         } finally {
@@ -157,6 +166,8 @@ internal class CrossPointNetworkSourceImpl(
                 },
             )
             response.status.isSuccess()
+        } catch (e: CancellationException) {
+            throw e
         } catch (_: Exception) {
             false
         } finally {
@@ -176,6 +187,8 @@ internal class CrossPointNetworkSourceImpl(
                 },
             )
             response.status.isSuccess()
+        } catch (e: CancellationException) {
+            throw e
         } catch (_: Exception) {
             false
         } finally {
@@ -188,6 +201,8 @@ internal class CrossPointNetworkSourceImpl(
         return try {
             val base = baseUrl()
             client.get("$base/api/status").body()
+        } catch (e: CancellationException) {
+            throw e
         } catch (_: Exception) {
             null
         } finally {
@@ -200,6 +215,8 @@ internal class CrossPointNetworkSourceImpl(
         return try {
             val response = client.get("http://$ip/api/status")
             response.status.isSuccess()
+        } catch (e: CancellationException) {
+            throw e
         } catch (_: Exception) {
             false
         } finally {
@@ -212,6 +229,8 @@ internal class CrossPointNetworkSourceImpl(
         return try {
             val base = baseUrl()
             client.get("$base/api/settings").body()
+        } catch (e: CancellationException) {
+            throw e
         } catch (_: Exception) {
             emptyList()
         } finally {
@@ -229,6 +248,8 @@ internal class CrossPointNetworkSourceImpl(
                 setBody(jsonBody)
             }
             response.status.isSuccess()
+        } catch (e: CancellationException) {
+            throw e
         } catch (_: Exception) {
             false
         } finally {

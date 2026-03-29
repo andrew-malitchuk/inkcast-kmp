@@ -2,10 +2,30 @@ package data.network.impl.source.epub
 
 import platform.Foundation.NSUUID
 
+/**
+ * iOS implementation of [EpubBuilder] using a manual STORED-only ZIP assembler.
+ *
+ * Since `java.util.zip` is unavailable on iOS/Native, this builds the ZIP
+ * archive byte-by-byte using only the STORED (no compression) method.
+ * EPUB readers are required to accept uncompressed entries.
+ */
 internal actual object EpubBuilder {
 
     private const val MIMETYPE = "application/epub+zip"
 
+    /**
+     * Builds a valid EPUB 3 archive from the given article content and images.
+     *
+     * Uses a custom STORED-only ZIP assembler since `java.util.zip` is not available
+     * on iOS/Native. The resulting archive is uncompressed, which is valid per the
+     * EPUB specification.
+     *
+     * @param title The article title (will be XML-escaped).
+     * @param cleanHtml The sanitised article HTML body.
+     * @param images The list of [EpubImage] assets to embed.
+     * @return The complete EPUB file as a byte array.
+     * @see buildStoreOnlyZip
+     */
     actual fun build(title: String, cleanHtml: String, images: List<EpubImage>): ByteArray {
         val safeTitle = title.escapeXml()
         val uuid = NSUUID().UUIDString
@@ -89,6 +109,11 @@ $imageManifest
         return buildStoreOnlyZip(entries)
     }
 
+    /**
+     * Escapes XML special characters in this [String] to produce valid XML content.
+     *
+     * @return The escaped string safe for embedding in XML/XHTML documents.
+     */
     private fun String.escapeXml(): String = this
         .replace("&", "&amp;")
         .replace("<", "&lt;")
@@ -97,7 +122,82 @@ $imageManifest
         .replace("'", "&apos;")
 }
 
+/**
+ * Represents a single file entry to be written into the ZIP archive.
+ *
+ * @param name The relative path of the entry within the ZIP (e.g. `"OEBPS/article.xhtml"`).
+ * @param data The raw byte content of the entry.
+ */
 private class ZipFileEntry(val name: String, val data: ByteArray)
+
+/**
+ * Growable byte buffer that avoids per-byte boxing overhead of `MutableList<Byte>`.
+ */
+private class ByteBuffer(initialCapacity: Int = 4096) {
+    private var array = ByteArray(initialCapacity)
+    var size: Int = 0
+        private set
+
+    private fun ensureCapacity(needed: Int) {
+        val required = size + needed
+        if (required > array.size) {
+            val newSize = maxOf(array.size * 2, required)
+            array = array.copyOf(newSize)
+        }
+    }
+
+    /**
+     * Appends a single byte to the buffer.
+     *
+     * @param b The byte to write.
+     */
+    fun writeByte(b: Byte) {
+        ensureCapacity(1)
+        array[size++] = b
+    }
+
+    /**
+     * Appends all bytes from the given array to the buffer.
+     *
+     * @param bytes The byte array to write.
+     */
+    fun writeBytes(bytes: ByteArray) {
+        ensureCapacity(bytes.size)
+        bytes.copyInto(array, size)
+        size += bytes.size
+    }
+
+    /**
+     * Writes a 16-bit integer in little-endian byte order.
+     *
+     * @param value The integer value; only the lower 16 bits are written.
+     */
+    fun writeLE16(value: Int) {
+        ensureCapacity(2)
+        array[size++] = (value and 0xFF).toByte()
+        array[size++] = ((value shr 8) and 0xFF).toByte()
+    }
+
+    /**
+     * Writes a 32-bit integer in little-endian byte order.
+     *
+     * @param value The integer value to write.
+     */
+    fun writeLE32(value: Int) {
+        ensureCapacity(4)
+        array[size++] = (value and 0xFF).toByte()
+        array[size++] = ((value shr 8) and 0xFF).toByte()
+        array[size++] = ((value shr 16) and 0xFF).toByte()
+        array[size++] = ((value shr 24) and 0xFF).toByte()
+    }
+
+    /**
+     * Returns a trimmed copy of the buffer contents.
+     *
+     * @return A new [ByteArray] containing exactly [size] bytes.
+     */
+    fun toByteArray(): ByteArray = array.copyOf(size)
+}
 
 /**
  * Builds a ZIP archive using only STORED (no compression) method.
@@ -106,85 +206,81 @@ private class ZipFileEntry(val name: String, val data: ByteArray)
  * EPUB readers are required to support uncompressed entries.
  */
 private fun buildStoreOnlyZip(entries: List<ZipFileEntry>): ByteArray {
-    val buffer = mutableListOf<Byte>()
-    val centralDirectory = mutableListOf<Byte>()
-    val offsets = mutableListOf<Int>()
+    val totalDataSize = entries.sumOf { it.data.size + it.name.encodeToByteArray().size + 76 }
+    val buffer = ByteBuffer(totalDataSize)
+    val centralDir = ByteBuffer(entries.size * 92)
+    val offsets = IntArray(entries.size)
+    val crcs = IntArray(entries.size) { crc32(entries[it].data) }
 
-    for (entry in entries) {
-        offsets.add(buffer.size)
+    for ((i, entry) in entries.withIndex()) {
+        offsets[i] = buffer.size
         val nameBytes = entry.name.encodeToByteArray()
-        val crc = crc32(entry.data)
 
         // Local file header
-        buffer.addAll(littleEndian32(0x04034b50)) // signature
-        buffer.addAll(littleEndian16(20))          // version needed
-        buffer.addAll(littleEndian16(0))           // flags
-        buffer.addAll(littleEndian16(0))           // compression: STORED
-        buffer.addAll(littleEndian16(0))           // mod time
-        buffer.addAll(littleEndian16(0))           // mod date
-        buffer.addAll(littleEndian32(crc))         // crc-32
-        buffer.addAll(littleEndian32(entry.data.size)) // compressed size
-        buffer.addAll(littleEndian32(entry.data.size)) // uncompressed size
-        buffer.addAll(littleEndian16(nameBytes.size))  // name length
-        buffer.addAll(littleEndian16(0))               // extra length
-        buffer.addAll(nameBytes.toList())
-        buffer.addAll(entry.data.toList())
+        buffer.writeLE32(0x04034b50) // signature
+        buffer.writeLE16(20)         // version needed
+        buffer.writeLE16(0)          // flags
+        buffer.writeLE16(0)          // compression: STORED
+        buffer.writeLE16(0)          // mod time
+        buffer.writeLE16(0)          // mod date
+        buffer.writeLE32(crcs[i])    // crc-32
+        buffer.writeLE32(entry.data.size) // compressed size
+        buffer.writeLE32(entry.data.size) // uncompressed size
+        buffer.writeLE16(nameBytes.size)  // name length
+        buffer.writeLE16(0)               // extra length
+        buffer.writeBytes(nameBytes)
+        buffer.writeBytes(entry.data)
     }
 
     val centralDirOffset = buffer.size
 
     for ((i, entry) in entries.withIndex()) {
         val nameBytes = entry.name.encodeToByteArray()
-        val crc = crc32(entry.data)
 
         // Central directory file header
-        centralDirectory.addAll(littleEndian32(0x02014b50)) // signature
-        centralDirectory.addAll(littleEndian16(20))          // version made by
-        centralDirectory.addAll(littleEndian16(20))          // version needed
-        centralDirectory.addAll(littleEndian16(0))           // flags
-        centralDirectory.addAll(littleEndian16(0))           // compression
-        centralDirectory.addAll(littleEndian16(0))           // mod time
-        centralDirectory.addAll(littleEndian16(0))           // mod date
-        centralDirectory.addAll(littleEndian32(crc))
-        centralDirectory.addAll(littleEndian32(entry.data.size))
-        centralDirectory.addAll(littleEndian32(entry.data.size))
-        centralDirectory.addAll(littleEndian16(nameBytes.size))
-        centralDirectory.addAll(littleEndian16(0))           // extra length
-        centralDirectory.addAll(littleEndian16(0))           // comment length
-        centralDirectory.addAll(littleEndian16(0))           // disk number start
-        centralDirectory.addAll(littleEndian16(0))           // internal attrs
-        centralDirectory.addAll(littleEndian32(0))           // external attrs
-        centralDirectory.addAll(littleEndian32(offsets[i]))   // local header offset
-        centralDirectory.addAll(nameBytes.toList())
+        centralDir.writeLE32(0x02014b50) // signature
+        centralDir.writeLE16(20)          // version made by
+        centralDir.writeLE16(20)          // version needed
+        centralDir.writeLE16(0)           // flags
+        centralDir.writeLE16(0)           // compression
+        centralDir.writeLE16(0)           // mod time
+        centralDir.writeLE16(0)           // mod date
+        centralDir.writeLE32(crcs[i])
+        centralDir.writeLE32(entry.data.size)
+        centralDir.writeLE32(entry.data.size)
+        centralDir.writeLE16(nameBytes.size)
+        centralDir.writeLE16(0)           // extra length
+        centralDir.writeLE16(0)           // comment length
+        centralDir.writeLE16(0)           // disk number start
+        centralDir.writeLE16(0)           // internal attrs
+        centralDir.writeLE32(0)           // external attrs
+        centralDir.writeLE32(offsets[i])  // local header offset
+        centralDir.writeBytes(nameBytes)
     }
 
-    buffer.addAll(centralDirectory)
+    buffer.writeBytes(centralDir.toByteArray())
 
     // End of central directory
-    buffer.addAll(littleEndian32(0x06054b50)) // signature
-    buffer.addAll(littleEndian16(0))           // disk number
-    buffer.addAll(littleEndian16(0))           // disk with central dir
-    buffer.addAll(littleEndian16(entries.size)) // entries on this disk
-    buffer.addAll(littleEndian16(entries.size)) // total entries
-    buffer.addAll(littleEndian32(centralDirectory.size)) // central dir size
-    buffer.addAll(littleEndian32(centralDirOffset))      // central dir offset
-    buffer.addAll(littleEndian16(0))                     // comment length
+    buffer.writeLE32(0x06054b50) // signature
+    buffer.writeLE16(0)           // disk number
+    buffer.writeLE16(0)           // disk with central dir
+    buffer.writeLE16(entries.size) // entries on this disk
+    buffer.writeLE16(entries.size) // total entries
+    buffer.writeLE32(centralDir.size) // central dir size
+    buffer.writeLE32(centralDirOffset) // central dir offset
+    buffer.writeLE16(0)                // comment length
 
     return buffer.toByteArray()
 }
 
-private fun littleEndian16(value: Int): List<Byte> = listOf(
-    (value and 0xFF).toByte(),
-    ((value shr 8) and 0xFF).toByte(),
-)
-
-private fun littleEndian32(value: Int): List<Byte> = listOf(
-    (value and 0xFF).toByte(),
-    ((value shr 8) and 0xFF).toByte(),
-    ((value shr 16) and 0xFF).toByte(),
-    ((value shr 24) and 0xFF).toByte(),
-)
-
+/**
+ * Computes the CRC-32 checksum of the given byte array using the standard polynomial (0xEDB88320).
+ *
+ * This is a pure-Kotlin implementation used on iOS/Native where `java.util.zip.CRC32` is unavailable.
+ *
+ * @param data The input bytes to checksum.
+ * @return The CRC-32 value as a signed [Int].
+ */
 private fun crc32(data: ByteArray): Int {
     var crc = 0xFFFFFFFF.toInt()
     for (byte in data) {

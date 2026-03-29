@@ -13,6 +13,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.coroutines.cancellation.CancellationException
 import kotlinx.coroutines.withTimeout
 
 /**
@@ -126,6 +127,8 @@ internal class UploadNetworkSourceImpl(
                 isSuccess = doneSignal.await()
                 listenerJob.cancelAndJoin()
             }
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: IllegalStateException) {
             // Re-throw domain errors (device IP missing, timeout) so they propagate to UseCase.
             throw e

@@ -7,6 +7,12 @@ import java.net.DatagramPacket
 import java.net.DatagramSocket
 import java.net.InetAddress
 
+/**
+ * Android implementation of [DeviceDiscovery] using `java.net.DatagramSocket`.
+ *
+ * Sends a `"hello"` UDP broadcast to `255.255.255.255:8134` over the Wi-Fi
+ * network and collects device responses within a 3-second timeout.
+ */
 internal actual class DeviceDiscovery actual constructor() {
 
     actual suspend fun discover(): List<String> = withContext(Dispatchers.IO) {

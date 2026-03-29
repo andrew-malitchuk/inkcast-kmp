@@ -112,6 +112,7 @@ internal class ReaderRepositoryImpl(
     /** @see ReaderRepository.updateDeviceIp */
     override suspend fun updateDeviceIp(ip: String) {
         deviceIpPreferenceSource.setData(DeviceIpPreference(ip = ip))
+        lastConnectedIpPreferenceSource.setData(LastConnectedIpPreference(ip = ip))
     }
 
     /** @see ReaderRepository.getLastConnectedIp */

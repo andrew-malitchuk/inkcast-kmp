@@ -14,6 +14,16 @@ import io.ktor.client.engine.cio.CIO
  */
 internal actual object NetworkProvider {
 
+    /**
+     * Creates a Ktor [HttpClient] using the CIO engine.
+     *
+     * On desktop JVM, network interface binding is not available, so the [network]
+     * parameter is accepted for API compatibility but ignored.
+     *
+     * @param network The requested network type (ignored on desktop).
+     * @param block Optional configuration block applied to the [HttpClient].
+     * @return A configured [HttpClient] instance.
+     */
     actual fun createClient(
         network: NetworkType,
         block: HttpClientConfig<out HttpClientEngineConfig>.() -> Unit,

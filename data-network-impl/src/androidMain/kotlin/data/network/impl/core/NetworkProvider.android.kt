@@ -57,8 +57,13 @@ private class SafeSocketFactory(private val delegate: SocketFactory) : SocketFac
  */
 internal actual object NetworkProvider {
 
+    @Volatile
     private var connectivityManager: ConnectivityManager? = null
+
+    @Volatile
     private var wifiNetwork: Network? = null
+
+    @Volatile
     private var cellularNetwork: Network? = null
 
     /**

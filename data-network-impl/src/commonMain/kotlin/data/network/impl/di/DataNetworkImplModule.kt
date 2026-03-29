@@ -23,6 +23,7 @@ import org.koin.dsl.module
  * - [CrossPointNetworkSource] — **singleton** resolving IP dynamically via [DeviceAddressProvider].
  * - [UploadNetworkSource] — **singleton** for WebSocket file uploads.
  * - [LinkProcessingNetworkSource] — **singleton** for article download and EPUB generation.
+ * - [DeviceDiscoverySource] — **singleton** for UDP broadcast device discovery.
  *
  * @see data.preference.impl.di.DataPreferenceImplModule
  */
