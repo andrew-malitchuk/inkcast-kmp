@@ -1,4 +1,6 @@
-![Inkcast](docs/img/img_logo.png)
+<p align="center">
+  <img src="docs/img/img_logo.png" alt="Inkcast" width="80"/>
+</p>
 
 # Inkcast
 
@@ -10,25 +12,14 @@ Built with Compose Multiplatform, Inkcast runs natively on both **Android** and 
 
 Originally developed as a companion app for the CrossPoint Reader project to streamline the e-reader workflow. If you need functionality that isn't currently supported, feel free to open an issue.
 
-### Onboarding & Connection
+## Quick Demo
 
 <p align="center">
-  <img src="docs/img/img_demo_0.png" alt="Onboarding" width="30%"/>
-  <img src="docs/img/img_demo_1.png" alt="Connection" width="30%"/>
-</p>
-
-### File Manager
-
-<p align="center">
-  <img src="docs/img/img_demo_2.png" alt="File Manager — Files" width="30%"/>
-  <img src="docs/img/img_demo_3.png" alt="File Manager — Folders" width="30%"/>
-</p>
-
-### Device Dashboard & Sleep Screen
-
-<p align="center">
-  <img src="docs/img/img_demo_4.png" alt="Device Dashboard" width="30%"/>
-  <img src="docs/img/img_demo_5.png" alt="Sleep Screen Editor" width="30%"/>
+  <img src="docs/img/img_demo_0.png" alt="Onboarding" width="19%"/>
+  <img src="docs/img/img_demo_1.png" alt="Connection" width="19%"/>
+  <img src="docs/img/img_demo_2.png" alt="File Manager" width="19%"/>
+  <img src="docs/img/img_demo_4.png" alt="Device Dashboard" width="19%"/>
+  <img src="docs/img/img_demo_5.png" alt="Sleep Screen" width="19%"/>
 </p>
 
 ## Core Features
