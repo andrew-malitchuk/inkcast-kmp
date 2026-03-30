@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/img/img_logo.png" alt="Inkcast" width="80"/>
+  <img src="docs/img/img_logo.png" alt="Inkcast" width="160"/>
 </p>
 
 # Inkcast
