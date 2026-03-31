@@ -6,6 +6,14 @@ import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.annotation.OrbitExperimental
 import org.orbitmvi.orbit.viewmodel.container
 
+/**
+ * Orbit MVI ViewModel for the About feature screen.
+ *
+ * Manages [AboutState] and emits [AboutSideEffect] in response to [AboutIntent] actions.
+ *
+ * @see AboutScreen
+ * @see AboutContract
+ */
 @OrbitExperimental
 public class AboutViewModel(
     // inject use cases here

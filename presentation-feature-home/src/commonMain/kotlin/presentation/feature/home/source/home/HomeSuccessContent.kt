@@ -51,6 +51,19 @@ private const val BAR_SLIDE_DURATION_MS = 400
 /** Delay before the bottom bar animation starts, allowing content to settle. */
 private const val BAR_SLIDE_DELAY_MS = 200L
 
+/**
+ * Main content composable for the Home screen in its loaded state.
+ *
+ * Hosts the four feature tabs ([HomeTab]) via a [SaveableStateProvider] so
+ * that each tab retains its scroll position across tab switches, and
+ * renders an animated bottom navigation bar with a settings shortcut button.
+ *
+ * @param state Current immutable UI state snapshot from [HomeViewModel].
+ * @param onIntent Callback that forwards user intents to the ViewModel.
+ *
+ * @see HomeContent
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @Composable
 internal fun HomeSuccessContent(
     state: HomeState,
@@ -70,6 +83,7 @@ internal fun HomeSuccessContent(
             .fillMaxSize()
             .background(Theme.color.canvas),
     ) {
+        // Preserve child-tab state across tab switches.
         saveableStateHolder.SaveableStateProvider(state.selectedTab) {
             when (state.selectedTab) {
                 HomeTab.FILES -> HomeFilesTab(resetTrigger = state.tabResetTrigger)
@@ -111,6 +125,7 @@ internal fun HomeSuccessContent(
                     modifier = Modifier.weight(1f),
                 )
                 Spacer(modifier = Modifier.width(Theme.spacing.spacingS))
+                // Circular settings button beside the tab bar.
                 Box(
                     modifier = Modifier
                         .size(56.dp)

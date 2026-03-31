@@ -18,6 +18,19 @@ import presentation.core.styling.core.Theme
 import presentation.core.ui.source.kit.atom.text.SectionHeader
 import presentation.core.ui.source.kit.molecule.button.SegmentedButtonGroup
 
+/**
+ * Success-state content for the Settings screen.
+ *
+ * Displays language and theme [SegmentedButtonGroup] selectors, each preceded
+ * by a [SectionHeader]. Scrollable vertically to accommodate additional settings
+ * in the future.
+ *
+ * @param state Current [SettingsState] containing selected indices and option labels.
+ * @param onIntent Callback to dispatch [SettingsIntent] actions to the ViewModel.
+ *
+ * @see SettingsContent
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @Composable
 internal fun SettingsSuccessContent(
     state: SettingsState,
@@ -28,6 +41,7 @@ internal fun SettingsSuccessContent(
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
     ) {
+        // Language preference selector
         SectionHeader(title = stringResource(Res.string.settings_language))
         SegmentedButtonGroup(
             items = state.languageOptions,
@@ -40,6 +54,7 @@ internal fun SettingsSuccessContent(
 
         Spacer(modifier = Modifier.height(Theme.spacing.spacingL))
 
+        // Theme preference selector
         SectionHeader(title = stringResource(Res.string.settings_theme))
         SegmentedButtonGroup(
             items = state.themeOptions,

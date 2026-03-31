@@ -15,6 +15,14 @@ import presentation.core.styling.core.Theme
 import presentation.core.ui.core.modifier.ShimmerProvider
 import presentation.core.ui.core.modifier.shimmerable
 
+/**
+ * Shimmer loading placeholder for the sleep screen gallery section.
+ *
+ * Displays a column of six shimmer rectangles that approximate the layout
+ * of gallery items while the actual data is being fetched.
+ *
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @Composable
 internal fun HomeSleepShimmerContent() {
     ShimmerProvider(isLoading = true) {

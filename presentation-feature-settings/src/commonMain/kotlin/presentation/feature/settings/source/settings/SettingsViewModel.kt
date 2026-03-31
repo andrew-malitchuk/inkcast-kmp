@@ -14,10 +14,20 @@ import org.orbitmvi.orbit.viewmodel.container
 /**
  * ViewModel for the Settings screen.
  *
+ * Follows the MVI pattern via Orbit: UI dispatches [SettingsIntent] actions
+ * through [handleIntent], the ViewModel reduces [SettingsState], and emits
+ * [SettingsSideEffect] for one-shot events such as back navigation.
+ *
+ * On initialisation, the current language and theme preferences are loaded
+ * from their respective use cases and reflected in the UI state.
+ *
  * @property getApplicationLanguageUseCase Retrieves the persisted language preference.
  * @property setApplicationLanguageUseCase Persists a new language preference.
  * @property getThemeUseCase Retrieves the persisted theme preference.
  * @property setThemeUseCase Persists a new theme preference.
+ *
+ * @see SettingsContract
+ * @see SettingsScreen
  */
 @OrbitExperimental
 public class SettingsViewModel(
@@ -74,6 +84,7 @@ public class SettingsViewModel(
     }
 
     private companion object {
+        /** Ordered list of theme models matching [SettingsState.themeOptions] by index. */
         val THEME_MODELS = listOf(ThemeModel.Light, ThemeModel.Dark)
     }
 }

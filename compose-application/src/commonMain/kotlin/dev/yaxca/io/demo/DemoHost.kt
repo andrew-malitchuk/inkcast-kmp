@@ -19,11 +19,28 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import presentation.core.styling.core.Theme
 
+/**
+ * Available tabs within the demo mode host.
+ *
+ * @property label Human-readable tab title displayed in the tab bar.
+ */
 private enum class DemoTab(val label: String) {
+    /** Showcases design tokens: colors, typography, spacing, shapes. */
     StyleGuide("Style Guide"),
+    /** Showcases reusable UI components: atoms, molecules, organisms. */
     UiKit("UI Kit"),
 }
 
+/**
+ * Hosts the demo/style-guide screens behind a tab bar.
+ *
+ * Used only when `DEMO_MODE` is enabled in [App]. Manages its own
+ * tab selection state internally for simplicity.
+ *
+ * @see DemoStyleGuideScreen
+ * @see DemoUiKitScreen
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @Composable
 internal fun DemoHost() {
     var selectedTab by remember { mutableStateOf(DemoTab.StyleGuide) }

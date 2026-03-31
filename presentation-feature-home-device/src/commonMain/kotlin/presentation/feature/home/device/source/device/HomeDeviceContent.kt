@@ -14,6 +14,20 @@ import presentation.core.styling.core.Theme
 import presentation.core.ui.source.kit.atom.icon.RefreshCcw
 import presentation.core.ui.source.kit.molecule.header.ActionHeader
 
+/**
+ * Root content composable for the device settings screen.
+ *
+ * Renders the screen header with a refresh action and cross-fades between
+ * [HomeDeviceShimmerContent] (while data is loading) and
+ * [HomeDeviceSuccessContent] (once the device status is available).
+ *
+ * @param state Current immutable UI state snapshot from [HomeDeviceViewModel].
+ * @param onIntent Callback that forwards user intents to the ViewModel.
+ *
+ * @see HomeDeviceShimmerContent
+ * @see HomeDeviceSuccessContent
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @Composable
 internal fun HomeDeviceContent(
     state: HomeDeviceState,
@@ -30,6 +44,7 @@ internal fun HomeDeviceContent(
             actionIcon = RefreshCcw,
             onActionClick = { onIntent(HomeDeviceIntent.Refresh) },
         )
+        // Cross-fade between shimmer and loaded content.
         Crossfade(
             targetState = state.isLoading,
             modifier = Modifier.fillMaxSize(),

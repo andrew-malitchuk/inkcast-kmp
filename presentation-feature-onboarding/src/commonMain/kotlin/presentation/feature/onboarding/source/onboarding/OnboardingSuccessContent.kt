@@ -37,9 +37,26 @@ import inkcast_kmp.presentation_core_localisation.generated.resources.onboarding
 import inkcast_kmp.presentation_core_localisation.generated.resources.onboarding_title
 import org.jetbrains.compose.resources.stringResource
 
+/** Duration in milliseconds for individual enter/exit animations. */
 private const val ANIM_DURATION_MS = 400
+
+/** Delay in milliseconds between sequenced animation items. */
 private const val ANIM_DELAY_MS = 200L
 
+/**
+ * Success-state content for the Onboarding screen.
+ *
+ * Displays a wizard illustration, welcome title, description text, and a
+ * "Get Started" button. Each section animates in sequentially using
+ * [AnimationSequenceHost]: the content block fades in first, followed by
+ * the button sliding up from the bottom.
+ *
+ * @param state Current [OnboardingState]; used to toggle the button's loading indicator.
+ * @param onIntent Callback to dispatch [OnboardingIntent] actions to the ViewModel.
+ *
+ * @see OnboardingContent
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @Composable
 internal fun OnboardingSuccessContent(
     state: OnboardingState,

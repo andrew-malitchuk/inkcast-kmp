@@ -52,6 +52,18 @@ import presentation.core.ui.source.kit.molecule.item.ItemCardType
 import presentation.core.ui.source.kit.organism.bottomsheet.AppBottomSheet
 import presentation.core.ui.source.kit.organism.pulltorefresh.AppPullToRefreshBox
 
+/**
+ * Success-state content for the file manager screen.
+ *
+ * Renders the breadcrumb navigation, upload progress indicator, pull-to-refresh file list,
+ * and bottom sheets for add menu, action menu, delete confirmation, create folder, and rename
+ * operations.
+ *
+ * @param state Current UI state of the file manager screen.
+ * @param onIntent Callback to dispatch user intents to the ViewModel.
+ *
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @Composable
 internal fun HomeFilesSuccessContent(
     state: HomeFilesState,

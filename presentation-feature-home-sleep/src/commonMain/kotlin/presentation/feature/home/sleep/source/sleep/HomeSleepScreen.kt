@@ -10,6 +10,18 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
+/**
+ * Screen-level composable for the sleep screen editor feature.
+ *
+ * Collects MVI state and side effects from [HomeSleepViewModel], wires up the
+ * image picker launcher, and delegates rendering to [HomeSleepContent].
+ *
+ * @param viewModel ViewModel instance provided by Koin.
+ *
+ * @see HomeSleepContract
+ * @see HomeSleepContent
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @Composable
 public fun HomeSleepScreen(viewModel: HomeSleepViewModel = koinViewModel()) {
     val state = viewModel.collectAsState()

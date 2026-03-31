@@ -13,6 +13,19 @@ import presentation.core.styling.core.Theme
 import presentation.core.ui.source.kit.molecule.header.NavigationHeader
 import presentation.core.ui.source.kit.molecule.header.SimpleHeader
 
+/**
+ * Layout shell for the Connection screen providing header and content structure.
+ *
+ * Shows a [SimpleHeader] during onboarding flow or a [NavigationHeader] with
+ * back button when accessed from settings.
+ *
+ * @param state Current UI state driving the content.
+ * @param isInitialSetup When `true`, renders a non-navigable header for onboarding.
+ * @param onIntent Callback to dispatch user intents to the ViewModel.
+ *
+ * @see ConnectionSuccessContent
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @Composable
 internal fun ConnectionContent(
     state: ConnectionState,

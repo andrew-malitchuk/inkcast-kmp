@@ -1,5 +1,10 @@
 package presentation.feature.splash.source.splash
 
+/**
+ * UI state for the Splash screen.
+ *
+ * @property isLoading Whether the splash animation / initial loading is still in progress.
+ */
 public data class SplashState(
     val isLoading: Boolean = true,
 )
@@ -33,6 +38,11 @@ public sealed class SplashSideEffect {
     public data class ShowError(val messageId: Int) : SplashSideEffect()
 }
 
+/**
+ * User- or system-initiated actions on the Splash screen.
+ */
 public sealed class SplashIntent {
+
+    /** The splash animation has completed and the screen is ready to navigate away. */
     public data object OnAnimationFinished : SplashIntent()
 }

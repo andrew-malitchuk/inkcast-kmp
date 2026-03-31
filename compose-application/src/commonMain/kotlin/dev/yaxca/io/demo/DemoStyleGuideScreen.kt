@@ -28,6 +28,14 @@ import androidx.compose.ui.unit.dp
 import presentation.core.styling.core.Theme
 import presentation.core.ui.source.kit.atom.shape.SquircleShape
 
+/**
+ * Renders a scrollable catalogue of all design tokens: colors, typography, spacing, and shapes.
+ *
+ * Intended for developer use during design-system validation. Not shipped in production builds.
+ *
+ * @see DemoHost
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun DemoStyleGuideScreen() {

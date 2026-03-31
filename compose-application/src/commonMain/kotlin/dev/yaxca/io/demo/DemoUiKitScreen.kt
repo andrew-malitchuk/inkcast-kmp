@@ -56,6 +56,16 @@ import presentation.core.ui.source.kit.molecule.header.SimpleHeader
 import presentation.core.ui.source.kit.molecule.item.ItemCard
 import presentation.core.ui.source.kit.molecule.item.ItemCardType
 
+/**
+ * Renders a scrollable catalogue of all reusable UI components (atoms and molecules).
+ *
+ * Demonstrates buttons, toggles, inputs, sliders, progress indicators, icons,
+ * headers, item cards, and tab bars in various configurations.
+ * Intended for developer use during UI-kit validation. Not shipped in production builds.
+ *
+ * @see DemoHost
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun DemoUiKitScreen() {

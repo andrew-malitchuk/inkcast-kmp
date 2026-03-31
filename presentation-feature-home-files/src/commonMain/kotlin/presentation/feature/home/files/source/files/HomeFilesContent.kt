@@ -14,6 +14,18 @@ import presentation.core.styling.core.Theme
 import presentation.core.ui.source.kit.atom.icon.Plus
 import presentation.core.ui.source.kit.molecule.header.ActionHeader
 
+/**
+ * Main content composable for the file manager screen.
+ *
+ * Renders the screen header with an add action and crossfades between
+ * [HomeFilesShimmerContent] (loading) and [HomeFilesSuccessContent] (loaded)
+ * based on the current state.
+ *
+ * @param state Current UI state of the file manager screen.
+ * @param onIntent Callback to dispatch user intents to the ViewModel.
+ *
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @Composable
 internal fun HomeFilesContent(
     state: HomeFilesState,

@@ -45,6 +45,19 @@ import presentation.core.ui.source.kit.atom.icon.Wifi
 import presentation.core.ui.source.kit.atom.input.Input
 import presentation.core.ui.source.kit.atom.text.SectionHeader
 
+/**
+ * Renders the loaded-state body of the Connection screen with auto-discovery and manual sections.
+ *
+ * The auto-discovery section shows a scan button and discovered device list with shimmer
+ * placeholders during scanning. The manual section provides an IP input field and connect button.
+ *
+ * @param state Current UI state with scanning progress, discovered devices, and IP input.
+ * @param isInitialSetup When `true`, adjusts layout for onboarding flow context.
+ * @param onIntent Callback for user actions: scan, select device, update IP, connect manually.
+ *
+ * @see ConnectionContent
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @Composable
 internal fun ConnectionSuccessContent(
     state: ConnectionState,

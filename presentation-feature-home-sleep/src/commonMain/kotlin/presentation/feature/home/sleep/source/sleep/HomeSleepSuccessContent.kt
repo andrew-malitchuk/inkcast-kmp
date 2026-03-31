@@ -52,6 +52,17 @@ import presentation.core.ui.source.kit.molecule.item.ItemCardType
 import presentation.core.ui.source.kit.organism.bottomsheet.AppBottomSheet
 import presentation.core.ui.source.kit.organism.pulltorefresh.AppPullToRefreshBox
 
+/**
+ * Success-state content for the sleep screen editor.
+ *
+ * Renders the image crop/preview area, widget selector, quote input, upload button
+ * with progress indicator, on-device gallery list, and a delete confirmation bottom sheet.
+ *
+ * @param state Current UI state of the sleep screen editor.
+ * @param onIntent Callback to dispatch user intents to the ViewModel.
+ *
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @Composable
 internal fun HomeSleepSuccessContent(
     state: HomeSleepState,

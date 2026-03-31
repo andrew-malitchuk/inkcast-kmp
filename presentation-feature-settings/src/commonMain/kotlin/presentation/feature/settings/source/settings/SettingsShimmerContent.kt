@@ -15,6 +15,16 @@ import presentation.core.styling.core.Theme
 import presentation.core.ui.core.modifier.ShimmerProvider
 import presentation.core.ui.core.modifier.shimmerable
 
+/**
+ * Shimmer loading placeholder for the Settings screen.
+ *
+ * Mirrors the layout of [SettingsSuccessContent] with shimmering boxes in place
+ * of section headers and segmented button groups, providing a skeleton preview
+ * while preferences are being loaded.
+ *
+ * @see SettingsSuccessContent
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @Composable
 internal fun SettingsShimmerContent() {
     ShimmerProvider(isLoading = true) {
@@ -23,7 +33,7 @@ internal fun SettingsShimmerContent() {
                 .fillMaxSize()
                 .padding(horizontal = Theme.spacing.spacingL),
         ) {
-            // Section header placeholder
+            // Section header placeholder for the language setting
             Box(
                 modifier = Modifier
                     .fillMaxWidth(0.4f)
@@ -33,7 +43,7 @@ internal fun SettingsShimmerContent() {
 
             Spacer(modifier = Modifier.height(Theme.spacing.spacingM))
 
-            // SegmentedButtonGroup placeholder
+            // SegmentedButtonGroup placeholder for the language selector
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -43,7 +53,7 @@ internal fun SettingsShimmerContent() {
 
             Spacer(modifier = Modifier.height(Theme.spacing.spacingL))
 
-            // Section header placeholder
+            // Section header placeholder for the theme setting
             Box(
                 modifier = Modifier
                     .fillMaxWidth(0.3f)
@@ -53,7 +63,7 @@ internal fun SettingsShimmerContent() {
 
             Spacer(modifier = Modifier.height(Theme.spacing.spacingM))
 
-            // SegmentedButtonGroup placeholder
+            // SegmentedButtonGroup placeholder for the theme selector
             Box(
                 modifier = Modifier
                     .fillMaxWidth()

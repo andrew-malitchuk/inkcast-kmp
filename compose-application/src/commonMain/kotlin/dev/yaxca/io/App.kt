@@ -25,11 +25,17 @@ import presentation.core.styling.source.theme.AppTheme
 private const val DEMO_MODE = false
 
 /**
- * Root application composable.
+ * Root application composable that wires locale, theme, and navigation.
  *
  * Observes the persisted language and theme preferences reactively,
  * then wraps the navigation graph in [AppLocaleProvider] and [AppTheme]
  * so that every screen receives the correct locale and colour scheme.
+ *
+ * @param sharedUrl Optional URL received via Android share intent, provided to screens
+ *   through [LocalSharedUrl] composition local. `null` when launched normally.
+ *
+ * @see NavigationHost
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
  */
 @Composable
 public fun App(sharedUrl: String? = null) {

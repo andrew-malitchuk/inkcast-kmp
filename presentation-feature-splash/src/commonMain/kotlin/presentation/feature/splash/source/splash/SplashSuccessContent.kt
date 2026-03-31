@@ -12,6 +12,18 @@ import androidx.compose.ui.unit.dp
 import presentation.core.styling.core.Theme
 import presentation.core.ui.source.kit.atom.icon.AppIcon
 
+/**
+ * Success-state content for the Splash screen.
+ *
+ * Displays the application icon centered on the canvas background.
+ * This is shown while [SplashViewModel] determines the initial navigation destination.
+ *
+ * @param state Current [SplashState]; reserved for future use (e.g. progress indicators).
+ * @param onIntent Callback to dispatch [SplashIntent] actions to the ViewModel.
+ *
+ * @see SplashContent
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @Composable
 internal fun SplashSuccessContent(
     state: SplashState,

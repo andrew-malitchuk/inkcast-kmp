@@ -20,6 +20,19 @@ import presentation.core.ui.source.kit.atom.snackbar.StackedSnackbarDuration
 import presentation.core.ui.source.kit.atom.snackbar.StackedSnackbarHost
 import presentation.core.ui.source.kit.atom.snackbar.rememberStackedSnackbarHostState
 
+/**
+ * Screen-level composable for the file manager feature.
+ *
+ * Collects MVI state and side effects from [HomeFilesViewModel], wires up the
+ * file picker launcher for EPUB uploads, and displays snackbar notifications.
+ * Delegates rendering to [HomeFilesContent].
+ *
+ * @param viewModel ViewModel instance provided by Koin.
+ *
+ * @see HomeFilesContract
+ * @see HomeFilesContent
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @Composable
 public fun HomeFilesScreen(viewModel: HomeFilesViewModel = koinViewModel()) {
     val state = viewModel.collectAsState()

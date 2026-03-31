@@ -12,6 +12,19 @@ import org.jetbrains.compose.resources.stringResource
 import presentation.core.styling.core.Theme
 import presentation.core.ui.source.kit.molecule.header.SimpleHeader
 
+/**
+ * Root content composable for the Create EPUB screen.
+ *
+ * Renders the screen header and delegates the body to
+ * [HomeCreateSuccessContent]. A shimmer or error branch can be added
+ * here in the future based on [HomeCreateState.isLoading].
+ *
+ * @param state Current immutable UI state snapshot from [HomeCreateViewModel].
+ * @param onIntent Callback that forwards user intents to the ViewModel.
+ *
+ * @see HomeCreateSuccessContent
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @Composable
 internal fun HomeCreateContent(
     state: HomeCreateState,

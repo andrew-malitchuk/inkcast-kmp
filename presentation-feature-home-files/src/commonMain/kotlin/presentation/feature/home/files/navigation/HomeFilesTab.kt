@@ -11,6 +11,17 @@ import androidx.navigation3.ui.NavDisplay
 import org.orbitmvi.orbit.annotation.OrbitExperimental
 import presentation.feature.home.files.source.files.HomeFilesScreen
 
+/**
+ * Top-level composable for the files tab inside the home screen.
+ *
+ * Manages a local navigation back stack scoped to the files tab and renders
+ * the appropriate destination screen. Supports resetting the back stack to root
+ * when the tab is re-selected.
+ *
+ * @param resetTrigger Incremented value that triggers popping the back stack to root.
+ *
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @OptIn(OrbitExperimental::class)
 @Composable
 public fun HomeFilesTab(resetTrigger: Int = 0) {

@@ -37,6 +37,20 @@ import presentation.core.ui.source.kit.molecule.button.SegmentedButtonGroup
 import presentation.core.ui.source.kit.molecule.setting.SettingRow
 import presentation.core.ui.source.kit.organism.pulltorefresh.AppPullToRefreshBox
 
+/**
+ * Main content composable for the device settings screen in its loaded state.
+ *
+ * Displays device system information (uptime, free RAM, firmware, IP,
+ * Wi-Fi mode), orientation and UI-theme pickers via [SegmentedButtonGroup],
+ * and a "Change device" button at the bottom. Supports pull-to-refresh to
+ * re-fetch all device data.
+ *
+ * @param state Current immutable UI state snapshot from [HomeDeviceViewModel].
+ * @param onIntent Callback that forwards user intents to the ViewModel.
+ *
+ * @see HomeDeviceContent
+ * @see <a href="https://www.figma.com/design/STUB_REPLACE_ME">Figma</a>
+ */
 @Composable
 internal fun HomeDeviceSuccessContent(
     state: HomeDeviceState,
@@ -52,6 +66,7 @@ internal fun HomeDeviceSuccessContent(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState()),
         ) {
+            // region Device Info
             SectionHeader(title = stringResource(Res.string.device_info))
             SettingRow(
                 label = stringResource(Res.string.device_uptime),
@@ -77,19 +92,25 @@ internal fun HomeDeviceSuccessContent(
             SettingRow(label = stringResource(Res.string.device_firmware), icon = Settings, trailing = { Text(text = state.firmware, style = Theme.typography.bodyEmphasis, color = Theme.color.inkMain) })
             SettingRow(label = stringResource(Res.string.device_ip), icon = Wifi, trailing = { Text(text = state.ipAddress, style = Theme.typography.bodyEmphasis, color = Theme.color.inkMain) })
             SettingRow(label = stringResource(Res.string.device_wifi_mode), icon = Wifi, trailing = { Text(text = state.wifiMode, style = Theme.typography.bodyEmphasis, color = Theme.color.inkMain) })
+            // endregion
 
             Spacer(modifier = Modifier.height(Theme.spacing.spacingL))
 
+            // region Orientation picker
             SectionHeader(title = stringResource(Res.string.device_orientation))
             SegmentedButtonGroup(items = state.orientationOptions, selectedIndex = state.selectedOrientationIndex, onSelect = { onIntent(HomeDeviceIntent.SelectOrientation(it)) }, modifier = Modifier.fillMaxWidth().padding(horizontal = Theme.spacing.spacingL))
+            // endregion
 
             Spacer(modifier = Modifier.height(Theme.spacing.spacingL))
 
+            // region Theme picker
             SectionHeader(title = stringResource(Res.string.device_interface_theme))
             SegmentedButtonGroup(items = state.themeOptions, selectedIndex = state.selectedThemeIndex, onSelect = { onIntent(HomeDeviceIntent.SelectTheme(it)) }, modifier = Modifier.fillMaxWidth().padding(horizontal = Theme.spacing.spacingL))
+            // endregion
 
             Spacer(modifier = Modifier.height(Theme.spacing.spacingXL))
 
+            // "Change device" navigates to the Connection screen.
             Button(text = stringResource(Res.string.device_change_device), onClick = { onIntent(HomeDeviceIntent.ChangeDevice) }, style = ButtonStyle.Primary, size = ButtonSizeType.Large, modifier = Modifier.fillMaxWidth().padding(horizontal = Theme.spacing.spacingL))
 
             Spacer(modifier = Modifier.height(Theme.spacing.spacing5XL))
