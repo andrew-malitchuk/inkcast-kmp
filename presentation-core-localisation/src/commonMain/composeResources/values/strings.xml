@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Onboarding -->
+    <string name="onboarding_title">Welcome to Your Library</string>
+    <string name="onboarding_description">Seamlessly sync your books, customize your e-ink screensavers, and convert web articles to e-book format.</string>
+    <string name="onboarding_get_started">Get Started</string>
+
+    <!-- Tabs -->
+    <string name="tab_files">Files</string>
+    <string name="tab_create">Create</string>
+    <string name="tab_sleep">Sleep</string>
+    <string name="tab_device">Device</string>
+
+    <!-- Splash -->
+    <string name="splash_title">Splash</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_language_en">English</string>
+    <string name="settings_language_uk">Українська</string>
+    <string name="settings_language_es">Español</string>
+    <string name="settings_language_de">Deutsch</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+
+    <!-- Connection -->
+    <string name="connection_title">Connection</string>
+    <string name="connection_auto_discovery">Auto-Discovery</string>
+    <string name="connection_auto_discovery_description">Scan your local network for nearby devices. Ensure your e-reader is on the same Wi-Fi connection.</string>
+    <string name="connection_scanning">Scanning…</string>
+    <string name="connection_scan_for_devices">Scan for Devices</string>
+    <string name="connection_manual_connection">Manual Connection</string>
+    <string name="connection_manual_description">Enter your device IP address manually if it doesn't appear in the automatic scan.</string>
+    <string name="connection_ip_address">IP Address</string>
+    <string name="connection_ip_placeholder">192.168.1.XX</string>
+    <string name="connection_connecting">Connecting…</string>
+    <string name="connection_connect">Connect</string>
+
+    <!-- File Manager -->
+    <string name="files_title">File Manager</string>
+    <string name="files_no_files">No files</string>
+    <string name="files_uploading_progress">Uploading %1$s%%</string>
+    <string name="files_folder">Folder</string>
+    <string name="files_new_folder">New Folder</string>
+    <string name="files_folder_name">Folder name</string>
+    <string name="files_create">Create</string>
+    <string name="files_delete">Delete</string>
+    <string name="files_delete_message">Delete %1$s?</string>
+    <string name="files_delete_folder_hint">This will delete the folder and all its contents.</string>
+    <string name="files_rename">Rename</string>
+    <string name="files_new_name">New name</string>
+    <string name="files_cancel">Cancel</string>
+    <string name="files_actions">Actions</string>
+    <string name="files_add">Add</string>
+    <string name="files_upload_file">Upload File</string>
+
+    <!-- Device -->
+    <string name="device_title">Device</string>
+    <string name="device_info">Device Info</string>
+    <string name="device_uptime">Uptime</string>
+    <string name="device_free_ram">Free RAM</string>
+    <string name="device_firmware">Firmware</string>
+    <string name="device_ip">IP</string>
+    <string name="device_wifi_mode">Wi-Fi Mode</string>
+    <string name="device_orientation">Orientation</string>
+    <string name="device_interface_theme">Interface Theme</string>
+    <string name="device_change_device">Change Device</string>
+
+    <!-- Sleep Screen -->
+    <string name="sleep_title">Sleep Screen</string>
+    <string name="sleep_crop_position">Crop &amp; Position</string>
+    <string name="sleep_drag_hint">Drag to pan, pinch to zoom</string>
+    <string name="sleep_eink_preview">E-ink Preview</string>
+    <string name="sleep_preview_description">Sleep screen preview</string>
+    <string name="sleep_widget">Widget</string>
+    <string name="sleep_widget_none">None</string>
+    <string name="sleep_widget_calendar">Calendar</string>
+    <string name="sleep_widget_quote">Quote</string>
+    <string name="sleep_quote_placeholder">Quote text</string>
+    <string name="sleep_upload">Upload Sleep Screen</string>
+    <string name="sleep_on_device">On Device</string>
+    <string name="sleep_no_screens">No sleep screens on device</string>
+    <string name="sleep_delete">Delete</string>
+    <string name="sleep_delete_message">Delete %1$s?</string>
+    <string name="sleep_cancel">Cancel</string>
+    <string name="sleep_pick_hint">Tap the image icon to pick a photo</string>
+
+    <!-- Error -->
+    <string name="error_title">Oops, something went wrong</string>
+    <string name="error_description">We're already working on a fix. Please try again later.</string>
+
+    <!-- Create EPUB -->
+    <string name="create_title">Create EPUB</string>
+    <string name="create_description">Convert a web article or your own text into an EPUB file and send it directly to your e-reader.</string>
+    <string name="create_url">URL</string>
+    <string name="create_url_placeholder">https://example.com/article</string>
+    <string name="create_downloading">Downloading…</string>
+    <string name="create_download_article">Download Article</string>
+    <string name="create_input_title">Title</string>
+    <string name="create_title_placeholder">My Article</string>
+    <string name="create_content">Content</string>
+    <string name="create_content_placeholder">Paste your text here…</string>
+    <string name="create_generating">Generating…</string>
+    <string name="create_generate_epub">Generate EPUB</string>
+    <string name="create_ready_to_upload">Ready to Upload</string>
+    <string name="create_file_size_kb">%1$s KB</string>
+    <string name="create_upload_to_device">Upload to Device</string>
+    <string name="create_upload_success">File uploaded successfully</string>
+    <string name="create_device_not_reachable_title">Device Not Reachable</string>
+    <string name="create_device_not_reachable">Connect to your e-reader's Wi-Fi network to upload. If you haven't set up a device yet, tap \"Set Up Device\" below.</string>
+    <string name="create_device_not_reachable_setup">Set Up Device</string>
+    <string name="create_device_not_reachable_retry">Retry Upload</string>
+</resources>

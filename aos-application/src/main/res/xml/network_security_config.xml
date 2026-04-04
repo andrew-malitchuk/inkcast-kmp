@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!--
+        Cleartext HTTP is required for ESP32 device communication over local Wi-Fi.
+        Android's domain-config does not support IP-address matching, so cleartext
+        must be permitted globally. The app only uses HTTP for local device endpoints;
+        all internet traffic (article downloads) goes through HTTPS via Ktor defaults.
+    -->
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>

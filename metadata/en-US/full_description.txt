@@ -1,0 +1,11 @@
+Inkcast lets you send web articles, links, and documents to your e-reader device as properly formatted EPUB files over your local network.
+
+Features:
+- Discover e-reader devices on your local network automatically
+- Convert web links and articles into clean, readable EPUB format
+- Upload EPUB files directly to your e-reader wirelessly
+- Cross-platform: works on Android and iOS via Kotlin Multiplatform
+- Multiple language support (English, Ukrainian, Spanish, German)
+- No tracking, no ads, no account required
+
+Inkcast is built with Kotlin Multiplatform and Compose Multiplatform, providing a native experience on every platform. All processing happens locally on your device — no cloud services involved.

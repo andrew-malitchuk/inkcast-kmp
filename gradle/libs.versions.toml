@@ -1,0 +1,121 @@
+[versions]
+couchbaseLite = "3.2.4-1.2.0"
+minSdk = "27"
+playServicesHomeTypes = "17.0.0"
+targetSdk = "36"
+versionCode = "1"
+versionName = "0.0.1"
+applicationId = "dev.inkcast.aos"
+
+agp = "9.0.0"
+androidx-activity = "1.13.0"
+androidx-appcompat = "1.7.1"
+androidx-constraintlayout = "2.2.1"
+androidx-core = "1.18.0"
+androidx-espresso = "3.6.1"
+androidx-lifecycle = "2.9.6"
+androidx-testExt = "1.2.1"
+composeMultiplatform = "1.10.2"
+junit = "4.13.2"
+kotlin = "2.3.20"
+orgJetbrainsKotlinMultiplatformGradlePlugin = "2.3.20"
+gradle = "9.0.0"
+composeGradlePlugin = "1.10.2"
+kotlinGradlePlugin = "2.0.20"
+kotlinxCoroutinesCore = "1.9.0"
+koin = "4.1.1"
+
+kotlinxSerializationCore = "1.10.0"
+ktor = "3.1.3"
+
+navigation3 = "1.0.0-alpha05"
+navigationCompose = "2.9.2"
+material3WindowSizeClassMultiplatform = "0.5.0"
+
+datastorePreferences = "1.1.7"
+multiplatformSettings = "1.3.0"
+stately = "2.1.0"
+atomicfu = "0.31.0"
+window = "1.5.1"
+connectivity = "2.4.1"
+glanceAppwidget = "1.1.1"
+kotlinx-serialization = "1.6.0"
+
+filekit = "0.10.0"
+
+orbitCompose = "11.0.0"
+orbitCore = "11.0.0"
+orbitViewmodel = "11.0.0"
+
+
+[libraries]
+androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
+androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx-constraintlayout" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
+androidx-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-runtimeCompose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
+couchbase-lite = { module = "dev.kotbase:couchbase-lite", version.ref = "couchbaseLite" }
+couchbase-lite-ktx = { module = "dev.kotbase:couchbase-lite-ktx", version.ref = "couchbaseLite" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationCore" }
+play-services-home = { module = "com.google.android.gms:play-services-home", version = "17.0.0" }
+org-jetbrains-kotlin-multiplatform-gradle-plugin = { module = "org.jetbrains.kotlin.multiplatform:org.jetbrains.kotlin.multiplatform.gradle.plugin", version.ref = "orgJetbrainsKotlinMultiplatformGradlePlugin" }
+gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinGradlePlugin" }
+compose-gradle-plugin = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "composeGradlePlugin" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version = "kotlinxCoroutinesCore" }
+
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-android-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
+koin-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
+
+navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+navigation3-ui = { group = "org.jetbrains.androidx.navigation3", name = "navigation3-ui", version.ref = "navigation3" }
+kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinxSerializationCore" }
+material3-windowsizeclass-multiplatform = { group = "dev.chrisbanes.material3", name = "material3-window-size-class-multiplatform", version.ref = "material3WindowSizeClassMultiplatform" }
+
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
+multiplatform-settings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatformSettings" }
+multiplatform-settings-coroutines = { module = "com.russhwolf:multiplatform-settings-coroutines", version.ref = "multiplatformSettings" }
+
+play-services-home-types = { module = "com.google.android.gms:play-services-home-types", version.ref = "playServicesHomeTypes" }
+stately-collections = { module = "co.touchlab:stately-concurrent-collections", version.ref = "stately" }
+atomicfu = { module = "org.jetbrains.kotlinx:atomicfu", version.ref = "atomicfu" }
+androidx-window = { group = "androidx.window", name = "window", version.ref = "window" }
+
+connectivity-core = { module = "dev.jordond.connectivity:connectivity-core", version.ref = "connectivity" }
+connectivity-device = { module = "dev.jordond.connectivity:connectivity-device", version.ref = "connectivity" }
+connectivity-android = { module = "dev.jordond.connectivity:connectivity-android", version.ref = "connectivity" }
+connectivity-apple = { module = "dev.jordond.connectivity:connectivity-apple", version.ref = "connectivity" }
+connectivity-http = { module = "dev.jordond.connectivity:connectivity-http", version.ref = "connectivity" }
+connectivity-compose = { module = "dev.jordond.connectivity:connectivity-compose", version.ref = "connectivity" }
+connectivity-compose-device = { module = "dev.jordond.connectivity:connectivity-compose-device", version.ref = "connectivity" }
+connectivity-compose-http = { module = "dev.jordond.connectivity:connectivity-compose-http", version.ref = "connectivity" }
+androidx-glance-appwidget = { group = "androidx.glance", name = "glance-appwidget", version.ref = "glanceAppwidget" }
+
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
+ktor-client-websockets = { module = "io.ktor:ktor-client-websockets", version.ref = "ktor" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+
+filekit-core = { module = "io.github.vinceglb:filekit-core", version.ref = "filekit" }
+filekit-dialogs-compose = { module = "io.github.vinceglb:filekit-dialogs-compose", version.ref = "filekit" }
+
+orbit-compose = { module = "org.orbit-mvi:orbit-compose", version.ref = "orbitCompose" }
+orbit-viewmodel = { module = "org.orbit-mvi:orbit-viewmodel", version.ref = "orbitViewmodel" }
+orbit-core = { module = "org.orbit-mvi:orbit-core", version.ref = "orbitCore" }
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
+androidMultiplatformLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
+composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
