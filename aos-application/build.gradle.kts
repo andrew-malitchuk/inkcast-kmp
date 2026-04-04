@@ -1,4 +1,6 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.androidApplication)
@@ -9,6 +11,29 @@ plugins {
 android {
     namespace = libs.versions.applicationId.get()
     compileSdk = libs.versions.targetSdk.get().toInt()
+
+    // Load signing configuration from local properties
+    val signingPropertiesFile = File(rootDir, "./configure/secrets/signing.properties")
+    if (signingPropertiesFile.exists()) {
+        val signingProperties = Properties().also {
+            it.load(FileInputStream(signingPropertiesFile))
+        }
+
+        signingConfigs {
+            getByName("debug") {
+                keyAlias = signingProperties.getProperty("debugKey")
+                keyPassword = signingProperties.getProperty("debugPassword")
+                storePassword = signingProperties.getProperty("debugPassword")
+                storeFile = File(rootDir, "./configure/signing/yaxca.debug")
+            }
+            create("release") {
+                keyAlias = signingProperties.getProperty("releaseKey")
+                keyPassword = signingProperties.getProperty("releasePassword")
+                storePassword = signingProperties.getProperty("releasePassword")
+                storeFile = File(rootDir, "./configure/signing/yaxca.release")
+            }
+        }
+    }
 
     defaultConfig {
         applicationId = libs.versions.applicationId.get()
@@ -24,9 +49,20 @@ android {
         }
     }
 
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
+    }
+
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            signingConfig = signingConfigs.findByName("release")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                rootProject.file("proguard-rules.pro"),
+            )
         }
     }
 
