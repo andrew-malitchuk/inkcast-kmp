@@ -1,6 +1,7 @@
 package presentation.feature.connection.source.connection
 
 import androidx.lifecycle.ViewModel
+import domain.core.monad.Failure
 import domain.usecase.api.source.usecase.reader.DiscoverDevicesUseCase
 import domain.usecase.api.source.usecase.reader.GetDeviceIpUseCase
 import domain.usecase.api.source.usecase.reader.GetLastConnectedIpUseCase
@@ -55,12 +56,7 @@ public class ConnectionViewModel(
         reduce { state.copy(isLoading = true) }
         val ip = getDeviceIpUseCase().getOrNull()
             ?: getLastConnectedIpUseCase().getOrNull()
-        reduce {
-            state.copy(
-                isLoading = false,
-                ipAddress = ip ?: "",
-            )
-        }
+        reduce { state.copy(isLoading = false, ipAddress = ip ?: "") }
     }
 
     private fun onBackClick() = intent {
@@ -72,36 +68,23 @@ public class ConnectionViewModel(
      * CrossPoint devices on the local network.
      */
     private fun scanForDevices() = intent {
-        reduce {
-            state.copy(
-                isScanning = true,
-                scanStatus = "SCANNING…",
-                errorMessage = null,
-                discoveredDevices = emptyList(),
-            )
-        }
+        reduce { state.copy(isScanning = true, discoveredDevices = emptyList()) }
 
         val result = discoverDevicesUseCase()
-        val devices = result.getOrNull() ?: emptyList()
 
-        if (devices.isNotEmpty()) {
-            reduce {
-                state.copy(
-                    isScanning = false,
-                    scanStatus = "",
-                    discoveredDevices = devices,
-                )
-            }
-        } else {
-            reduce {
-                state.copy(
-                    isScanning = false,
-                    scanStatus = "",
-                    errorMessage = "",
-                )
-            }
-            postSideEffect(ConnectionSideEffect.ShowError)
-        }
+        result.fold(
+            onSuccess = { devices ->
+                reduce { state.copy(isScanning = false, discoveredDevices = devices) }
+            },
+            onFailure = { error ->
+                reduce { state.copy(isScanning = false) }
+                val errorType = when (error) {
+                    is Failure.Logic.NoDevicesFound -> ConnectionErrorType.NoDevicesFound
+                    else -> ConnectionErrorType.NetworkError
+                }
+                postSideEffect(ConnectionSideEffect.ShowError(errorType))
+            },
+        )
     }
 
     /**
@@ -110,7 +93,7 @@ public class ConnectionViewModel(
      * back without an extra HTTP verification round-trip.
      */
     private fun selectDevice(ip: String) = intent {
-        reduce { state.copy(isConnecting = true, errorMessage = null) }
+        reduce { state.copy(isConnecting = true) }
         setDeviceIpUseCase(ip)
         setLastConnectedIpUseCase(ip)
         reduce { state.copy(isConnecting = false) }
@@ -118,16 +101,20 @@ public class ConnectionViewModel(
     }
 
     private fun updateIpAddress(ip: String) = intent {
-        reduce { state.copy(ipAddress = ip, errorMessage = null) }
+        reduce { state.copy(ipAddress = ip) }
     }
 
     private fun connectManually() = intent {
         val ip = state.ipAddress.trim()
-        if (ip.isBlank()) {
-            reduce { state.copy(errorMessage = "Please enter an IP address.") }
-            return@intent
+        when {
+            ip.isBlank() -> {
+                postSideEffect(ConnectionSideEffect.ShowError(ConnectionErrorType.EmptyIp))
+            }
+            !IP_REGEX.matches(ip) -> {
+                postSideEffect(ConnectionSideEffect.ShowError(ConnectionErrorType.InvalidIp))
+            }
+            else -> connectToDevice(ip)
         }
-        connectToDevice(ip)
     }
 
     /**
@@ -135,7 +122,7 @@ public class ConnectionViewModel(
      * (bypasses preferences), then persists the IP and navigates back.
      */
     private fun connectToDevice(ip: String) = intent {
-        reduce { state.copy(isConnecting = true, errorMessage = null) }
+        reduce { state.copy(isConnecting = true) }
 
         val reachable = verifyDeviceUseCase(ip).getOrNull() ?: false
 
@@ -145,13 +132,12 @@ public class ConnectionViewModel(
             reduce { state.copy(isConnecting = false) }
             postSideEffect(ConnectionSideEffect.NavigateBack)
         } else {
-            reduce {
-                state.copy(
-                    isConnecting = false,
-                    errorMessage = "",
-                )
-            }
-            postSideEffect(ConnectionSideEffect.ShowError)
+            reduce { state.copy(isConnecting = false) }
+            postSideEffect(ConnectionSideEffect.ShowError(ConnectionErrorType.DeviceNotReachable))
         }
+    }
+
+    private companion object {
+        val IP_REGEX = Regex("""^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$""")
     }
 }

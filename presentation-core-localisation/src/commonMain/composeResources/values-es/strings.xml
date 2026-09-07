@@ -28,7 +28,7 @@
     <!-- Connection -->
     <string name="connection_title">Conexión</string>
     <string name="connection_auto_discovery">Detección automática</string>
-    <string name="connection_auto_discovery_description">Escanea tu red local en busca de dispositivos cercanos. Asegúrate de que tu lector electrónico esté en la misma red Wi-Fi.</string>
+    <string name="connection_auto_discovery_description">Busca dispositivos cercanos. Conecta tu teléfono primero al punto de acceso Wi-Fi del lector.</string>
     <string name="connection_scanning">Escaneando…</string>
     <string name="connection_scan_for_devices">Buscar dispositivos</string>
     <string name="connection_manual_connection">Conexión manual</string>
@@ -37,6 +37,11 @@
     <string name="connection_ip_placeholder">192.168.1.XX</string>
     <string name="connection_connecting">Conectando…</string>
     <string name="connection_connect">Conectar</string>
+    <string name="connection_no_devices_found">No se encontraron dispositivos. Asegúrate de que el punto de acceso del lector esté activo.</string>
+    <string name="connection_network_error">Error de red durante el escaneo. Comprueba tu conexión Wi-Fi.</string>
+    <string name="connection_hotspot_hint">Asegúrate de estar conectado al punto de acceso Wi-Fi del lector, no a tu red doméstica.</string>
+    <string name="connection_invalid_ip">Introduce una dirección IP válida (p.ej. 192.168.4.1).</string>
+    <string name="connection_enter_ip">Por favor, introduce una dirección IP.</string>
 
     <!-- File Manager -->
     <string name="files_title">Gestor de archivos</string>
@@ -55,6 +60,8 @@
     <string name="files_actions">Acciones</string>
     <string name="files_add">Añadir</string>
     <string name="files_upload_file">Subir archivo</string>
+    <string name="files_move">Mover</string>
+    <string name="files_move_destination">Ruta de destino (p. ej. /books)</string>
 
     <!-- Device -->
     <string name="device_title">Dispositivo</string>
@@ -67,6 +74,11 @@
     <string name="device_orientation">Orientación</string>
     <string name="device_interface_theme">Tema de interfaz</string>
     <string name="device_change_device">Cambiar dispositivo</string>
+    <string name="device_maintenance">Mantenimiento</string>
+    <string name="device_cache_clear">Limpiar caché de renderizado</string>
+    <string name="device_cache_clear_description">Elimina el directorio .crosspoint/. Soluciona los cuelgues por agotamiento de memoria. El dispositivo reconstruye la caché automáticamente en el siguiente uso.</string>
+    <string name="device_cache_cleared">Caché limpiada</string>
+    <string name="device_cache_clear_failed">Error al limpiar la caché</string>
 
     <!-- Sleep Screen -->
     <string name="sleep_title">Pantalla de reposo</string>
@@ -87,9 +99,54 @@
     <string name="sleep_cancel">Cancelar</string>
     <string name="sleep_pick_hint">Toca el icono de imagen para elegir una foto</string>
 
+    <!-- Upload: shared device-not-reachable bottom sheet -->
+    <string name="upload_device_not_reachable_title">Dispositivo no disponible</string>
+    <string name="upload_device_not_reachable_body">Conéctate al punto de acceso Wi-Fi del lector para subir. Si aún no has configurado un dispositivo, toca «Configurar dispositivo».</string>
+    <string name="upload_device_not_reachable_setup">Configurar dispositivo</string>
+    <string name="upload_device_not_reachable_retry">Reintentar subida</string>
+
     <!-- Error -->
     <string name="error_title">Vaya, algo salió mal</string>
     <string name="error_description">Ya estamos trabajando en una solución. Inténtalo de nuevo más tarde.</string>
+
+    <!-- Onboarding: hotspot setup step -->
+    <string name="onboarding_setup_title">Conecta tu lector electrónico</string>
+    <string name="onboarding_setup_step1">1. En tu lector, ve a Transferencia de archivos y toca Crear punto de acceso.</string>
+    <string name="onboarding_setup_step2">2. Abre los ajustes Wi-Fi de tu teléfono y conéctate a la red del lector.</string>
+    <string name="onboarding_setup_step3">3. Vuelve aquí y toca «Buscar dispositivos» o introduce la IP manualmente.</string>
+    <string name="onboarding_setup_hint">La IP por defecto suele ser 192.168.4.1</string>
+    <string name="onboarding_continue">Continuar</string>
+
+    <!-- Sleep Screen: status messages -->
+    <string name="sleep_status_decoding">Decodificando…</string>
+    <string name="sleep_status_decode_failed">Error al decodificar la imagen</string>
+    <string name="sleep_status_uploading">Subiendo %1$s%%</string>
+    <string name="sleep_status_upload_complete">Subida completa</string>
+    <string name="sleep_status_upload_failed">Error en la subida</string>
+    <string name="sleep_status_deleted">Eliminado: %1$s</string>
+    <string name="sleep_status_delete_failed">Error al eliminar</string>
+
+    <!-- File Manager: status messages -->
+    <string name="files_status_load_failed">Error al cargar archivos</string>
+    <string name="files_status_folders_no_rename">Las carpetas no se pueden renombrar</string>
+    <string name="files_status_created">Creado: %1$s</string>
+    <string name="files_status_create_failed">Error al crear carpeta</string>
+    <string name="files_status_deleted">Eliminado: %1$s</string>
+    <string name="files_status_delete_failed">Error al eliminar</string>
+    <string name="files_status_uploaded">Subido: %1$s</string>
+    <string name="files_status_upload_failed">Error en la subida</string>
+    <string name="files_status_renamed">Renombrado a: %1$s</string>
+    <string name="files_status_rename_failed">Error al renombrar</string>
+    <string name="files_status_moved">Movido: %1$s</string>
+    <string name="files_status_move_failed">Error al mover</string>
+
+    <!-- Create EPUB: status/error messages -->
+    <string name="create_status_enter_url">Por favor, introduce una URL.</string>
+    <string name="create_status_enter_text">Por favor, introduce algún texto.</string>
+    <string name="create_status_download_failed">Error al descargar el artículo.</string>
+    <string name="create_status_generate_failed">Error al generar el EPUB.</string>
+    <string name="create_status_building">Creando EPUB…</string>
+    <string name="create_status_uploading">Subiendo %1$s%%</string>
 
     <!-- Create EPUB -->
     <string name="create_title">Crear EPUB</string>

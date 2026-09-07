@@ -1,6 +1,7 @@
 package presentation.feature.home.device.source.device
 
 import androidx.lifecycle.ViewModel
+import domain.usecase.api.source.usecase.reader.DeleteItemUseCase
 import domain.usecase.api.source.usecase.reader.GetDeviceIpUseCase
 import domain.usecase.api.source.usecase.reader.GetDeviceSettingsUseCase
 import domain.usecase.api.source.usecase.reader.GetDeviceStatusUseCase
@@ -20,6 +21,7 @@ import org.orbitmvi.orbit.viewmodel.container
  * @property getDeviceSettingsUseCase Retrieves device display settings.
  * @property updateDeviceSettingsUseCase Pushes updated settings to the device.
  * @property getDeviceIpUseCase Retrieves the persisted device IP address.
+ * @property deleteItemUseCase Deletes a file or directory on the device (used for cache clearing).
  */
 @OrbitExperimental
 public class HomeDeviceViewModel(
@@ -27,6 +29,7 @@ public class HomeDeviceViewModel(
     private val getDeviceSettingsUseCase: GetDeviceSettingsUseCase,
     private val updateDeviceSettingsUseCase: UpdateDeviceSettingsUseCase,
     private val getDeviceIpUseCase: GetDeviceIpUseCase,
+    private val deleteItemUseCase: DeleteItemUseCase,
 ) : ContainerHost<HomeDeviceState, HomeDeviceSideEffect>, ViewModel() {
 
     override val container: Container<HomeDeviceState, HomeDeviceSideEffect> =
@@ -40,6 +43,7 @@ public class HomeDeviceViewModel(
             is HomeDeviceIntent.SelectOrientation -> selectOrientation(intent.index)
             is HomeDeviceIntent.SelectTheme -> selectTheme(intent.index)
             is HomeDeviceIntent.ChangeDevice -> handleChangeDevice()
+            is HomeDeviceIntent.ClearCache -> clearCache()
         }
     }
 
@@ -141,6 +145,16 @@ public class HomeDeviceViewModel(
 
     private fun handleChangeDevice() = intent {
         postSideEffect(HomeDeviceSideEffect.NavigateToConnection)
+    }
+
+    private fun clearCache() = intent {
+        reduce { state.copy(isClearingCache = true) }
+        val result = deleteItemUseCase("/.crosspoint", isDirectory = true)
+        reduce { state.copy(isClearingCache = false) }
+        result.fold(
+            onSuccess = { postSideEffect(HomeDeviceSideEffect.ShowCacheCleared) },
+            onFailure = { postSideEffect(HomeDeviceSideEffect.ShowCacheClearFailed) },
+        )
     }
 
     // region Formatting helpers

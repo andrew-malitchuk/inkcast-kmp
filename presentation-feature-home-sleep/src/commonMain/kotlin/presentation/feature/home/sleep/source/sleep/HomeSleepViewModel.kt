@@ -2,9 +2,11 @@ package presentation.feature.home.sleep.source.sleep
 
 import androidx.lifecycle.ViewModel
 import domain.usecase.api.source.usecase.reader.DeleteItemUseCase
+import domain.usecase.api.source.usecase.reader.GetDeviceIpUseCase
 import domain.usecase.api.source.usecase.reader.ListFilesUseCase
 import domain.usecase.api.source.usecase.reader.UpdateDeviceSettingsUseCase
 import domain.usecase.api.source.usecase.reader.UploadEpubUseCase
+import domain.usecase.api.source.usecase.reader.VerifyDeviceUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.orbitmvi.orbit.Container
@@ -26,10 +28,16 @@ import presentation.core.platform.source.image.WidgetRenderer
  * (crop, resize, dither, widget overlay), uploading to the device,
  * and managing the on-device gallery.
  *
+ * Upload performs a two-step reachability check before transferring bytes:
+ * 1. Resolves the persisted device IP via [getDeviceIpUseCase].
+ * 2. Pings the device via [verifyDeviceUseCase].
+ *
  * @property listFilesUseCase Lists files on the device.
  * @property uploadEpubUseCase Uploads files to the device via WebSocket.
  * @property deleteItemUseCase Deletes files on the device.
  * @property updateDeviceSettingsUseCase Updates device settings.
+ * @property getDeviceIpUseCase Retrieves the stored device IP address.
+ * @property verifyDeviceUseCase Checks whether the device is reachable at a given IP.
  */
 @OrbitExperimental
 public class HomeSleepViewModel(
@@ -37,6 +45,8 @@ public class HomeSleepViewModel(
     private val uploadEpubUseCase: UploadEpubUseCase,
     private val deleteItemUseCase: DeleteItemUseCase,
     private val updateDeviceSettingsUseCase: UpdateDeviceSettingsUseCase,
+    private val getDeviceIpUseCase: GetDeviceIpUseCase,
+    private val verifyDeviceUseCase: VerifyDeviceUseCase,
 ) : ContainerHost<HomeSleepState, HomeSleepSideEffect>, ViewModel() {
 
     // NOTE: Stored outside Orbit state because raw pixel/BMP data is not meaningful
@@ -60,6 +70,9 @@ public class HomeSleepViewModel(
             is HomeSleepIntent.WidgetSelected -> onWidgetSelected(intent.index)
             is HomeSleepIntent.QuoteChanged -> onQuoteChanged(intent.text)
             is HomeSleepIntent.Upload -> upload()
+            is HomeSleepIntent.DismissDeviceNotReachable -> dismissDeviceNotReachable()
+            is HomeSleepIntent.RetryUpload -> retryUpload()
+            is HomeSleepIntent.SetUpDevice -> setUpDevice()
             is HomeSleepIntent.OnGalleryItemMoreClick -> showDeleteConfirmation(intent.file)
             is HomeSleepIntent.ConfirmDeleteGalleryItem -> deleteGalleryItem(intent.file)
             is HomeSleepIntent.DismissDialog -> dismissDialog()
@@ -72,7 +85,7 @@ public class HomeSleepViewModel(
     }
 
     private fun onImageSelected(bytes: ByteArray) = intent {
-        reduce { state.copy(isProcessing = true, statusMessage = "Decoding...") }
+        reduce { state.copy(isProcessing = true, statusMessage = HomeSleepStatusMessage.Decoding) }
         val decoded = withContext(Dispatchers.Default) {
             ImageDecoder.decode(bytes)
         }
@@ -88,12 +101,12 @@ public class HomeSleepViewModel(
                     offsetX = 0.5f,
                     offsetY = 0.5f,
                     zoom = 1f,
-                    statusMessage = "",
+                    statusMessage = null,
                 )
             }
             processImage()
         } else {
-            reduce { state.copy(isProcessing = false, statusMessage = "Failed to decode image") }
+            reduce { state.copy(isProcessing = false, statusMessage = HomeSleepStatusMessage.DecodeFailed) }
         }
     }
 
@@ -139,12 +152,29 @@ public class HomeSleepViewModel(
         }
 
         bmpBytes = result.first
-        reduce { state.copy(isProcessing = false, previewBitmap = result.second, statusMessage = "") }
+        reduce { state.copy(isProcessing = false, previewBitmap = result.second, statusMessage = null) }
     }
 
     private fun upload() = intent {
         val bytes = bmpBytes ?: return@intent
-        reduce { state.copy(isUploading = true, uploadProgress = 0, statusMessage = "Uploading...") }
+
+        val ip = getDeviceIpUseCase().getOrNull()
+        if (ip.isNullOrBlank()) {
+            reduce { state.copy(showDeviceNotReachable = true) }
+            return@intent
+        }
+
+        val reachable = verifyDeviceUseCase(ip).getOrNull() ?: false
+        if (!reachable) {
+            reduce { state.copy(showDeviceNotReachable = true) }
+            return@intent
+        }
+
+        doUpload(bytes)
+    }
+
+    private fun doUpload(bytes: ByteArray) = intent {
+        reduce { state.copy(isUploading = true, uploadProgress = 0, statusMessage = HomeSleepStatusMessage.Uploading(0)) }
 
         try {
             updateDeviceSettingsUseCase(mapOf("sleepScreen" to 2))
@@ -159,7 +189,7 @@ public class HomeSleepViewModel(
             onProgress = { progress ->
                 if (progress == 100 || progress - lastReportedProgress >= 5) {
                     lastReportedProgress = progress
-                    intent { reduce { state.copy(uploadProgress = progress) } }
+                    intent { reduce { state.copy(uploadProgress = progress, statusMessage = HomeSleepStatusMessage.Uploading(progress)) } }
                 }
             },
             remotePath = "/sleep/",
@@ -167,16 +197,29 @@ public class HomeSleepViewModel(
 
         result.fold(
             onSuccess = {
-                reduce { state.copy(isUploading = false, uploadProgress = 0, statusMessage = "Upload complete!") }
-                postSideEffect(HomeSleepSideEffect.ShowMessage("Upload complete!"))
+                reduce { state.copy(isUploading = false, uploadProgress = 0, statusMessage = HomeSleepStatusMessage.UploadComplete) }
+                postSideEffect(HomeSleepSideEffect.ShowUploadSuccess)
                 loadGallery()
             },
-            onFailure = { error ->
-                val message = error.message ?: "Upload failed"
-                reduce { state.copy(isUploading = false, uploadProgress = 0, statusMessage = message) }
-                postSideEffect(HomeSleepSideEffect.ShowError(message))
+            onFailure = {
+                reduce { state.copy(isUploading = false, uploadProgress = 0, statusMessage = HomeSleepStatusMessage.UploadFailed, showDeviceNotReachable = true) }
+                postSideEffect(HomeSleepSideEffect.ShowUploadError)
             },
         )
+    }
+
+    private fun dismissDeviceNotReachable() = intent {
+        reduce { state.copy(showDeviceNotReachable = false) }
+    }
+
+    private fun retryUpload() = intent {
+        reduce { state.copy(showDeviceNotReachable = false) }
+        upload()
+    }
+
+    private fun setUpDevice() = intent {
+        reduce { state.copy(showDeviceNotReachable = false) }
+        postSideEffect(HomeSleepSideEffect.NavigateToConnection)
     }
 
     private fun loadGallery() = intent {
@@ -224,11 +267,13 @@ public class HomeSleepViewModel(
         val result = deleteItemUseCase("/sleep/${file.name}")
         result.fold(
             onSuccess = {
-                postSideEffect(HomeSleepSideEffect.ShowMessage("Deleted: ${file.name}"))
+                reduce { state.copy(statusMessage = HomeSleepStatusMessage.Deleted(file.name ?: "")) }
+                postSideEffect(HomeSleepSideEffect.ShowDeleteSuccess(file.name ?: ""))
                 loadGallery()
             },
             onFailure = {
-                postSideEffect(HomeSleepSideEffect.ShowError("Failed to delete"))
+                reduce { state.copy(statusMessage = HomeSleepStatusMessage.DeleteFailed) }
+                postSideEffect(HomeSleepSideEffect.ShowDeleteError)
             },
         )
     }

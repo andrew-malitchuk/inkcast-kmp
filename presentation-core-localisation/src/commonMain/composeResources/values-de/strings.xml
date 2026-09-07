@@ -28,7 +28,7 @@
     <!-- Connection -->
     <string name="connection_title">Verbindung</string>
     <string name="connection_auto_discovery">Automatische Erkennung</string>
-    <string name="connection_auto_discovery_description">Durchsuche dein lokales Netzwerk nach Geräten in der Nähe. Stelle sicher, dass dein E-Reader mit demselben WLAN verbunden ist.</string>
+    <string name="connection_auto_discovery_description">Suche nach Geräten in der Nähe. Verbinde dein Telefon zuerst mit dem WLAN-Hotspot des E-Readers.</string>
     <string name="connection_scanning">Wird gescannt…</string>
     <string name="connection_scan_for_devices">Geräte suchen</string>
     <string name="connection_manual_connection">Manuelle Verbindung</string>
@@ -37,6 +37,11 @@
     <string name="connection_ip_placeholder">192.168.1.XX</string>
     <string name="connection_connecting">Verbindung wird hergestellt…</string>
     <string name="connection_connect">Verbinden</string>
+    <string name="connection_no_devices_found">Keine Geräte gefunden. Stelle sicher, dass der Hotspot des E-Readers aktiv ist.</string>
+    <string name="connection_network_error">Netzwerkfehler beim Scannen. Überprüfe deine WLAN-Verbindung.</string>
+    <string name="connection_hotspot_hint">Stelle sicher, dass du mit dem WLAN-Hotspot des E-Readers verbunden bist, nicht mit deinem Heimnetzwerk.</string>
+    <string name="connection_invalid_ip">Bitte gib eine gültige IP-Adresse ein (z.B. 192.168.4.1).</string>
+    <string name="connection_enter_ip">Bitte gib eine IP-Adresse ein.</string>
 
     <!-- File Manager -->
     <string name="files_title">Dateimanager</string>
@@ -55,6 +60,8 @@
     <string name="files_actions">Aktionen</string>
     <string name="files_add">Hinzufügen</string>
     <string name="files_upload_file">Datei hochladen</string>
+    <string name="files_move">Verschieben</string>
+    <string name="files_move_destination">Zielpfad (z. B. /books)</string>
 
     <!-- Device -->
     <string name="device_title">Gerät</string>
@@ -67,6 +74,11 @@
     <string name="device_orientation">Ausrichtung</string>
     <string name="device_interface_theme">Oberflächendesign</string>
     <string name="device_change_device">Gerät wechseln</string>
+    <string name="device_maintenance">Wartung</string>
+    <string name="device_cache_clear">Rendering-Cache leeren</string>
+    <string name="device_cache_clear_description">Löscht das .crosspoint/-Verzeichnis. Behebt Abstürze durch Speichererschöpfung. Das Gerät baut den Cache beim nächsten Gebrauch automatisch neu auf.</string>
+    <string name="device_cache_cleared">Cache geleert</string>
+    <string name="device_cache_clear_failed">Cache konnte nicht geleert werden</string>
 
     <!-- Sleep Screen -->
     <string name="sleep_title">Ruhebildschirm</string>
@@ -87,9 +99,54 @@
     <string name="sleep_cancel">Abbrechen</string>
     <string name="sleep_pick_hint">Tippe auf das Bildsymbol, um ein Foto auszuwählen</string>
 
+    <!-- Upload: shared device-not-reachable bottom sheet -->
+    <string name="upload_device_not_reachable_title">Gerät nicht erreichbar</string>
+    <string name="upload_device_not_reachable_body">Verbinde dich mit dem WLAN-Hotspot des E-Readers zum Hochladen. Falls du noch kein Gerät eingerichtet hast, tippe auf „Gerät einrichten".</string>
+    <string name="upload_device_not_reachable_setup">Gerät einrichten</string>
+    <string name="upload_device_not_reachable_retry">Erneut hochladen</string>
+
     <!-- Error -->
     <string name="error_title">Hoppla, etwas ist schiefgelaufen</string>
     <string name="error_description">Wir arbeiten bereits an einer Lösung. Bitte versuche es später erneut.</string>
+
+    <!-- Onboarding: hotspot setup step -->
+    <string name="onboarding_setup_title">Mit deinem E-Reader verbinden</string>
+    <string name="onboarding_setup_step1">1. Gehe auf deinem E-Reader zu „Dateiübertragung" und tippe auf „Hotspot erstellen".</string>
+    <string name="onboarding_setup_step2">2. Öffne die WLAN-Einstellungen deines Telefons und verbinde dich mit dem Netzwerk des E-Readers.</string>
+    <string name="onboarding_setup_step3">3. Komme hierher zurück und tippe auf „Geräte suchen" oder gib die IP manuell ein.</string>
+    <string name="onboarding_setup_hint">Die Standard-IP lautet meist 192.168.4.1</string>
+    <string name="onboarding_continue">Weiter</string>
+
+    <!-- Sleep Screen: status messages -->
+    <string name="sleep_status_decoding">Wird dekodiert…</string>
+    <string name="sleep_status_decode_failed">Bild konnte nicht dekodiert werden</string>
+    <string name="sleep_status_uploading">Hochladen %1$s%%</string>
+    <string name="sleep_status_upload_complete">Hochladen abgeschlossen</string>
+    <string name="sleep_status_upload_failed">Hochladen fehlgeschlagen</string>
+    <string name="sleep_status_deleted">Gelöscht: %1$s</string>
+    <string name="sleep_status_delete_failed">Löschen fehlgeschlagen</string>
+
+    <!-- File Manager: status messages -->
+    <string name="files_status_load_failed">Dateien konnten nicht geladen werden</string>
+    <string name="files_status_folders_no_rename">Ordner können nicht umbenannt werden</string>
+    <string name="files_status_created">Erstellt: %1$s</string>
+    <string name="files_status_create_failed">Ordner konnte nicht erstellt werden</string>
+    <string name="files_status_deleted">Gelöscht: %1$s</string>
+    <string name="files_status_delete_failed">Löschen fehlgeschlagen</string>
+    <string name="files_status_uploaded">Hochgeladen: %1$s</string>
+    <string name="files_status_upload_failed">Hochladen fehlgeschlagen</string>
+    <string name="files_status_renamed">Umbenannt zu: %1$s</string>
+    <string name="files_status_rename_failed">Umbenennen fehlgeschlagen</string>
+    <string name="files_status_moved">Verschoben: %1$s</string>
+    <string name="files_status_move_failed">Verschieben fehlgeschlagen</string>
+
+    <!-- Create EPUB: status/error messages -->
+    <string name="create_status_enter_url">Bitte gib eine URL ein.</string>
+    <string name="create_status_enter_text">Bitte gib einen Text ein.</string>
+    <string name="create_status_download_failed">Artikel konnte nicht heruntergeladen werden.</string>
+    <string name="create_status_generate_failed">EPUB konnte nicht generiert werden.</string>
+    <string name="create_status_building">EPUB wird erstellt…</string>
+    <string name="create_status_uploading">Hochladen %1$s%%</string>
 
     <!-- Create EPUB -->
     <string name="create_title">EPUB erstellen</string>

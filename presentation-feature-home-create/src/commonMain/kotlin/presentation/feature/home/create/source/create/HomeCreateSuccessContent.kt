@@ -27,16 +27,22 @@ import inkcast_kmp.presentation_core_localisation.generated.resources.Res
 import inkcast_kmp.presentation_core_localisation.generated.resources.create_content
 import inkcast_kmp.presentation_core_localisation.generated.resources.create_content_placeholder
 import inkcast_kmp.presentation_core_localisation.generated.resources.create_description
+import inkcast_kmp.presentation_core_localisation.generated.resources.create_device_not_reachable
+import inkcast_kmp.presentation_core_localisation.generated.resources.create_device_not_reachable_retry
+import inkcast_kmp.presentation_core_localisation.generated.resources.create_device_not_reachable_setup
+import inkcast_kmp.presentation_core_localisation.generated.resources.create_device_not_reachable_title
 import inkcast_kmp.presentation_core_localisation.generated.resources.create_download_article
 import inkcast_kmp.presentation_core_localisation.generated.resources.create_file_size_kb
 import inkcast_kmp.presentation_core_localisation.generated.resources.create_generate_epub
 import inkcast_kmp.presentation_core_localisation.generated.resources.create_input_title
 import inkcast_kmp.presentation_core_localisation.generated.resources.create_ready_to_upload
+import inkcast_kmp.presentation_core_localisation.generated.resources.create_status_building
+import inkcast_kmp.presentation_core_localisation.generated.resources.create_status_download_failed
+import inkcast_kmp.presentation_core_localisation.generated.resources.create_status_enter_text
+import inkcast_kmp.presentation_core_localisation.generated.resources.create_status_enter_url
+import inkcast_kmp.presentation_core_localisation.generated.resources.create_status_generate_failed
+import inkcast_kmp.presentation_core_localisation.generated.resources.create_status_uploading
 import inkcast_kmp.presentation_core_localisation.generated.resources.create_title_placeholder
-import inkcast_kmp.presentation_core_localisation.generated.resources.create_device_not_reachable
-import inkcast_kmp.presentation_core_localisation.generated.resources.create_device_not_reachable_retry
-import inkcast_kmp.presentation_core_localisation.generated.resources.create_device_not_reachable_setup
-import inkcast_kmp.presentation_core_localisation.generated.resources.create_device_not_reachable_title
 import inkcast_kmp.presentation_core_localisation.generated.resources.create_upload_to_device
 import inkcast_kmp.presentation_core_localisation.generated.resources.create_url
 import inkcast_kmp.presentation_core_localisation.generated.resources.create_url_placeholder
@@ -126,20 +132,30 @@ internal fun HomeCreateSuccessContent(
             // endregion
 
             // region Status / Error
-            state.statusMessage?.let { message ->
+            state.statusMessage?.let { msg ->
+                val text = when (msg) {
+                    is HomeCreateStatusMessage.Building -> stringResource(Res.string.create_status_building)
+                    is HomeCreateStatusMessage.Uploading -> stringResource(Res.string.create_status_uploading, msg.progress.toString())
+                }
                 Spacer(modifier = Modifier.height(Theme.spacing.spacingL))
                 Text(
-                    text = message,
+                    text = text,
                     style = Theme.typography.body,
                     color = Theme.color.inkSubtle,
                     modifier = Modifier.padding(horizontal = Theme.spacing.spacingL),
                 )
             }
 
-            state.errorMessage?.let { message ->
+            state.errorMessage?.let { msg ->
+                val text = when (msg) {
+                    HomeCreateErrorMessage.EnterUrl -> stringResource(Res.string.create_status_enter_url)
+                    HomeCreateErrorMessage.EnterText -> stringResource(Res.string.create_status_enter_text)
+                    HomeCreateErrorMessage.DownloadFailed -> stringResource(Res.string.create_status_download_failed)
+                    HomeCreateErrorMessage.GenerateFailed -> stringResource(Res.string.create_status_generate_failed)
+                }
                 Spacer(modifier = Modifier.height(Theme.spacing.spacingM))
                 Text(
-                    text = message,
+                    text = text,
                     style = Theme.typography.body,
                     color = Theme.color.error,
                     modifier = Modifier.padding(horizontal = Theme.spacing.spacingL),

@@ -8,6 +8,7 @@ import domain.usecase.api.source.usecase.configuration.ObserveThemeUseCase
 import domain.usecase.api.source.usecase.configuration.SetApplicationLanguageUseCase
 import domain.usecase.api.source.usecase.configuration.SetOnboardingStatusUseCase
 import domain.usecase.api.source.usecase.configuration.SetThemeUseCase
+import domain.usecase.api.source.usecase.reader.DetectFirmwareTypeUseCase
 import domain.usecase.api.source.usecase.reader.DiscoverDevicesUseCase
 import domain.usecase.api.source.usecase.reader.VerifyDeviceUseCase
 import domain.usecase.api.source.usecase.reader.CreateFolderUseCase
@@ -34,6 +35,7 @@ import domain.usecase.impl.source.usecase.configuration.ObserveThemeUseCaseImpl
 import domain.usecase.impl.source.usecase.configuration.SetApplicationLanguageUseCaseImpl
 import domain.usecase.impl.source.usecase.configuration.SetOnboardingStatusUseCaseImpl
 import domain.usecase.impl.source.usecase.configuration.SetThemeUseCaseImpl
+import domain.usecase.impl.source.usecase.reader.DetectFirmwareTypeUseCaseImpl
 import domain.usecase.impl.source.usecase.reader.DiscoverDevicesUseCaseImpl
 import domain.usecase.impl.source.usecase.reader.VerifyDeviceUseCaseImpl
 import domain.usecase.impl.source.usecase.reader.CreateFolderUseCaseImpl
@@ -76,6 +78,7 @@ public val domainUseCaseImplModule: Module = module {
     // Reader — Discovery
     singleOf(::DiscoverDevicesUseCaseImpl) bind DiscoverDevicesUseCase::class
     singleOf(::VerifyDeviceUseCaseImpl) bind VerifyDeviceUseCase::class
+    singleOf(::DetectFirmwareTypeUseCaseImpl) bind DetectFirmwareTypeUseCase::class
     // Reader — Device IP
     singleOf(::GetDeviceIpUseCaseImpl) bind GetDeviceIpUseCase::class
     singleOf(::SetDeviceIpUseCaseImpl) bind SetDeviceIpUseCase::class

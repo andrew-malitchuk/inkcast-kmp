@@ -7,6 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import inkcast_kmp.presentation_core_localisation.generated.resources.Res
+import inkcast_kmp.presentation_core_localisation.generated.resources.device_cache_cleared
+import inkcast_kmp.presentation_core_localisation.generated.resources.device_cache_clear_failed
 import inkcast_kmp.presentation_core_localisation.generated.resources.error_title
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -35,6 +37,8 @@ public fun HomeDeviceScreen(viewModel: HomeDeviceViewModel = koinViewModel()) {
     val state = viewModel.collectAsState()
     val hostState = rememberStackedSnackbarHostState(animation = StackedSnackbarAnimation.Slide)
     val errorTitle = stringResource(Res.string.error_title)
+    val cacheClearedMsg = stringResource(Res.string.device_cache_cleared)
+    val cacheClearFailedMsg = stringResource(Res.string.device_cache_clear_failed)
 
     viewModel.collectSideEffect { effect ->
         when (effect) {
@@ -46,6 +50,12 @@ public fun HomeDeviceScreen(viewModel: HomeDeviceViewModel = koinViewModel()) {
             }
             is HomeDeviceSideEffect.NavigateToConnection -> {
                 appNavigator?.navigate(Destination.Connection())
+            }
+            is HomeDeviceSideEffect.ShowCacheCleared -> {
+                hostState.showSnackbar(title = cacheClearedMsg, duration = StackedSnackbarDuration.Short)
+            }
+            is HomeDeviceSideEffect.ShowCacheClearFailed -> {
+                hostState.showSnackbar(title = cacheClearFailedMsg, duration = StackedSnackbarDuration.Short)
             }
         }
     }

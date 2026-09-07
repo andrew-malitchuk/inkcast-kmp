@@ -4,9 +4,11 @@ package presentation.feature.onboarding.source.onboarding
  * UI state for the Onboarding screen.
  *
  * @property isLoading Whether a blocking operation (e.g. persisting onboarding status) is in progress.
+ * @property currentStep Current onboarding step: 0 = welcome, 1 = hotspot setup guide.
  */
 public data class OnboardingState(
     val isLoading: Boolean = false,
+    val currentStep: Int = 0,
 )
 
 /**
@@ -30,6 +32,9 @@ public sealed class OnboardingSideEffect {
  */
 public sealed class OnboardingIntent {
 
-    /** User tapped the "Get Started" button to complete onboarding. */
+    /** User tapped the "Get Started" button on the welcome step. Advances to the hotspot setup step. */
     public data object OnGetStartedClick : OnboardingIntent()
+
+    /** User tapped "Continue" on the hotspot setup step. Completes onboarding and navigates to Connection. */
+    public data object OnContinueClick : OnboardingIntent()
 }

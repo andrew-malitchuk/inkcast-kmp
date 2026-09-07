@@ -121,4 +121,17 @@ public interface CrossPointNetworkSource {
      * @return `true` if the server confirmed successful update.
      */
     public suspend fun updateSettings(settings: Map<String, Int>): Boolean
+
+    /**
+     * Probes the CrossPet-exclusive `/api/opds` endpoint to identify the firmware variant.
+     *
+     * CrossPet exposes `/api/opds` for its built-in OPDS server management.
+     * CrossPoint does not have this endpoint and returns 404.
+     *
+     * Endpoint: `GET /api/opds`
+     *
+     * @return `true` if the device responds with a success status (CrossPet),
+     *         `false` if the endpoint is absent or the request fails (CrossPoint / unknown).
+     */
+    public suspend fun probeOpdsEndpoint(): Boolean
 }

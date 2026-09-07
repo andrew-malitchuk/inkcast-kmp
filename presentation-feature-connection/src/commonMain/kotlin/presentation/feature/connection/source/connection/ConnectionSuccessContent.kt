@@ -27,6 +27,7 @@ import inkcast_kmp.presentation_core_localisation.generated.resources.connection
 import inkcast_kmp.presentation_core_localisation.generated.resources.connection_auto_discovery_description
 import inkcast_kmp.presentation_core_localisation.generated.resources.connection_connect
 import inkcast_kmp.presentation_core_localisation.generated.resources.connection_connecting
+import inkcast_kmp.presentation_core_localisation.generated.resources.connection_hotspot_hint
 import inkcast_kmp.presentation_core_localisation.generated.resources.connection_ip_address
 import inkcast_kmp.presentation_core_localisation.generated.resources.connection_ip_placeholder
 import inkcast_kmp.presentation_core_localisation.generated.resources.connection_manual_connection
@@ -162,9 +163,10 @@ internal fun ConnectionSuccessContent(
                     Spacer(modifier = Modifier.height(Theme.spacing.spacingM))
 
                     Text(
-                        text = state.scanStatus,
+                        text = stringResource(Res.string.connection_hotspot_hint),
                         style = Theme.typography.caption,
                         color = Theme.color.inkSubtle,
+                        modifier = Modifier.padding(horizontal = Theme.spacing.spacingL),
                     )
 
                     // Discovered devices
@@ -262,18 +264,6 @@ internal fun ConnectionSuccessContent(
                     )
                 }
             }
-        }
-        // endregion
-
-        // region Error
-        state.errorMessage?.let { message ->
-            Spacer(modifier = Modifier.height(Theme.spacing.spacingL))
-            Text(
-                text = message,
-                style = Theme.typography.body,
-                color = Theme.color.error,
-                modifier = Modifier.padding(horizontal = Theme.spacing.spacingL),
-            )
         }
         // endregion
 

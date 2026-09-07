@@ -31,5 +31,8 @@ public sealed class Failure : Throwable() {
 
         /** Triggered when a business rule is violated. */
         public data class Business(public override val message: String) : Logic()
+
+        /** Triggered when a device discovery scan completes with no devices found. */
+        public data object NoDevicesFound : Logic()
     }
 }

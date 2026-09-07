@@ -5,6 +5,22 @@ import domain.core.source.model.RemoteFileModel
 import presentation.core.platform.source.image.WidgetRenderer
 
 /**
+ * Typed status/error messages for the sleep screen editor.
+ *
+ * Resolved to localised strings via [stringResource] in the composable layer —
+ * no raw English strings are stored in the ViewModel.
+ */
+public sealed class HomeSleepStatusMessage {
+    public data object Decoding : HomeSleepStatusMessage()
+    public data object DecodeFailed : HomeSleepStatusMessage()
+    public data class Uploading(val progress: Int) : HomeSleepStatusMessage()
+    public data object UploadComplete : HomeSleepStatusMessage()
+    public data object UploadFailed : HomeSleepStatusMessage()
+    public data class Deleted(val name: String) : HomeSleepStatusMessage()
+    public data object DeleteFailed : HomeSleepStatusMessage()
+}
+
+/**
  * UI state for the sleep screen editor.
  *
  * @property hasImage Whether a source image has been loaded.
@@ -18,7 +34,8 @@ import presentation.core.platform.source.image.WidgetRenderer
  * @property previewBitmap Processed e-ink preview bitmap.
  * @property isUploading Whether an upload is in progress.
  * @property uploadProgress Upload progress (0–100).
- * @property statusMessage Transient status text.
+ * @property statusMessage Typed status message resolved to a localised string in the composable.
+ * @property showDeviceNotReachable When `true`, the device-not-reachable bottom sheet is shown.
  * @property isLoadingGallery Whether the device gallery is loading.
  * @property galleryFiles BMP files on the device in /sleep directory.
  * @property deleteTarget File pending delete confirmation, or null.
@@ -36,7 +53,8 @@ public data class HomeSleepState(
     val previewBitmap: ImageBitmap? = null,
     val isUploading: Boolean = false,
     val uploadProgress: Int = 0,
-    val statusMessage: String = "",
+    val statusMessage: HomeSleepStatusMessage? = null,
+    val showDeviceNotReachable: Boolean = false,
     val isLoadingGallery: Boolean = true,
     val galleryFiles: List<RemoteFileModel> = emptyList(),
     val deleteTarget: RemoteFileModel? = null,
@@ -46,9 +64,12 @@ public data class HomeSleepState(
  * One-time side effects emitted by [HomeSleepViewModel].
  */
 public sealed class HomeSleepSideEffect {
-    public data class ShowMessage(val message: String) : HomeSleepSideEffect()
-    public data class ShowError(val message: String) : HomeSleepSideEffect()
+    public data object ShowUploadSuccess : HomeSleepSideEffect()
+    public data object ShowUploadError : HomeSleepSideEffect()
+    public data class ShowDeleteSuccess(val name: String) : HomeSleepSideEffect()
+    public data object ShowDeleteError : HomeSleepSideEffect()
     public data object LaunchImagePicker : HomeSleepSideEffect()
+    public data object NavigateToConnection : HomeSleepSideEffect()
 }
 
 /**
@@ -62,6 +83,9 @@ public sealed class HomeSleepIntent {
     public data class WidgetSelected(val index: Int) : HomeSleepIntent()
     public data class QuoteChanged(val text: String) : HomeSleepIntent()
     public data object Upload : HomeSleepIntent()
+    public data object DismissDeviceNotReachable : HomeSleepIntent()
+    public data object RetryUpload : HomeSleepIntent()
+    public data object SetUpDevice : HomeSleepIntent()
     public data class OnGalleryItemMoreClick(val file: RemoteFileModel) : HomeSleepIntent()
     public data class ConfirmDeleteGalleryItem(val file: RemoteFileModel) : HomeSleepIntent()
     public data object DismissDialog : HomeSleepIntent()

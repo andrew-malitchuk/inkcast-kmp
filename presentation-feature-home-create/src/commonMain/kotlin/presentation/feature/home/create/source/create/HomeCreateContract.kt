@@ -1,6 +1,42 @@
 package presentation.feature.home.create.source.create
 
 /**
+ * Typed status feedback shown below the form during processing.
+ *
+ * Resolved to localised strings in [HomeCreateSuccessContent] via `stringResource()`.
+ */
+public sealed class HomeCreateStatusMessage {
+    /** EPUB generation (download + build) is in progress. */
+    public data object Building : HomeCreateStatusMessage()
+
+    /**
+     * Upload to the device is in progress.
+     *
+     * @property progress Upload percentage in `0..100`.
+     */
+    public data class Uploading(val progress: Int) : HomeCreateStatusMessage()
+}
+
+/**
+ * Typed validation and processing error shown in red below the form.
+ *
+ * Resolved to localised strings in [HomeCreateSuccessContent] via `stringResource()`.
+ */
+public sealed class HomeCreateErrorMessage {
+    /** User submitted the URL form without entering a URL. */
+    public data object EnterUrl : HomeCreateErrorMessage()
+
+    /** User submitted the text form without entering any content. */
+    public data object EnterText : HomeCreateErrorMessage()
+
+    /** Article download or EPUB build failed in URL mode. */
+    public data object DownloadFailed : HomeCreateErrorMessage()
+
+    /** EPUB generation failed in text mode. */
+    public data object GenerateFailed : HomeCreateErrorMessage()
+}
+
+/**
  * Immutable UI state snapshot for the Create EPUB screen.
  *
  * Combines input mode, user content, processing progress, prepared EPUB metadata,
@@ -17,8 +53,8 @@ package presentation.feature.home.create.source.create
  * @property isProcessing Whether a download, build, or upload operation is running.
  * @property isUploading Whether an upload to the device is specifically in progress.
  * @property progress Upload progress percentage in `0..100` range.
- * @property statusMessage Human-readable status feedback shown below the form.
- * @property errorMessage Optional error message to display in red.
+ * @property statusMessage Typed status feedback shown below the form; `null` when idle.
+ * @property errorMessage Typed error shown in red below the form; `null` when no error.
  * @property epubReady Whether a prepared EPUB is available for upload.
  * @property epubTitle Title of the prepared EPUB.
  * @property epubSizeKb Size of the prepared EPUB in kilobytes.
@@ -37,8 +73,8 @@ public data class HomeCreateState(
     val isProcessing: Boolean = false,
     val isUploading: Boolean = false,
     val progress: Int = 0,
-    val statusMessage: String? = null,
-    val errorMessage: String? = null,
+    val statusMessage: HomeCreateStatusMessage? = null,
+    val errorMessage: HomeCreateErrorMessage? = null,
     val epubReady: Boolean = false,
     val epubTitle: String = "",
     val epubSizeKb: Int = 0,

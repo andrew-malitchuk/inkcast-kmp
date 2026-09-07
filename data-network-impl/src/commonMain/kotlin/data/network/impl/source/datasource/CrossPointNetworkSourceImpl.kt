@@ -256,4 +256,18 @@ internal class CrossPointNetworkSourceImpl(
             client.close()
         }
     }
+
+    override suspend fun probeOpdsEndpoint(): Boolean {
+        val client = createClient()
+        return try {
+            val base = baseUrl()
+            client.get("$base/api/opds").status.isSuccess()
+        } catch (e: CancellationException) {
+            throw e
+        } catch (_: Exception) {
+            false
+        } finally {
+            client.close()
+        }
+    }
 }

@@ -28,7 +28,7 @@
     <!-- Connection -->
     <string name="connection_title">З'єднання</string>
     <string name="connection_auto_discovery">Автовиявлення</string>
-    <string name="connection_auto_discovery_description">Скануйте локальну мережу для пошуку пристроїв. Переконайтеся, що ваш рідер підключений до тієї ж Wi-Fi мережі.</string>
+    <string name="connection_auto_discovery_description">Шукайте пристрої поблизу. Спочатку підключіть телефон до Wi-Fi точки доступу рідера.</string>
     <string name="connection_scanning">Сканування…</string>
     <string name="connection_scan_for_devices">Знайти пристрої</string>
     <string name="connection_manual_connection">Ручне з'єднання</string>
@@ -37,6 +37,11 @@
     <string name="connection_ip_placeholder">192.168.1.XX</string>
     <string name="connection_connecting">З'єднання…</string>
     <string name="connection_connect">З'єднатися</string>
+    <string name="connection_no_devices_found">Пристрої не знайдено. Переконайтеся, що точку доступу рідера увімкнено.</string>
+    <string name="connection_network_error">Помилка мережі під час сканування. Перевірте Wi-Fi з'єднання.</string>
+    <string name="connection_hotspot_hint">Переконайтеся, що ви підключені до Wi-Fi точки доступу рідера, а не до домашньої мережі.</string>
+    <string name="connection_invalid_ip">Введіть коректну IP-адресу (наприклад, 192.168.4.1).</string>
+    <string name="connection_enter_ip">Будь ласка, введіть IP-адресу.</string>
 
     <!-- File Manager -->
     <string name="files_title">Файловий менеджер</string>
@@ -55,6 +60,8 @@
     <string name="files_actions">Дії</string>
     <string name="files_add">Додати</string>
     <string name="files_upload_file">Завантажити файл</string>
+    <string name="files_move">Перемістити</string>
+    <string name="files_move_destination">Шлях призначення (напр. /books)</string>
 
     <!-- Device -->
     <string name="device_title">Пристрій</string>
@@ -67,6 +74,11 @@
     <string name="device_orientation">Орієнтація</string>
     <string name="device_interface_theme">Тема інтерфейсу</string>
     <string name="device_change_device">Змінити пристрій</string>
+    <string name="device_maintenance">Обслуговування</string>
+    <string name="device_cache_clear">Очистити кеш рендерингу</string>
+    <string name="device_cache_clear_description">Видаляє директорію .crosspoint/. Виправляє збої через вичерпання пам'яті. Пристрій відновить кеш автоматично при наступному використанні.</string>
+    <string name="device_cache_cleared">Кеш очищено</string>
+    <string name="device_cache_clear_failed">Не вдалося очистити кеш</string>
 
     <!-- Sleep Screen -->
     <string name="sleep_title">Заставка сну</string>
@@ -87,9 +99,54 @@
     <string name="sleep_cancel">Скасувати</string>
     <string name="sleep_pick_hint">Натисніть іконку зображення, щоб обрати фото</string>
 
+    <!-- Upload: shared device-not-reachable bottom sheet -->
+    <string name="upload_device_not_reachable_title">Пристрій недоступний</string>
+    <string name="upload_device_not_reachable_body">Підключіться до Wi-Fi точки доступу рідера для завантаження. Якщо ви ще не налаштували пристрій, натисніть «Налаштувати пристрій».</string>
+    <string name="upload_device_not_reachable_setup">Налаштувати пристрій</string>
+    <string name="upload_device_not_reachable_retry">Повторити завантаження</string>
+
     <!-- Error -->
     <string name="error_title">Ой, щось пішло не так</string>
     <string name="error_description">Ми вже працюємо над виправленням. Спробуйте пізніше.</string>
+
+    <!-- Onboarding: hotspot setup step -->
+    <string name="onboarding_setup_title">Підключіться до рідера</string>
+    <string name="onboarding_setup_step1">1. На рідері перейдіть до «Передача файлів» і натисніть «Створити точку доступу».</string>
+    <string name="onboarding_setup_step2">2. Відкрийте налаштування Wi-Fi на телефоні та підключіться до мережі рідера.</string>
+    <string name="onboarding_setup_step3">3. Поверніться сюди та натисніть «Знайти пристрої» або введіть IP вручну.</string>
+    <string name="onboarding_setup_hint">IP-адреса за замовчуванням зазвичай 192.168.4.1</string>
+    <string name="onboarding_continue">Продовжити</string>
+
+    <!-- Sleep Screen: status messages -->
+    <string name="sleep_status_decoding">Декодування…</string>
+    <string name="sleep_status_decode_failed">Не вдалося декодувати зображення</string>
+    <string name="sleep_status_uploading">Завантаження %1$s%%</string>
+    <string name="sleep_status_upload_complete">Завантаження завершено</string>
+    <string name="sleep_status_upload_failed">Помилка завантаження</string>
+    <string name="sleep_status_deleted">Видалено: %1$s</string>
+    <string name="sleep_status_delete_failed">Не вдалося видалити</string>
+
+    <!-- File Manager: status messages -->
+    <string name="files_status_load_failed">Не вдалося завантажити файли</string>
+    <string name="files_status_folders_no_rename">Теки не можна перейменовувати</string>
+    <string name="files_status_created">Створено: %1$s</string>
+    <string name="files_status_create_failed">Не вдалося створити теку</string>
+    <string name="files_status_deleted">Видалено: %1$s</string>
+    <string name="files_status_delete_failed">Не вдалося видалити</string>
+    <string name="files_status_uploaded">Завантажено: %1$s</string>
+    <string name="files_status_upload_failed">Помилка завантаження</string>
+    <string name="files_status_renamed">Перейменовано: %1$s</string>
+    <string name="files_status_rename_failed">Не вдалося перейменувати</string>
+    <string name="files_status_moved">Переміщено: %1$s</string>
+    <string name="files_status_move_failed">Не вдалося перемістити</string>
+
+    <!-- Create EPUB: status/error messages -->
+    <string name="create_status_enter_url">Будь ласка, введіть URL.</string>
+    <string name="create_status_enter_text">Будь ласка, введіть текст.</string>
+    <string name="create_status_download_failed">Не вдалося завантажити статтю.</string>
+    <string name="create_status_generate_failed">Не вдалося згенерувати EPUB.</string>
+    <string name="create_status_building">Створення EPUB…</string>
+    <string name="create_status_uploading">Завантаження %1$s%%</string>
 
     <!-- Create EPUB -->
     <string name="create_title">Створити EPUB</string>

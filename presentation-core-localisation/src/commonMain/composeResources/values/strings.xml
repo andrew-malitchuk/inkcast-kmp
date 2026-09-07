@@ -28,7 +28,7 @@
     <!-- Connection -->
     <string name="connection_title">Connection</string>
     <string name="connection_auto_discovery">Auto-Discovery</string>
-    <string name="connection_auto_discovery_description">Scan your local network for nearby devices. Ensure your e-reader is on the same Wi-Fi connection.</string>
+    <string name="connection_auto_discovery_description">Scan for nearby devices. Connect your phone to your e-reader\'s Wi-Fi hotspot first.</string>
     <string name="connection_scanning">Scanning…</string>
     <string name="connection_scan_for_devices">Scan for Devices</string>
     <string name="connection_manual_connection">Manual Connection</string>
@@ -37,6 +37,11 @@
     <string name="connection_ip_placeholder">192.168.1.XX</string>
     <string name="connection_connecting">Connecting…</string>
     <string name="connection_connect">Connect</string>
+    <string name="connection_no_devices_found">No devices found. Make sure your e-reader\'s hotspot is active.</string>
+    <string name="connection_network_error">Network error during scan. Check your Wi-Fi connection.</string>
+    <string name="connection_hotspot_hint">Make sure you\'re connected to your e-reader\'s Wi-Fi hotspot, not your home network.</string>
+    <string name="connection_invalid_ip">Please enter a valid IP address (e.g. 192.168.4.1).</string>
+    <string name="connection_enter_ip">Please enter an IP address.</string>
 
     <!-- File Manager -->
     <string name="files_title">File Manager</string>
@@ -55,6 +60,8 @@
     <string name="files_actions">Actions</string>
     <string name="files_add">Add</string>
     <string name="files_upload_file">Upload File</string>
+    <string name="files_move">Move</string>
+    <string name="files_move_destination">Destination path (e.g. /books)</string>
 
     <!-- Device -->
     <string name="device_title">Device</string>
@@ -67,6 +74,11 @@
     <string name="device_orientation">Orientation</string>
     <string name="device_interface_theme">Interface Theme</string>
     <string name="device_change_device">Change Device</string>
+    <string name="device_maintenance">Maintenance</string>
+    <string name="device_cache_clear">Clear Rendering Cache</string>
+    <string name="device_cache_clear_description">Removes the .crosspoint/ cache directory. Fixes memory exhaustion panics. The device rebuilds the cache automatically on next use.</string>
+    <string name="device_cache_cleared">Cache cleared</string>
+    <string name="device_cache_clear_failed">Failed to clear cache</string>
 
     <!-- Sleep Screen -->
     <string name="sleep_title">Sleep Screen</string>
@@ -87,9 +99,54 @@
     <string name="sleep_cancel">Cancel</string>
     <string name="sleep_pick_hint">Tap the image icon to pick a photo</string>
 
+    <!-- Upload: shared device-not-reachable bottom sheet -->
+    <string name="upload_device_not_reachable_title">Device Not Reachable</string>
+    <string name="upload_device_not_reachable_body">Connect to your e-reader\'s Wi-Fi hotspot to upload. If you haven\'t set up a device yet, tap \"Set Up Device\" below.</string>
+    <string name="upload_device_not_reachable_setup">Set Up Device</string>
+    <string name="upload_device_not_reachable_retry">Retry Upload</string>
+
     <!-- Error -->
     <string name="error_title">Oops, something went wrong</string>
     <string name="error_description">We're already working on a fix. Please try again later.</string>
+
+    <!-- Onboarding: hotspot setup step -->
+    <string name="onboarding_setup_title">Connect to Your E-Reader</string>
+    <string name="onboarding_setup_step1">1. On your e-reader, go to File Transfer and tap Create Hotspot.</string>
+    <string name="onboarding_setup_step2">2. Open your phone\'s Wi-Fi settings and connect to the reader\'s network.</string>
+    <string name="onboarding_setup_step3">3. Return here and tap \"Scan for Devices\" or enter the IP manually.</string>
+    <string name="onboarding_setup_hint">The default IP is usually 192.168.4.1</string>
+    <string name="onboarding_continue">Continue</string>
+
+    <!-- Sleep Screen: status messages -->
+    <string name="sleep_status_decoding">Decoding…</string>
+    <string name="sleep_status_decode_failed">Failed to decode image</string>
+    <string name="sleep_status_uploading">Uploading %1$s%%</string>
+    <string name="sleep_status_upload_complete">Upload complete</string>
+    <string name="sleep_status_upload_failed">Upload failed</string>
+    <string name="sleep_status_deleted">Deleted: %1$s</string>
+    <string name="sleep_status_delete_failed">Failed to delete</string>
+
+    <!-- File Manager: status messages -->
+    <string name="files_status_load_failed">Failed to load files</string>
+    <string name="files_status_folders_no_rename">Folders cannot be renamed</string>
+    <string name="files_status_created">Created: %1$s</string>
+    <string name="files_status_create_failed">Failed to create folder</string>
+    <string name="files_status_deleted">Deleted: %1$s</string>
+    <string name="files_status_delete_failed">Failed to delete</string>
+    <string name="files_status_uploaded">Uploaded: %1$s</string>
+    <string name="files_status_upload_failed">Upload failed</string>
+    <string name="files_status_renamed">Renamed to: %1$s</string>
+    <string name="files_status_rename_failed">Failed to rename</string>
+    <string name="files_status_moved">Moved: %1$s</string>
+    <string name="files_status_move_failed">Failed to move</string>
+
+    <!-- Create EPUB: status/error messages -->
+    <string name="create_status_enter_url">Please enter a URL.</string>
+    <string name="create_status_enter_text">Please enter some text.</string>
+    <string name="create_status_download_failed">Failed to download article.</string>
+    <string name="create_status_generate_failed">Failed to generate EPUB.</string>
+    <string name="create_status_building">Building EPUB…</string>
+    <string name="create_status_uploading">Uploading %1$s%%</string>
 
     <!-- Create EPUB -->
     <string name="create_title">Create EPUB</string>

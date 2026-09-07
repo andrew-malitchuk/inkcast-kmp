@@ -12,7 +12,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import inkcast_kmp.presentation_core_localisation.generated.resources.Res
+import inkcast_kmp.presentation_core_localisation.generated.resources.device_cache_clear
+import inkcast_kmp.presentation_core_localisation.generated.resources.device_cache_clear_description
 import inkcast_kmp.presentation_core_localisation.generated.resources.device_change_device
+import inkcast_kmp.presentation_core_localisation.generated.resources.device_maintenance
 import inkcast_kmp.presentation_core_localisation.generated.resources.device_firmware
 import inkcast_kmp.presentation_core_localisation.generated.resources.device_free_ram
 import inkcast_kmp.presentation_core_localisation.generated.resources.device_info
@@ -106,6 +109,27 @@ internal fun HomeDeviceSuccessContent(
             // region Theme picker
             SectionHeader(title = stringResource(Res.string.device_interface_theme))
             SegmentedButtonGroup(items = state.themeOptions, selectedIndex = state.selectedThemeIndex, onSelect = { onIntent(HomeDeviceIntent.SelectTheme(it)) }, modifier = Modifier.fillMaxWidth().padding(horizontal = Theme.spacing.spacingL))
+            // endregion
+
+            Spacer(modifier = Modifier.height(Theme.spacing.spacingL))
+
+            // region Maintenance
+            SectionHeader(title = stringResource(Res.string.device_maintenance))
+            Text(
+                text = stringResource(Res.string.device_cache_clear_description),
+                style = Theme.typography.caption,
+                color = Theme.color.inkSubtle,
+                modifier = Modifier.padding(horizontal = Theme.spacing.spacingL),
+            )
+            Spacer(modifier = Modifier.height(Theme.spacing.spacingM))
+            Button(
+                text = stringResource(Res.string.device_cache_clear),
+                onClick = { onIntent(HomeDeviceIntent.ClearCache) },
+                style = ButtonStyle.Secondary,
+                size = ButtonSizeType.Large,
+                modifier = Modifier.fillMaxWidth().padding(horizontal = Theme.spacing.spacingL),
+                enabled = !state.isClearingCache,
+            )
             // endregion
 
             Spacer(modifier = Modifier.height(Theme.spacing.spacingXL))

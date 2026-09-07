@@ -7,7 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import inkcast_kmp.presentation_core_localisation.generated.resources.Res
-import inkcast_kmp.presentation_core_localisation.generated.resources.error_title
+import inkcast_kmp.presentation_core_localisation.generated.resources.connection_enter_ip
+import inkcast_kmp.presentation_core_localisation.generated.resources.connection_invalid_ip
+import inkcast_kmp.presentation_core_localisation.generated.resources.connection_network_error
+import inkcast_kmp.presentation_core_localisation.generated.resources.connection_no_devices_found
+import inkcast_kmp.presentation_core_localisation.generated.resources.connection_hotspot_hint
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.orbitmvi.orbit.compose.collectAsState
@@ -40,7 +44,12 @@ public fun ConnectionScreen(
     val appNavigator = LocalAppNavigator.current
     val state = viewModel.collectAsState()
     val hostState = rememberStackedSnackbarHostState(animation = StackedSnackbarAnimation.Slide)
-    val errorTitle = stringResource(Res.string.error_title)
+
+    val noDevicesFoundMsg = stringResource(Res.string.connection_no_devices_found)
+    val networkErrorMsg = stringResource(Res.string.connection_network_error)
+    val hotspotHintMsg = stringResource(Res.string.connection_hotspot_hint)
+    val invalidIpMsg = stringResource(Res.string.connection_invalid_ip)
+    val enterIpMsg = stringResource(Res.string.connection_enter_ip)
 
     viewModel.collectSideEffect { effect ->
         when (effect) {
@@ -55,8 +64,15 @@ public fun ConnectionScreen(
                 }
             }
             is ConnectionSideEffect.ShowError -> {
+                val message = when (effect.errorType) {
+                    ConnectionErrorType.NoDevicesFound -> noDevicesFoundMsg
+                    ConnectionErrorType.NetworkError -> networkErrorMsg
+                    ConnectionErrorType.DeviceNotReachable -> hotspotHintMsg
+                    ConnectionErrorType.InvalidIp -> invalidIpMsg
+                    ConnectionErrorType.EmptyIp -> enterIpMsg
+                }
                 hostState.showSnackbar(
-                    title = errorTitle,
+                    title = message,
                     duration = StackedSnackbarDuration.Short,
                 )
             }

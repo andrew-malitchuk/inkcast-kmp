@@ -1,6 +1,29 @@
 package presentation.feature.connection.source.connection
 
 /**
+ * Typed error variants for the connection screen.
+ *
+ * Each value maps to a specific localised string in the composable layer —
+ * no raw strings are stored in the ViewModel or state.
+ */
+public enum class ConnectionErrorType {
+    /** Scan completed but no devices responded on the network. */
+    NoDevicesFound,
+
+    /** A network-level error occurred during the scan. */
+    NetworkError,
+
+    /** The device at the entered IP address did not respond to a reachability check. */
+    DeviceNotReachable,
+
+    /** The manually entered IP address has an invalid format. */
+    InvalidIp,
+
+    /** The manual IP field was blank when the user tapped Connect. */
+    EmptyIp,
+}
+
+/**
  * UI state for the device connection screen.
  *
  * Combines auto-discovery and manual connection states into a single
@@ -10,18 +33,14 @@ package presentation.feature.connection.source.connection
  * @property isScanning Whether a network scan is currently running.
  * @property isConnecting Whether a connection attempt is in progress.
  * @property ipAddress Current value of the manual IP input field.
- * @property scanStatus Human-readable scan status label.
  * @property discoveredDevices List of discovered device IP addresses.
- * @property errorMessage Optional error message to display.
  */
 public data class ConnectionState(
     val isLoading: Boolean = false,
     val isScanning: Boolean = false,
     val isConnecting: Boolean = false,
     val ipAddress: String = "",
-    val scanStatus: String = "",
     val discoveredDevices: List<String> = emptyList(),
-    val errorMessage: String? = null,
 )
 
 /**
@@ -31,8 +50,12 @@ public sealed class ConnectionSideEffect {
     /** Navigate back to the previous screen. */
     public data object NavigateBack : ConnectionSideEffect()
 
-    /** Show a generic error snackbar. */
-    public data object ShowError : ConnectionSideEffect()
+    /**
+     * Show an error snackbar with a localised message resolved from [errorType].
+     *
+     * @property errorType Typed error variant — resolved to a string via [stringResource] in the Screen.
+     */
+    public data class ShowError(val errorType: ConnectionErrorType) : ConnectionSideEffect()
 }
 
 /**

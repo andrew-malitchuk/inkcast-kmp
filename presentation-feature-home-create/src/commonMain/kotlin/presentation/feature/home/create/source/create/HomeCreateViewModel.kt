@@ -103,7 +103,7 @@ public class HomeCreateViewModel(
     private fun createFromUrl() = intent {
         val url = state.url.trim()
         if (url.isBlank()) {
-            reduce { state.copy(errorMessage = "Please enter a URL.") }
+            reduce { state.copy(errorMessage = HomeCreateErrorMessage.EnterUrl) }
             return@intent
         }
 
@@ -111,14 +111,12 @@ public class HomeCreateViewModel(
             state.copy(
                 isProcessing = true,
                 errorMessage = null,
-                statusMessage = null,
+                statusMessage = HomeCreateStatusMessage.Building,
                 epubReady = false,
             )
         }
 
-        val result = downloadAndBuildEpubUseCase(url) { status ->
-            intent { reduce { state.copy(statusMessage = status) } }
-        }
+        val result = downloadAndBuildEpubUseCase(url) {}
 
         val epub = result.getOrNull()
         val bytes = epub?.bytes
@@ -130,14 +128,15 @@ public class HomeCreateViewModel(
                     epubReady = true,
                     epubTitle = epub.title ?: "Untitled",
                     epubSizeKb = bytes.size / 1024,
-                    statusMessage = "EPUB ready! (${bytes.size / 1024} KB)",
+                    statusMessage = null,
                 )
             }
         } else {
             reduce {
                 state.copy(
                     isProcessing = false,
-                    errorMessage = "Failed to download article.",
+                    statusMessage = null,
+                    errorMessage = HomeCreateErrorMessage.DownloadFailed,
                 )
             }
             postSideEffect(HomeCreateSideEffect.ShowError)
@@ -147,7 +146,7 @@ public class HomeCreateViewModel(
     private fun createFromText() = intent {
         val content = state.text.trim()
         if (content.isBlank()) {
-            reduce { state.copy(errorMessage = "Please enter some text.") }
+            reduce { state.copy(errorMessage = HomeCreateErrorMessage.EnterText) }
             return@intent
         }
 
@@ -155,7 +154,7 @@ public class HomeCreateViewModel(
             state.copy(
                 isProcessing = true,
                 errorMessage = null,
-                statusMessage = "Generating EPUB…",
+                statusMessage = HomeCreateStatusMessage.Building,
                 epubReady = false,
             )
         }
@@ -177,9 +176,7 @@ public class HomeCreateViewModel(
         // inline HTML content to be packaged directly.
         val result = downloadAndBuildEpubUseCase(
             "data:text/html,$htmlContent",
-        ) { status ->
-            intent { reduce { state.copy(statusMessage = status) } }
-        }
+        ) {}
 
         val epub = result.getOrNull()
         val textBytes = epub?.bytes
@@ -191,14 +188,15 @@ public class HomeCreateViewModel(
                     epubReady = true,
                     epubTitle = title,
                     epubSizeKb = textBytes.size / 1024,
-                    statusMessage = "EPUB ready! (${textBytes.size / 1024} KB)",
+                    statusMessage = null,
                 )
             }
         } else {
             reduce {
                 state.copy(
                     isProcessing = false,
-                    errorMessage = "Failed to generate EPUB.",
+                    statusMessage = null,
+                    errorMessage = HomeCreateErrorMessage.GenerateFailed,
                 )
             }
             postSideEffect(HomeCreateSideEffect.ShowError)
@@ -250,7 +248,7 @@ public class HomeCreateViewModel(
                             reduce {
                                 state.copy(
                                     progress = percent,
-                                    statusMessage = "Uploading: $percent%",
+                                    statusMessage = HomeCreateStatusMessage.Uploading(percent),
                                 )
                             }
                         }

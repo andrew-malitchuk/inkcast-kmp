@@ -13,6 +13,7 @@ import data.repository.impl.core.mapper.PreparedEpubNetworkMapper
 import data.repository.impl.core.mapper.RemoteFileNetworkMapper
 import data.repository.impl.core.mapper.SettingItemNetworkMapper
 import domain.core.source.model.DeviceStatusModel
+import domain.core.source.model.FirmwareType
 import domain.core.source.model.PreparedEpubModel
 import domain.core.source.model.RemoteFileModel
 import domain.core.source.model.SettingItemModel
@@ -87,6 +88,10 @@ internal class ReaderRepositoryImpl(
     // endregion
 
     // region Discovery
+
+    /** @see ReaderRepository.detectFirmwareType */
+    override suspend fun detectFirmwareType(): FirmwareType =
+        if (crossPointNetworkSource.probeOpdsEndpoint()) FirmwareType.CrossPet else FirmwareType.CrossPoint
 
     /** @see ReaderRepository.discoverDevices */
     override suspend fun discoverDevices(): List<String> =

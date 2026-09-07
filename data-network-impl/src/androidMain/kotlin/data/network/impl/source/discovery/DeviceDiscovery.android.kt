@@ -42,8 +42,6 @@ internal actual class DeviceDiscovery actual constructor() {
                     break
                 }
             }
-        } catch (_: Exception) {
-            // UDP scan failed — network unavailable or socket error.
         } finally {
             socket?.close()
         }

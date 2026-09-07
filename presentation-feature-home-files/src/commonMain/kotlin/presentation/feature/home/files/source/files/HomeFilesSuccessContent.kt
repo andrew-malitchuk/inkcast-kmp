@@ -28,6 +28,8 @@ import inkcast_kmp.presentation_core_localisation.generated.resources.files_canc
 import inkcast_kmp.presentation_core_localisation.generated.resources.files_create
 import inkcast_kmp.presentation_core_localisation.generated.resources.files_delete
 import inkcast_kmp.presentation_core_localisation.generated.resources.files_delete_folder_hint
+import inkcast_kmp.presentation_core_localisation.generated.resources.files_move
+import inkcast_kmp.presentation_core_localisation.generated.resources.files_move_destination
 import inkcast_kmp.presentation_core_localisation.generated.resources.files_delete_message
 import inkcast_kmp.presentation_core_localisation.generated.resources.files_folder
 import inkcast_kmp.presentation_core_localisation.generated.resources.files_folder_name
@@ -37,6 +39,10 @@ import inkcast_kmp.presentation_core_localisation.generated.resources.files_no_f
 import inkcast_kmp.presentation_core_localisation.generated.resources.files_rename
 import inkcast_kmp.presentation_core_localisation.generated.resources.files_upload_file
 import inkcast_kmp.presentation_core_localisation.generated.resources.files_uploading_progress
+import inkcast_kmp.presentation_core_localisation.generated.resources.upload_device_not_reachable_body
+import inkcast_kmp.presentation_core_localisation.generated.resources.upload_device_not_reachable_retry
+import inkcast_kmp.presentation_core_localisation.generated.resources.upload_device_not_reachable_setup
+import inkcast_kmp.presentation_core_localisation.generated.resources.upload_device_not_reachable_title
 import org.jetbrains.compose.resources.stringResource
 import presentation.core.styling.core.Theme
 import presentation.core.ui.source.kit.atom.button.Button
@@ -158,6 +164,40 @@ internal fun HomeFilesSuccessContent(
 
     // region Bottom Sheets
 
+    // Device not reachable bottom sheet
+    if (state.showDeviceNotReachable) {
+        AppBottomSheet(
+            onDismiss = { onIntent(HomeFilesIntent.DismissDeviceNotReachable) },
+            title = stringResource(Res.string.upload_device_not_reachable_title),
+        ) {
+            Text(
+                text = stringResource(Res.string.upload_device_not_reachable_body),
+                style = Theme.typography.body,
+                color = Theme.color.inkMain,
+            )
+            Spacer(modifier = Modifier.height(Theme.spacing.spacingL))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(Theme.spacing.spacingM),
+            ) {
+                Button(
+                    text = stringResource(Res.string.upload_device_not_reachable_setup),
+                    onClick = { onIntent(HomeFilesIntent.SetUpDevice) },
+                    style = ButtonStyle.Secondary,
+                    size = ButtonSizeType.Large,
+                    modifier = Modifier.weight(1f),
+                )
+                Button(
+                    text = stringResource(Res.string.upload_device_not_reachable_retry),
+                    onClick = { onIntent(HomeFilesIntent.RetryUpload) },
+                    style = ButtonStyle.Primary,
+                    size = ButtonSizeType.Large,
+                    modifier = Modifier.weight(1f),
+                )
+            }
+        }
+    }
+
     // Add menu bottom sheet
     if (state.showAddMenu) {
         AppBottomSheet(
@@ -199,6 +239,14 @@ internal fun HomeFilesSuccessContent(
             Button(
                 text = stringResource(Res.string.files_rename),
                 onClick = { onIntent(HomeFilesIntent.SelectRenameAction) },
+                style = ButtonStyle.Secondary,
+                size = ButtonSizeType.Large,
+                modifier = Modifier.fillMaxWidth(),
+            )
+            Spacer(modifier = Modifier.height(Theme.spacing.spacingS))
+            Button(
+                text = stringResource(Res.string.files_move),
+                onClick = { onIntent(HomeFilesIntent.SelectMoveAction) },
                 style = ButtonStyle.Secondary,
                 size = ButtonSizeType.Large,
                 modifier = Modifier.fillMaxWidth(),
@@ -317,6 +365,43 @@ internal fun HomeFilesSuccessContent(
                     size = ButtonSizeType.Large,
                     modifier = Modifier.weight(1f),
                     enabled = newName.trim().isNotEmpty(),
+                )
+            }
+        }
+    }
+
+    // Move bottom sheet
+    state.moveTarget?.let { file ->
+        var destPath by remember { mutableStateOf(state.currentPath) }
+        AppBottomSheet(
+            onDismiss = { onIntent(HomeFilesIntent.DismissDialog) },
+            title = stringResource(Res.string.files_move),
+        ) {
+            Input(
+                initialText = state.currentPath,
+                onTextChanged = { destPath = it },
+                placeholder = stringResource(Res.string.files_move_destination),
+                modifier = Modifier.fillMaxWidth(),
+            )
+            Spacer(modifier = Modifier.height(Theme.spacing.spacingL))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(Theme.spacing.spacingM),
+            ) {
+                Button(
+                    text = stringResource(Res.string.files_cancel),
+                    onClick = { onIntent(HomeFilesIntent.DismissDialog) },
+                    style = ButtonStyle.Secondary,
+                    size = ButtonSizeType.Large,
+                    modifier = Modifier.weight(1f),
+                )
+                Button(
+                    text = stringResource(Res.string.files_move),
+                    onClick = { onIntent(HomeFilesIntent.ConfirmMove(destPath.trim())) },
+                    style = ButtonStyle.Primary,
+                    size = ButtonSizeType.Large,
+                    modifier = Modifier.weight(1f),
+                    enabled = destPath.trim().isNotEmpty(),
                 )
             }
         }

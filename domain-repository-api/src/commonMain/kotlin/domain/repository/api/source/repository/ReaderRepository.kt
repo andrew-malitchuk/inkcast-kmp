@@ -1,6 +1,7 @@
 package domain.repository.api.source.repository
 
 import domain.core.source.model.DeviceStatusModel
+import domain.core.source.model.FirmwareType
 import domain.core.source.model.PreparedEpubModel
 import domain.core.source.model.RemoteFileModel
 import domain.core.source.model.SettingItemModel
@@ -101,6 +102,16 @@ public interface ReaderRepository {
     // endregion
 
     // region Discovery
+
+    /**
+     * Detects whether the connected device runs CrossPet or CrossPoint firmware.
+     *
+     * Probes the CrossPet-exclusive `/api/opds` endpoint:
+     * a successful response indicates CrossPet; 404 or any failure indicates CrossPoint.
+     *
+     * @return [FirmwareType.CrossPet], [FirmwareType.CrossPoint], or [FirmwareType.Unknown] on error.
+     */
+    public suspend fun detectFirmwareType(): FirmwareType
 
     /**
      * Broadcasts a UDP discovery packet on the local network and returns

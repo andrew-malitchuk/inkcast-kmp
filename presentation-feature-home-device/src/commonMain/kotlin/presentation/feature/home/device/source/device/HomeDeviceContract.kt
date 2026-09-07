@@ -37,6 +37,7 @@ public data class HomeDeviceState(
     // UI Theme
     val selectedThemeIndex: Int = 0,
     val themeOptions: List<String> = listOf("Classic", "Lyra", "Lyra Extended"),
+    val isClearingCache: Boolean = false,
 )
 
 /**
@@ -48,6 +49,12 @@ public sealed class HomeDeviceSideEffect {
 
     /** Navigate to the device connection screen. */
     public data object NavigateToConnection : HomeDeviceSideEffect()
+
+    /** Cache was cleared successfully. */
+    public data object ShowCacheCleared : HomeDeviceSideEffect()
+
+    /** Cache clear failed. */
+    public data object ShowCacheClearFailed : HomeDeviceSideEffect()
 }
 
 /**
@@ -73,4 +80,7 @@ public sealed class HomeDeviceIntent {
 
     /** Navigate to the "Change Device" flow. */
     public data object ChangeDevice : HomeDeviceIntent()
+
+    /** Clear the `.crosspoint/` rendering cache on the device. */
+    public data object ClearCache : HomeDeviceIntent()
 }

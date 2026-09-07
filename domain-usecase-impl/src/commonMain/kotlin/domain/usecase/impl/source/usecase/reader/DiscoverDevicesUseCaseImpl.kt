@@ -18,6 +18,8 @@ internal class DiscoverDevicesUseCaseImpl(
     override suspend fun invoke(): Result<List<String>> = resultLauncher(
         errorMapper = Failure.Technical::Network,
     ) {
-        readerRepository.discoverDevices()
+        val devices = readerRepository.discoverDevices()
+        if (devices.isEmpty()) throw Failure.Logic.NoDevicesFound
+        devices
     }
 }

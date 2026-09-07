@@ -27,12 +27,23 @@ import inkcast_kmp.presentation_core_localisation.generated.resources.sleep_no_s
 import inkcast_kmp.presentation_core_localisation.generated.resources.sleep_on_device
 import inkcast_kmp.presentation_core_localisation.generated.resources.sleep_pick_hint
 import inkcast_kmp.presentation_core_localisation.generated.resources.sleep_quote_placeholder
+import inkcast_kmp.presentation_core_localisation.generated.resources.sleep_status_decode_failed
+import inkcast_kmp.presentation_core_localisation.generated.resources.sleep_status_decoding
+import inkcast_kmp.presentation_core_localisation.generated.resources.sleep_status_delete_failed
+import inkcast_kmp.presentation_core_localisation.generated.resources.sleep_status_deleted
+import inkcast_kmp.presentation_core_localisation.generated.resources.sleep_status_upload_complete
+import inkcast_kmp.presentation_core_localisation.generated.resources.sleep_status_upload_failed
+import inkcast_kmp.presentation_core_localisation.generated.resources.sleep_status_uploading
 import inkcast_kmp.presentation_core_localisation.generated.resources.sleep_title
 import inkcast_kmp.presentation_core_localisation.generated.resources.sleep_upload
 import inkcast_kmp.presentation_core_localisation.generated.resources.sleep_widget
 import inkcast_kmp.presentation_core_localisation.generated.resources.sleep_widget_calendar
 import inkcast_kmp.presentation_core_localisation.generated.resources.sleep_widget_none
 import inkcast_kmp.presentation_core_localisation.generated.resources.sleep_widget_quote
+import inkcast_kmp.presentation_core_localisation.generated.resources.upload_device_not_reachable_body
+import inkcast_kmp.presentation_core_localisation.generated.resources.upload_device_not_reachable_retry
+import inkcast_kmp.presentation_core_localisation.generated.resources.upload_device_not_reachable_setup
+import inkcast_kmp.presentation_core_localisation.generated.resources.upload_device_not_reachable_title
 import org.jetbrains.compose.resources.stringResource
 import presentation.core.platform.source.image.WidgetRenderer
 import presentation.core.styling.core.Theme
@@ -189,13 +200,24 @@ internal fun HomeSleepSuccessContent(
                     )
                 }
 
-                if (state.statusMessage.isNotEmpty() && !state.isUploading) {
-                    Spacer(modifier = Modifier.height(Theme.spacing.spacingS))
-                    Text(
-                        text = state.statusMessage,
-                        style = Theme.typography.body,
-                        color = Theme.color.inkSubtle,
-                    )
+                state.statusMessage?.let { msg ->
+                    if (!state.isUploading) {
+                        val text = when (msg) {
+                            is HomeSleepStatusMessage.Decoding -> stringResource(Res.string.sleep_status_decoding)
+                            is HomeSleepStatusMessage.DecodeFailed -> stringResource(Res.string.sleep_status_decode_failed)
+                            is HomeSleepStatusMessage.Uploading -> stringResource(Res.string.sleep_status_uploading, msg.progress)
+                            is HomeSleepStatusMessage.UploadComplete -> stringResource(Res.string.sleep_status_upload_complete)
+                            is HomeSleepStatusMessage.UploadFailed -> stringResource(Res.string.sleep_status_upload_failed)
+                            is HomeSleepStatusMessage.Deleted -> stringResource(Res.string.sleep_status_deleted, msg.name)
+                            is HomeSleepStatusMessage.DeleteFailed -> stringResource(Res.string.sleep_status_delete_failed)
+                        }
+                        Spacer(modifier = Modifier.height(Theme.spacing.spacingS))
+                        Text(
+                            text = text,
+                            style = Theme.typography.body,
+                            color = Theme.color.inkSubtle,
+                        )
+                    }
                 }
                 // endregion
 
@@ -249,6 +271,41 @@ internal fun HomeSleepSuccessContent(
             }
         }
     }
+
+    // region Device Not Reachable Bottom Sheet
+    if (state.showDeviceNotReachable) {
+        AppBottomSheet(
+            onDismiss = { onIntent(HomeSleepIntent.DismissDeviceNotReachable) },
+            title = stringResource(Res.string.upload_device_not_reachable_title),
+        ) {
+            Text(
+                text = stringResource(Res.string.upload_device_not_reachable_body),
+                style = Theme.typography.body,
+                color = Theme.color.inkMain,
+            )
+            Spacer(modifier = Modifier.height(Theme.spacing.spacingL))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(Theme.spacing.spacingM),
+            ) {
+                Button(
+                    text = stringResource(Res.string.upload_device_not_reachable_setup),
+                    onClick = { onIntent(HomeSleepIntent.SetUpDevice) },
+                    style = ButtonStyle.Secondary,
+                    size = ButtonSizeType.Large,
+                    modifier = Modifier.weight(1f),
+                )
+                Button(
+                    text = stringResource(Res.string.upload_device_not_reachable_retry),
+                    onClick = { onIntent(HomeSleepIntent.RetryUpload) },
+                    style = ButtonStyle.Primary,
+                    size = ButtonSizeType.Large,
+                    modifier = Modifier.weight(1f),
+                )
+            }
+        }
+    }
+    // endregion
 
     // region Delete Confirmation Bottom Sheet
     state.deleteTarget?.let { file ->

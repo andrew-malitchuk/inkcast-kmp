@@ -36,13 +36,21 @@ public class OnboardingViewModel(
     public fun handleIntent(intent: OnboardingIntent) {
         when (intent) {
             OnboardingIntent.OnGetStartedClick -> onGetStartedClick()
+            OnboardingIntent.OnContinueClick -> onContinueClick()
         }
+    }
+
+    /**
+     * Advances from the welcome step to the hotspot setup step.
+     */
+    private fun onGetStartedClick() = intent {
+        reduce { state.copy(currentStep = 1) }
     }
 
     /**
      * Persists the onboarding-completed flag and navigates to the Connection screen.
      */
-    private fun onGetStartedClick() = intent {
+    private fun onContinueClick() = intent {
         setOnboardingStatusUseCase(true)
         postSideEffect(OnboardingSideEffect.NavigateToConnection)
     }

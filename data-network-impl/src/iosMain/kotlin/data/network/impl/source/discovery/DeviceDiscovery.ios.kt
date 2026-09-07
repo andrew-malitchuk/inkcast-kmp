@@ -27,11 +27,11 @@ internal actual class DeviceDiscovery actual constructor() {
 
         // Resolve the subnet broadcast address from en0 (e.g. 192.168.1.255)
         val broadcastAddr = getWifiBroadcastAddress()
-            ?: return@withContext ips
+            ?: throw IllegalStateException("Wi-Fi interface not available")
 
         // NOTE: Open a UDP datagram socket for broadcast discovery.
         val sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)
-        if (sock < 0) return@withContext ips
+        if (sock < 0) throw IllegalStateException("Failed to open UDP socket")
 
         try {
             memScoped {
